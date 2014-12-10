@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?> 
+
+<TabHost android:id="@android:id/tabhost" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+        <FrameLayout android:id="@android:id/tabcontent" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+        <TabWidget android:id="@android:id/tabs" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="0.0" />
+        <RadioGroup android:gravity="center_vertical" android:layout_gravity="bottom" android:orientation="horizontal" android:id="@+id/main_radio" android:background="@drawable/bar_bottom_black" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <RadioButton android:id="@+id/radio_button0" android:tag="radio_button0" android:layout_marginTop="2.0dip"  android:drawableTop="@drawable/bar_bottom_duoliao" style="@style/main_tab_bottom" />
+            <RadioButton android:id="@+id/radio_button1" android:tag="radio_button1" android:layout_marginTop="2.0dip"  android:drawableTop="@drawable/bar_bottom_meg" style="@style/main_tab_bottom" />
+            <RadioButton android:id="@+id/radio_button2" android:tag="radio_button2" android:layout_marginTop="2.0dip"  android:drawableTop="@drawable/tab_3" style="@style/main_tab_bottom" />
+            <RadioButton android:id="@+id/radio_button3" android:tag="radio_button3" android:layout_marginTop="2.0dip"  android:drawableTop="@drawable/bar_bottom_bianli" style="@style/main_tab_bottom" />
+            <RadioButton android:id="@+id/radio_button4" android:tag="radio_button4" android:layout_marginTop="2.0dip" android:drawableTop="@drawable/bar_bottom_member" style="@style/main_tab_bottom" />
+        </RadioGroup>
+    </LinearLayout>
+</TabHost>
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--     android:id="@+id/common_bottom" -->
+<!--     android:layout_width="match_parent" -->
+<!--     android:layout_height="wrap_content"  -->
+<!--     android:background="@drawable/bar_bottom_black"> -->
+
+<!--      <ImageButton -->
+<!--         android:id="@+id/main_trigger" -->
+<!--         android:layout_width="63dp" -->
+<!--         android:layout_height="63dp" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_centerHorizontal="true" -->
+<!--         android:background="@color/transparent" -->
+<!--         android:src="@drawable/main_tab_trigger" />  -->
+
+<!-- 	<Button -->
+<!--         android:id="@+id/main_comero" -->
+<!--         android:layout_width="63dp" -->
+<!--         android:layout_height="50dp" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_centerHorizontal="true" -->
+<!--         android:background="@drawable/tab_3" -->
+<!--         android:paddingBottom="2dp" -->
+<!--         android:paddingTop="4dp" -->
+<!--         android:tag="4" -->
+<!--         android:textColor="@android:color/white" -->
+<!--         android:textSize="13sp" /> -->
+     
+<!--     <Button -->
+<!--         android:id="@+id/main_duoliao" -->
+<!--         android:layout_width="63dp" -->
+<!--         android:layout_height="50dp" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_marginRight="5dp" -->
+<!--         android:layout_toLeftOf="@+id/main_meg" -->
+<!--         android:background="@drawable/bar_bottom_duoliao" -->
+<!--         android:paddingBottom="2dp" -->
+<!--         android:paddingTop="4dp" -->
+<!--         android:tag="0" -->
+<!--         android:textSize="13sp"  -->
+<!--         android:visibility="visible"/> -->
+    
+<!--     <Button -->
+<!--         android:id="@+id/main_meg" -->
+<!--         android:layout_width="63dp" -->
+<!--         android:layout_height="50dp" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_toLeftOf="@+id/main_comero" -->
+<!--         android:layout_marginRight="5dp" -->
+<!--         android:background="@drawable/bar_bottom_meg" -->
+<!--         android:paddingBottom="2dp" -->
+<!--         android:paddingTop="4dp" -->
+<!--         android:tag="1" -->
+<!--         android:textSize="13sp" /> -->
+
+<!--     <Button -->
+<!--         android:id="@+id/main_member" -->
+<!--         android:layout_width="63dp" -->
+<!--         android:layout_height="50dp" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_toRightOf="@+id/main_bianli" -->
+<!--         android:layout_marginLeft="5dp" -->
+<!--         android:background="@drawable/bar_bottom_member" -->
+<!--         android:paddingBottom="2dp" -->
+<!--         android:paddingTop="4dp" -->
+<!--         android:tag="3" -->
+<!--         android:textSize="13sp" /> -->
+
+<!--     <Button -->
+<!--         android:id="@+id/main_bianli" -->
+<!--         android:layout_width="63dp" -->
+<!--         android:layout_height="50dp" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_marginLeft="5dp" -->
+<!--         android:layout_toRightOf="@+id/main_comero" -->
+<!--         android:background="@drawable/bar_bottom_bianli" -->
+<!--         android:paddingBottom="2dp" -->
+<!--         android:paddingTop="4dp" -->
+<!--         android:tag="2" -->
+<!--         android:textSize="13sp" /> -->
+
+
+
+<!-- <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--          android:id="@+id/common_bottom" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:background="@drawable/bar_bottom_black" -->
+<!--         android:orientation="vertical" > -->
+
+<!-- <FrameLayout -->
+<!--             android:layout_width="fill_parent" -->
+<!--             android:layout_height="wrap_content" > -->
+
+<!--             <RadioGroup -->
+<!--                 android:id="@+id/main_tab_group" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="bottom" -->
+<!--                 android:background="@drawable/bar_bottom_black" -->
+<!--                 android:gravity="bottom" -->
+<!--                 android:orientation="horizontal" -->
+<!--                  > -->
+
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_tab_addExam" -->
+<!--                     android:layout_weight="1.0"     -->
+<!--                     android:drawableTop="@drawable/bar_bottom_duoliao" -->
+<!--                      />  -->
+
+<!--                 <RadioButton -->
+<!--                     android:layout_width="63dp" -->
+<!--       				android:layout_height="50dp" -->
+<!--       			  	android:layout_alignParentBottom="true" -->
+<!--         			android:layout_centerHorizontal="true" -->
+<!--         			android:background="@drawable/tab_3" -->
+<!--         			android:paddingBottom="2dp" -->
+<!--         			android:paddingTop="4dp" -->
+<!--         			android:tag="4" /> -->
+
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_bianli" -->
+<!--         			android:layout_width="63dp" -->
+<!--         			android:layout_height="50dp" -->
+<!--         			android:layout_alignParentBottom="true" -->
+<!--         			android:layout_marginLeft="5dp" -->
+<!--         			android:layout_toRightOf="@+id/main_comero" -->
+<!--         			android:background="@drawable/bar_bottom_bianli" -->
+<!--         			android:paddingBottom="2dp" -->
+<!--         			android:paddingTop="4dp" -->
+<!--         			android:tag="2" -->
+<!--         			android:textSize="13sp" /> -->
+                
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_member" -->
+<!--         			android:layout_width="63dp" -->
+<!--         			android:layout_height="50dp" -->
+<!--         			android:layout_alignParentBottom="true" -->
+<!--         			android:layout_toRightOf="@+id/main_bianli" -->
+<!--         			android:layout_marginLeft="5dp" -->
+<!--         			android:background="@drawable/bar_bottom_member" -->
+<!--         			android:paddingBottom="2dp" -->
+<!--         			android:paddingTop="4dp" -->
+<!--         			android:tag="3" -->
+<!--         			android:textSize="13sp" /> -->
+<!--             </RadioGroup> -->
+
+<!--             <TextView -->
+<!--                 android:id="@+id/main_tab_new_message" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center_horizontal|top" -->
+<!--                 android:layout_marginLeft="60dip" -->
+<!--                 android:layout_marginTop="1dip" -->
+<!--                 android:background="@drawable/tips" -->
+<!--                 android:gravity="center" -->
+<!--                 android:text="1" -->
+<!--                 android:textColor="#ffffff" -->
+<!--                 android:textSize="10sp" -->
+<!--                 android:visibility="gone" />  -->
+<!--         </FrameLayout> -->
+
+<!-- <RadioButton -->
+<!--     android:id="@+id/main_duoliao" -->
+<!--     android:layout_width="83dp" -->
+<!--     android:layout_height="50dp" -->
+<!--     android:layout_marginRight="5dp" -->
+<!--     android:drawableTop="@drawable/bar_bottom_duoliao" -->
+<!--     android:paddingBottom="2dp" -->
+<!--     android:paddingTop="4dp" -->
+<!--     android:tag="0" -->
+<!--     android:text="我的考试" -->
+<!--     android:textSize="13sp" -->
+<!--     android:visibility="visible" /> -->
+
+<!--         </LinearLayout>--> 
+<!--     </RelativeLayout>--> 
+  
+
+<!-- <TabHost xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--     android:id="@android:id/tabhost" -->
+<!--     android:layout_width="fill_parent" -->
+<!--     android:layout_height="fill_parent" > -->
+<!--        <LinearLayout -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:orientation="vertical" > -->
+		
+<!--         <FrameLayout -->
+<!--             android:id="@android:id/tabcontent" -->
+<!--             android:layout_width="fill_parent" -->
+<!--             android:layout_height="0.0dip" -->
+<!--             android:layout_weight="1.0" /> -->
+
+<!--         <TabWidget -->
+<!--             android:id="@android:id/tabs" -->
+<!--             android:layout_width="fill_parent" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_weight="0.0" -->
+<!--             android:visibility="gone" /> -->
+
+<!--         <FrameLayout -->
+<!--             android:layout_width="fill_parent" -->
+<!--             android:layout_height="wrap_content" > -->
+
+<!--             <RadioGroup -->
+<!--                 android:id="@+id/main_tab_group" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="bottom" -->
+<!--                 android:background="@drawable/bar_bottom_black" -->
+<!--                 android:gravity="bottom" -->
+<!--                 android:orientation="horizontal" -->
+<!--                  > -->
+
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_duoliao" -->
+<!--                     style="@style/main_tab_bottom" -->
+<!--                     android:layout_weight="1.0"    -->
+<!--                     android:checked="true"  -->
+<!--                     android:drawableTop="@drawable/bar_bottom_duoliao" /> -->
+
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_mag" -->
+<!--                     style="@style/main_tab_bottom" -->
+<!--                     android:layout_weight="1.0" -->
+<!--                     android:checked="true" -->
+<!--                     android:drawableTop="@drawable/bar_bottom_meg" -->
+<!--                     /> -->
+                
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_camero" -->
+<!--                     style="@style/main_tab_bottom" -->
+<!--                     android:layout_weight="1.0" -->
+<!--                     android:drawableTop="@drawable/tab_3" -->
+<!--                      /> -->
+
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_bianli" -->
+<!--                     style="@style/main_tab_bottom" -->
+<!--                     android:layout_weight="1.0" -->
+<!--                     android:drawableTop="@drawable/bar_bottom_bianli" -->
+<!--                      /> -->
+
+<!--                 <RadioButton -->
+<!--                     android:id="@+id/main_member" -->
+<!--                     style="@style/main_tab_bottom" -->
+<!--                     android:layout_weight="1.0"    -->
+<!--                     android:drawableTop="@drawable/bar_bottom_member" -->
+<!--                      /> -->
+<!--             </RadioGroup> -->
+
+<!--             <TextView -->
+<!--                 android:id="@+id/main_tab_new_message" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center_horizontal|top" -->
+<!--                 android:layout_marginLeft="60dip" -->
+<!--                 android:layout_marginTop="1dip" -->
+<!--                 android:gravity="center" -->
+<!--                 android:text="1" -->
+<!--                 android:textColor="#ffffff" -->
+<!--                 android:textSize="10sp" -->
+<!--                 android:visibility="gone" /> -->
+<!--         </FrameLayout> -->
+<!--     </LinearLayout> -->
+<!-- </TabHost> -->

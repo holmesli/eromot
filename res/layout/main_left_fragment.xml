@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <ScrollView android:background="@drawable/menu_background" android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<LinearLayout android:orientation="vertical" android:id="@+id/llRoot" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+     	<include android:id="@+id/btmLayout" layout="@layout/toolbox_item_backtomain" />
+     	<include android:id="@+id/tieziLayout" layout="@layout/toolbox_item_tiezi" />
+        <include android:id="@+id/guanzhuLayout" layout="@layout/toolbox_item_guanzhu" />
+        <include android:id="@+id/fensiLayout" layout="@layout/toolbox_item_fensi" />
+        <include android:id="@+id/blacklistLayout" layout="@layout/toolbox_item_blacklist" />
+        <include android:id="@+id/aboutusLayout" layout="@layout/toolbox_item_aboutus" />
+        <include android:id="@+id/logoutLayout" layout="@layout/toolbox_item_logout" />
+    </LinearLayout>
+    
+</ScrollView> -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mlist"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/menu_background" >
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="fill_parent"
+        android:background="@drawable/menu_background"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip" >
+
+            <ImageView
+                android:id="@+id/head_view"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/head_default" />
+
+            <TextView
+                android:id="@+id/name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@+id/head_view"
+                android:text="sunflower"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/grade_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/name_textview"
+                android:layout_below="@+id/name_textview"
+                android:text="962343949"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_backtomain_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_backtomain"
+            android:textSize="15sp" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_tiezi_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_tiezi"
+            android:textSize="15sp" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_guanzhu_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_guanzhu"
+            android:textSize="15sp" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_fensi_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_fensi"
+            android:textSize="15sp" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_blacklist_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_blacklist"
+            android:textSize="15sp" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_aboutus_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_aboutus"
+            android:textSize="15sp" />
+        
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/my_logout_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/toolbox_item_logout"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</ScrollView>

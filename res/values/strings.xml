@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ToMore</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_camero">相机</string>
+    <string name="main_duoliao">多聊</string>
+    <string name="main_meg">杂志</string>
+    <string name="main_bianli">便利</string>
+    <string name="main_kabao">卡包</string>
+    <string name="toolbox_item_backtomain">回主页</string>
+    <string name="toolbox_item_tiezi">我的帖子</string>
+    <string name="toolbox_item_guanzhu">我的关注</string>
+    <string name="toolbox_item_fensi">我的粉丝</string>
+    <string name="toolbox_item_blacklist">黑名单</string>
+    <string name="toolbox_item_aboutus">关于</string>
+    <string name="toolbox_item_logout">退出</string>
+    <string name="bar_title_bt_duoliao">多聊</string>
+    <string name="bar_title_bt_duoyao">多摇</string>
+    <string name="bar_title_meg">杂志</string>
+    <string name="bar_title_member">会员卡</string>
+    <string name="bar_title_add">添加</string>
+    <string name="bar_title_bianli">便利</string>
+ 
+
+
+</resources>
