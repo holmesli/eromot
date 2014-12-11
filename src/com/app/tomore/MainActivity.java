@@ -20,6 +20,8 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.app.Application;
 import android.content.Intent;
 import android.app.TabActivity;
+import com.app.tomore.httpclient.*;
+import com.app.tomore.beans.*;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements OnCheckedChangeListener {
