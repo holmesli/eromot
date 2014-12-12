@@ -124,10 +124,28 @@ public class ArticleModel extends BaseBean {
 	private String ArticleVideo;
 	private String  VideoUrl;
 	private String  TextUrl;
+	
+	public ArticleModel(JSONObject json)
+	{
+		ArticleID=json.optString("ArticleID");
+		ArticleTitle =json.optString("ArticleTitle");
+		ArticleContent = json.optString("ArticleContent");
+		ArticleLargeImage=json.optString("ArticleLargeImage");
+		ArticleSmallImage=json.optString("ArticleSmallImage");
+		ImagePosition = json.optString("ImagePosition");
+		ArticleDate = json.optString("ArticleDate");
+		Author = json.optString("Author");
+		ArticleIssue = json.optString("ArticleIssue");
+		DisplayStyle = json.optString("DisplayStyle");
+		ArticleVideo = json.optString("ArticleVideo");
+		VideoUrl = json.optString("VideoUrl");
+		TextUrl = json.optString("TextUrl");
+	}
 
 	@Override
 	public Object parseJSON(JSONObject jsonObj) {
 		// TODO Auto-generated method stub
+			
 		return null;
 	}
 
