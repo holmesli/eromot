@@ -20,9 +20,11 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.app.Application;
 import android.content.Intent;
 import android.app.TabActivity;
-import com.app.tomore.httpclient.*;
-import com.app.tomore.beans.*;
 
+import com.app.tomore.httpclient.NormalHttpClient;
+import com.app.tomore.httpcore.HttpRequestException;
+import com.app.tomore.httpcore.HttpResponse;
+import com.app.tomore.httpcore.ParameterMap;
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements OnCheckedChangeListener {
 	//private View magMain;  
@@ -36,6 +38,20 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+//http://54.213.167.5/APIV2/getArticleByArticleIssue.php?&articleIssue=0
+		NormalHttpClient aClient =new NormalHttpClient("");
+		ParameterMap aMap = new ParameterMap();
+		aMap.add("articleIssue", "0");
+		try {
+			HttpResponse aRespone = aClient.get("http://54.213.167.5/APIV2/getArticleByArticleIssue.php", aMap);
+		//	byte[] responsBogy = aRespone.getBody();
+			String bodyString = aRespone.getBodyAsString();
+			String bodyString2 = bodyString;
+		} catch (HttpRequestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		main_tab_new_message=(TextView) findViewById(R.id.main_tab_new_message);
 //        main_tab_new_message.setVisibility(View.VISIBLE);
