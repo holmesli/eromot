@@ -20,11 +20,9 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.app.Application;
 import android.content.Intent;
 import android.app.TabActivity;
-
-import com.app.tomore.httpclient.NormalHttpClient;
-import com.app.tomore.httpcore.HttpRequestException;
-import com.app.tomore.httpcore.HttpResponse;
-import com.app.tomore.httpcore.ParameterMap;
+import com.turbomanage.httpclient.BasicHttpClient;
+import com.turbomanage.httpclient.*;
+import com.turbomanage.httpclient.android.*;
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements OnCheckedChangeListener {
 	//private View magMain;  
@@ -40,18 +38,11 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		setContentView(R.layout.activity_main);
 		
 //http://54.213.167.5/APIV2/getArticleByArticleIssue.php?&articleIssue=0
-		NormalHttpClient aClient =new NormalHttpClient("");
-		ParameterMap aMap = new ParameterMap();
-		aMap.add("articleIssue", "0");
-		try {
-			HttpResponse aRespone = aClient.get("http://54.213.167.5/APIV2/getArticleByArticleIssue.php", aMap);
-		//	byte[] responsBogy = aRespone.getBody();
-			String bodyString = aRespone.getBodyAsString();
-			String bodyString2 = bodyString;
-		} catch (HttpRequestException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		BasicHttpClient aClient =new BasicHttpClient("http://54.213.167.5/APIV2/");
+		ParameterMap aMap = new ParameterMap().add("articleIssue", "0");
+		HttpResponse aRespone = aClient.get("getArticleByArticleIssue.php", aMap);
+//	byte[] responsBogy = aRespone.getBody();
+		System.out.println(aRespone.getBodyAsString());
 		
 //		main_tab_new_message=(TextView) findViewById(R.id.main_tab_new_message);
 //        main_tab_new_message.setVisibility(View.VISIBLE);
