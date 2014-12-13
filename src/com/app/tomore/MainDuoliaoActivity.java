@@ -2,6 +2,10 @@
 package com.app.tomore;
 
 import com.app.tomore.fragment.BackToMainActivity;
+import com.app.tomore.httpclient.AndroidHttpClient;
+import com.app.tomore.httpclient.AsyncCallback;
+import com.app.tomore.httpclient.HttpResponse;
+import com.app.tomore.httpclient.ParameterMap;
 import com.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
@@ -27,6 +31,32 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_duoliao_activity);
+		
+//		AndroidHttpClient httpClient = new AndroidHttpClient("http://54.213.167.5/APIV2/");
+//        httpClient.setMaxRetries(5);
+//        ParameterMap params = httpClient.newParams()
+//                .add("articleIssue", "0");
+//                //.add("email", "test@example.com")
+//                //.add("action", "Log In");
+//        httpClient.post("getArticleByArticleIssue.php", params, new AsyncCallback() {
+//            public void onSuccess(HttpResponse httpResponse) {
+//                System.out.println(httpResponse.getBodyAsString());
+//                
+//                
+//            }
+//            @Override
+//            public void onError(Exception e) {
+//                e.printStackTrace();
+//            }
+//			@Override
+//			public void onComplete(HttpResponse httpResponse) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//        });
+		
+		
+		
 		context=this;
 		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
