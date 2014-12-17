@@ -24,6 +24,5 @@
         android:layout_toRightOf="@+id/img"
         android:text="MagInfo" />
 
-    
 
 </RelativeLayout>

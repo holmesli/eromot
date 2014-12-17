@@ -1,11 +1,15 @@
 package com.app.tomore.beans;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
+
+import com.szy.news.model.Parameter;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public class ArticleModel extends BaseBean {
+public class ArticleModel extends BaseBean implements Serializable, Comparable<ArticleModel>  {
 	
 	public String getArticleTitle() {
 		return ArticleTitle;
@@ -177,6 +181,12 @@ public class ArticleModel extends BaseBean {
 	public ContentValues beanToValues() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int compareTo(ArticleModel another) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
