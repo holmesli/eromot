@@ -6,7 +6,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.app.tomore.R;
 import com.app.tomore.beans.ArticleModel;
-import com.app.tomore.beans.ImageLoaderFactory;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,7 +27,7 @@ public class ArticleAdapter extends BaseAdapter {
 	public ArticleAdapter(Context context,ArrayList<ArticleModel> arrayList) {
         this.mContext = context;
         this.arrayList = arrayList;
-        IL = ImageLoaderFactory.getInstance().createImageLoader(mContext);
+        //IL = ImageLoaderFactory.getInstance().createImageLoader(mContext);
         otp = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().showImageForEmptyUri(R.drawable.tomorelogo).build();
         //footerView =  getFooterView(mContext);
 	}
