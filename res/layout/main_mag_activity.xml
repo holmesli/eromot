@@ -31,15 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="获取数据完成后会显示在这里" />
-            <TextView
-        android:textColor="#FF0000"
-        android:textSize="16sp"
-       android:layout_marginTop="20dp"
-     android:gravity="center_horizontal"
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         />
+           
             <ListView   
 	     	android:dividerHeight="1dip" 
 	     	android:id="@+id/mag_listview" 

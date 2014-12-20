@@ -22,7 +22,12 @@ import java.util.concurrent.TimeoutException;
 
 
 
+
+
+
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.app.tomore.beans.ArticleAdapter;
@@ -54,11 +59,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 
+
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +81,7 @@ public class MainMagActivity extends Activity{
 	
 	private Intent intent;
 	private String mobelNo;
-	private ArrayList<ArticleModel> ArticleList;
+	private ArrayList<ArticleModel> articleList;
 	private MyBaseAdapter myBaseAdapter;
 	//static String path=AppConstants.path;
 	private Bitmap bitmap;
@@ -91,9 +100,11 @@ public class MainMagActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_mag_activity);
+
 		
-		
-//		textview = (TextView) findViewById(R.id.text2);
+		//textview = (TextView) findViewById(R.id.text2);
+
+
 //		AsyncHttpClient client = new AsyncHttpClient();
 //		final RequestParams params = new RequestParams();
 //		params.put("articleIssue", "1");
@@ -139,6 +150,7 @@ public class MainMagActivity extends Activity{
 //				
 //			}
 //		});
+//		
 		AndroidHttpClient httpClient = new AndroidHttpClient("http://54.213.167.5/APIV2/");
         httpClient.setMaxRetries(5);
         ParameterMap params = httpClient.newParams()
@@ -155,7 +167,7 @@ public class MainMagActivity extends Activity{
 				// TODO Auto-generated method stub
 				String response = httpResponse.getBodyAsString();
 				//System.out.println(response);
-				ArticleList=GetArticle(response);
+				articleList=parserRecommend(response);
 			}
         });
 		
@@ -214,18 +226,18 @@ public class MainMagActivity extends Activity{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if(ArticleList==null){
+			if(articleList==null){
 				return convertView;
 			}
 			final View view=convertView.inflate(MainMagActivity.this, R.layout.mag_listview,null);
 			//Object obj=ArticleList.get(position);
 			ImageView mag_item_image=(ImageView)view.findViewById(R.id.img);
 			TextView mag_item_title=(TextView)view.findViewById(R.id.info);
-//			
+			//article = ArticleList.get(position);
 				//mag_item_image.setImageBitmap(Article.getArticleSmallImage());
 				//mag_item_title.setText(article.getArticleTitle());
-				imageLoader.displayImage(data[position], mag_item_image);
-				//mag_item_title.setText(Article.getArticleTitle());
+				//imageLoader.displayImage(data[position], mag_item_image);
+				//mag_item_title.setText(article.getArticleTitle());
 //			}else{
 //			}
 			return view;
@@ -241,18 +253,54 @@ public class MainMagActivity extends Activity{
 //		return ArticleList;
 //
 //	}
-	public ArrayList<ArticleModel> GetArticle(String str)
-			throws JsonSyntaxException {
-		Gson gson = new Gson(); 
-	    JsonParser parser = new JsonParser(); 
-	    JsonArray Jarray = parser.parse(str).getAsJsonArray(); 
-	    ArrayList<ArticleModel> lcs = new ArrayList<ArticleModel>(); 
-	    for(JsonElement obj : Jarray ){ 
-	    	ArticleModel cse = gson.fromJson( obj , ArticleModel.class); 
-	        lcs.add(cse); 
-	    }
+//	public ArrayList<ArticleModel> GetArticle(String str)
+//			throws JsonSyntaxException {
+//		Gson gson = new Gson(); 
+//		//JsonReader jsonReader = new JsonReader(null);
+//	    JsonParser parser = new JsonParser(); 
+//	    JsonArray Jarray = parser.parse(str).getAsJsonArray(); 
+//	    //JsonArray Jarray = parser.parse(str).getAsJsonObject().getAsJsonArray("ArticleList");
+//	    ArrayList<ArticleModel> lcs = new ArrayList<ArticleModel>(); 
+//	    for(JsonElement obj : Jarray ){ 
+//	    	ArticleModel cse = gson.fromJson( obj , ArticleModel.class); 
+//	        lcs.add(cse); 
+//	    }
+//
+//		return lcs;
+//	}
+	public static ArrayList<ArticleModel> parserRecommend(String content) {
+		ArrayList<ArticleModel> list = new ArrayList<ArticleModel>();
+		ArticleModel article = null;
+		try {
 
-		return lcs;
+			JSONArray jsonArray = new JSONArray(content);
+			for (int i = 0; i < jsonArray.length(); ++i) {
+				JSONObject o = (JSONObject) jsonArray.get(i);
+				article = new ArticleModel();
+				article.setArticleTitle(o.getString("articleTitle"));
+				article.setArticleID(o.getString("articleID"));
+				article.setArticleContent(o.getString("articleContent"));
+				article.setArticleDate(o.getString("articleDate"));
+				article.setArticleLargeImage(o.getString("articleLargeImage"));
+				article.setArticleIssue(o.getString("articleIssue"));
+				article.setArticleSmallImage(o.getString("articleSmallImage"));
+				article.setArticleVideo(o.getString("articleVideo"));
+				article.setAuthor(o.getString("author"));
+				article.setDisplayStyle(o.getString("displayStyle"));
+				article.setImagePosition(o.getString("imagePosition"));
+				article.setTextUrl(o.getString("textUrl"));
+				article.setVideoUrl(o.getString("videoUrl"));
+//				article.setTitle(o.getString("Title"));
+//
+//				article.setID(o.getString("ID"));
+//
+//				article.setFirstPicUrl(o.getString("FirstPicUrl"));
+				list.add(article);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }
