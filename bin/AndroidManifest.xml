@@ -49,6 +49,7 @@
         <activity android:name=".MainBottomActivity"></activity>
         <activity android:name=".MainTabsActivity"></activity>
         <activity android:name=".CameroActivity"  > </activity>  
+        <activity android:name=".MyCameraActivity"  > </activity>  
     </application>
 
 </manifest>
