@@ -4,7 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
  <LinearLayout
-     android:id="@+id/popupTabs"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
@@ -40,35 +39,35 @@
                     android:id="@+id/main_duoliao"
                     style="@style/main_tab_bottom"
                     android:layout_weight="1.0"    
-                    android:background="@drawable/bar_bottom_duoliao" />
+                    android:drawableTop="@drawable/bar_bottom_duoliao" />
 
                 <RadioButton
                     android:id="@+id/main_mag"
                     style="@style/main_tab_bottom"
                     android:layout_weight="1.0"
                     android:checked="true"
-                    android:background="@drawable/bar_bottom_meg"
+                    android:drawableTop="@drawable/bar_bottom_meg"
                     />
                 
                 <RadioButton
                     android:id="@+id/main_camero"
                     style="@style/main_tab_bottom"
                     android:layout_weight="1.0"
-                    android:background="@drawable/tab_3"
+                    android:drawableTop="@drawable/tab_3"
                      />
 
                 <RadioButton
                     android:id="@+id/main_bianli"
                     style="@style/main_tab_bottom"
                     android:layout_weight="1.0"
-                    android:background="@drawable/bar_bottom_bianli"
+                    android:drawableTop="@drawable/bar_bottom_bianli"
                      />
 
                 <RadioButton
                     android:id="@+id/main_member"
                     style="@style/main_tab_bottom"
                     android:layout_weight="1.0"   
-                    android:background="@drawable/bar_bottom_member"
+                    android:drawableTop="@drawable/bar_bottom_member"
                      />
             </RadioGroup>
 
