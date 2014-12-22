@@ -1,4 +1,4 @@
-package com.app.tomore.camero;  
+package com.app.tomore;  
 import java.io.FileNotFoundException;  
 
 import com.app.tomore.R;
@@ -20,7 +20,7 @@ public class ViewAlbums extends Activity {
     @Override  
     public void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
-        setContentView(R.layout.activity_rect_photo);  
+        setContentView(R.layout.mycamera_layout);  
           
         ImageButton button = (ImageButton)findViewById(R.id.albums);  
         //button.setText("选择图片");  
@@ -47,9 +47,9 @@ public class ViewAlbums extends Activity {
             ContentResolver cr = this.getContentResolver();  
             try {  
                 Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));  
-                //ImageView imageView = (ImageView) findViewById(R.id.iv01);  
+                ImageView imageView = (ImageView) findViewById(R.id.iv01);  
                 /* 将Bitmap设定到ImageView */  
-               // imageView.setImageBitmap(bitmap);  
+                imageView.setImageBitmap(bitmap);  
             } catch (FileNotFoundException e) {  
                 Log.e("Exception", e.getMessage(),e);  
             }  

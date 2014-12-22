@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.net.Uri;
@@ -57,8 +58,8 @@ public class MyCameraActivity extends Activity {
 		setContentView(R.layout.mycamera_layout);
 		
 		btn_camera_capture = (Button) findViewById(R.id.camera_capture);
-		btn_camera_ok = (Button) findViewById(R.id.camera_ok);
-		btn_camera_cancel = (Button) findViewById(R.id.camera_cancel);
+//		btn_camera_ok = (Button) findViewById(R.id.camera_ok);
+//		btn_camera_cancel = (Button) findViewById(R.id.camera_cancel);
 		albums = (ImageButton) findViewById(R.id.albums);
 		
 		btn_camera_capture.setOnClickListener(new OnClickListener() {
@@ -73,31 +74,47 @@ public class MyCameraActivity extends Activity {
 //				btn_camera_cancel.setVisibility(View.VISIBLE);
 			}
 		});
-		btn_camera_ok.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//保存图片
-				saveImageToFile();
-				
-				camera.startPreview();
-				btn_camera_capture.setVisibility(View.VISIBLE);
-				btn_camera_ok.setVisibility(View.INVISIBLE);
-				btn_camera_cancel.setVisibility(View.INVISIBLE);
-				albums.setVisibility(View.INVISIBLE);
-			}
+//		btn_camera_ok.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				//保存图片
+//				saveImageToFile();
+//				
+//				camera.startPreview();
+//				btn_camera_capture.setVisibility(View.VISIBLE);
+//				btn_camera_ok.setVisibility(View.INVISIBLE);
+//				btn_camera_cancel.setVisibility(View.INVISIBLE);
+//				albums.setVisibility(View.VISIBLE);
+//			}
+//		});
+//		btn_camera_cancel.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				
+//				camera.startPreview();
+//				btn_camera_capture.setVisibility(View.VISIBLE);
+//				btn_camera_ok.setVisibility(View.INVISIBLE);
+//				btn_camera_cancel.setVisibility(View.INVISIBLE);				
+//			}
+//		});
+		
+		albums.setOnClickListener(new Button.OnClickListener() { //更准确点应该是View.OnClickListener
+		    public void onClick(View v)
+		    {
+		        /* 新建一个Intent对象 */
+		        Intent intent = new Intent();
+		        //intent.putExtra("name","LeiPei");    
+		        /* 指定intent要启动的类 */
+		        intent.setClass(MyCameraActivity.this, ViewAlbums.class);
+		        /* 启动一个新的Activity */
+		        MyCameraActivity.this.startActivity(intent);
+		        /* 关闭当前的Activity */
+		        MyCameraActivity.this.finish();
+		    }
 		});
-		btn_camera_cancel.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				camera.startPreview();
-				btn_camera_capture.setVisibility(View.VISIBLE);
-				btn_camera_ok.setVisibility(View.INVISIBLE);
-				btn_camera_cancel.setVisibility(View.INVISIBLE);				
-			}
-		});
+
 	}
 	@Override
 	protected void onPause() {
@@ -199,5 +216,6 @@ public class MyCameraActivity extends Activity {
 		}
 		return filePath;
 	}
-
+	
+	
 }

@@ -50,6 +50,7 @@
         <activity android:name=".MainTabsActivity"></activity>
         <activity android:name=".CameroActivity"  > </activity>  
         <activity android:name=".MyCameraActivity"  > </activity>  
+        <activity android:name=".ViewAlbums"  > </activity>  
     </application>
 
 </manifest>
