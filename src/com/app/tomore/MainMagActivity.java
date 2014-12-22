@@ -233,11 +233,11 @@ public class MainMagActivity extends Activity{
 			//Object obj=ArticleList.get(position);
 			ImageView mag_item_image=(ImageView)view.findViewById(R.id.img);
 			TextView mag_item_title=(TextView)view.findViewById(R.id.info);
-			//article = ArticleList.get(position);
+			article = articleList.get(position);
 				//mag_item_image.setImageBitmap(Article.getArticleSmallImage());
 				//mag_item_title.setText(article.getArticleTitle());
 				//imageLoader.displayImage(data[position], mag_item_image);
-				//mag_item_title.setText(article.getArticleTitle());
+				mag_item_title.setText(article.getArticleTitle());
 //			}else{
 //			}
 			return view;
