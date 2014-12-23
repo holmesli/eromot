@@ -44,14 +44,6 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-//http://54.213.167.5/APIV2/getArticleByArticleIssue.php?&articleIssue=0
-		//BasicHttpClient aClient =new BasicHttpClient("http://54.213.167.5/APIV2/");
-		//ParameterMap aMap = new ParameterMap().add("articleIssue", "0");
-		//HttpResponse aRespone = aClient.get("getArticleByArticleIssue.php", aMap);
-//	byte[] responsBogy = aRespone.getBody();
-		//System.out.println(aRespone.getBodyAsString());
-		
-		
 		
 		radioGroup = (RadioGroup) findViewById(R.id.main_tab_group);
 		
@@ -104,7 +96,6 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 					break;
 				case R.id.main_camero://ÎÒµÄ¿¼ÊÔ
 					tabHost.setCurrentTabByTag("相机");
-					//tabHost.getTabWidget().setVisibility(View.GONE);
 					MainActivity.hideTabs();
 					break;
 				case R.id.main_bianli://ÎÒµÄÍ¨Öª

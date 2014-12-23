@@ -80,14 +80,12 @@ import android.widget.TextView;
 public class MainMagActivity extends Activity{
 	
 	private Intent intent;
-	private String mobelNo;
 	private ArrayList<ArticleModel> articleList;
 	private MyBaseAdapter myBaseAdapter;
 	//static String path=AppConstants.path;
 	private Bitmap bitmap;
 	//private ArrayList<ArticleModel> articleModel;
 	private ArticleModel article;
-	private int noteId;
 	public ImageLoader imageLoader; 
 	private String[] data;
 	private TextView textview;
@@ -102,9 +100,6 @@ public class MainMagActivity extends Activity{
 		setContentView(R.layout.main_mag_activity);
 
 		
-		//textview = (TextView) findViewById(R.id.text2);
-
-
 //		AsyncHttpClient client = new AsyncHttpClient();
 //		final RequestParams params = new RequestParams();
 //		params.put("articleIssue", "1");
@@ -176,28 +171,7 @@ public class MainMagActivity extends Activity{
 		ListView listView=(ListView)findViewById(R.id.mag_listview);
 		myBaseAdapter=new MyBaseAdapter();
 		listView.setAdapter(myBaseAdapter);
-//		
-		
-		
-//		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				if(ArticleList==null){
-//					return;
-//				}
-//				ArticleModel noetItem = ArticleList.get(position);
-//				noteId = Integer.parseInt(noetItem.getArticleID());
-//				Object obj=(Object)ArticleList.get(position);
-//				//nextPageNote = new MyBaseAdapter();
-//				//nextPageNote = (ArticleModel)obj;
-//				//ShowMyDialog(1, null);
-//				//handler.sendEmptyMessage(0);
-//				if(obj instanceof String){
-//					return;
-//				}
-//			}
-//		});
+
 	}
 	
 	
@@ -244,30 +218,7 @@ public class MainMagActivity extends Activity{
 			}
 	}
 	
-//	public List praseFromJosn(String response) {
-//		Type ListType = new TypeToken<ArrayList<ArticleModel>>() {
-//		}.getType();
-//		Gson gson = new Gson();
-//		ArticleList = gson.fromJson(response, ListType);
-//
-//		return ArticleList;
-//
-//	}
-//	public ArrayList<ArticleModel> GetArticle(String str)
-//			throws JsonSyntaxException {
-//		Gson gson = new Gson(); 
-//		//JsonReader jsonReader = new JsonReader(null);
-//	    JsonParser parser = new JsonParser(); 
-//	    JsonArray Jarray = parser.parse(str).getAsJsonArray(); 
-//	    //JsonArray Jarray = parser.parse(str).getAsJsonObject().getAsJsonArray("ArticleList");
-//	    ArrayList<ArticleModel> lcs = new ArrayList<ArticleModel>(); 
-//	    for(JsonElement obj : Jarray ){ 
-//	    	ArticleModel cse = gson.fromJson( obj , ArticleModel.class); 
-//	        lcs.add(cse); 
-//	    }
-//
-//		return lcs;
-//	}
+
 	public static ArrayList<ArticleModel> parserRecommend(String content) {
 		ArrayList<ArticleModel> list = new ArrayList<ArticleModel>();
 		ArticleModel article = null;
@@ -290,11 +241,7 @@ public class MainMagActivity extends Activity{
 				article.setImagePosition(o.getString("imagePosition"));
 				article.setTextUrl(o.getString("textUrl"));
 				article.setVideoUrl(o.getString("videoUrl"));
-//				article.setTitle(o.getString("Title"));
-//
-//				article.setID(o.getString("ID"));
-//
-//				article.setFirstPicUrl(o.getString("FirstPicUrl"));
+
 				list.add(article);
 			}
 		} catch (JSONException e) {

@@ -59,8 +59,7 @@ public class MyCameraActivity extends Activity {
 		setContentView(R.layout.mycamera_layout);
 		
 		btn_camera_capture = (Button) findViewById(R.id.camera_capture);
-//		btn_camera_ok = (Button) findViewById(R.id.camera_ok);
-//		btn_camera_cancel = (Button) findViewById(R.id.camera_cancel);
+
 		albums = (ImageButton) findViewById(R.id.albums);
 		
 		btn_camera_capture.setOnClickListener(new OnClickListener() {
@@ -71,35 +70,9 @@ public class MyCameraActivity extends Activity {
 				
 				btn_camera_capture.setVisibility(View.INVISIBLE);
 				saveImageToFile();
-//				btn_camera_ok.setVisibility(View.VISIBLE);
-//				btn_camera_cancel.setVisibility(View.VISIBLE);
+
 			}
 		});
-//		btn_camera_ok.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				//保存图片
-//				saveImageToFile();
-//				
-//				camera.startPreview();
-//				btn_camera_capture.setVisibility(View.VISIBLE);
-//				btn_camera_ok.setVisibility(View.INVISIBLE);
-//				btn_camera_cancel.setVisibility(View.INVISIBLE);
-//				albums.setVisibility(View.VISIBLE);
-//			}
-//		});
-//		btn_camera_cancel.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				
-//				camera.startPreview();
-//				btn_camera_capture.setVisibility(View.VISIBLE);
-//				btn_camera_ok.setVisibility(View.INVISIBLE);
-//				btn_camera_cancel.setVisibility(View.INVISIBLE);				
-//			}
-//		});
 		
 		albums.setOnClickListener(new Button.OnClickListener() { //更准确点应该是View.OnClickListener
 		    public void onClick(View v)
