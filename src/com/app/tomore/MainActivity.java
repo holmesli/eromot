@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.app.Application;
@@ -30,7 +32,12 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 	private TabHost tabHost;
 	private TextView main_tab_new_message;
 	private RadioGroup radioderGroup;
+	
+	public static LinearLayout popupTabs ;
+	private TabWidget tabwidget;
+	private static RadioGroup radioGroup;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +52,7 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		
 		
 		
-		
+		radioGroup = (RadioGroup) findViewById(R.id.main_tab_group);
 		
         
         tabHost=this.getTabHost();
@@ -58,6 +65,10 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
         
         intent=new Intent().setClass(this,MainMagActivity.class);
         spec=tabHost.newTabSpec("杂志").setIndicator("杂志").setContent(intent);
+        tabHost.addTab(spec);
+        
+        intent=new Intent().setClass(this,MyCameraActivity.class);
+        spec=tabHost.newTabSpec("相机").setIndicator("相机").setContent(intent);
         tabHost.addTab(spec);
         
         intent=new Intent().setClass(this, MainBLActivity.class);
@@ -74,6 +85,9 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		radioderGroup.check(R.id.main_duoliao);
 	}
         
+	 public static void hideTabs(){
+		 radioGroup.setVisibility(ViewGroup.GONE);
+	    }
 //        RadioGroup radioGroup=(RadioGroup) this.findViewById(R.id.main_tab_group);
 //        radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 //			
@@ -86,6 +100,11 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 					break;
 				case R.id.main_mag://ÎÒµÄ¿¼ÊÔ
 					tabHost.setCurrentTabByTag("杂志");
+					break;
+				case R.id.main_camero://ÎÒµÄ¿¼ÊÔ
+					tabHost.setCurrentTabByTag("相机");
+					//tabHost.getTabWidget().setVisibility(View.GONE);
+					MainActivity.hideTabs();
 					break;
 				case R.id.main_bianli://ÎÒµÄÍ¨Öª
 					tabHost.setCurrentTabByTag("便利");
