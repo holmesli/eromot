@@ -4,32 +4,11 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF" >
 
-    <!--
-         <TextView
+    <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-    -->
-
-    <include
-        android:id="@+id/include1"
-        layout="@layout/bar_title_bianli"
-        android:focusable="true" />
-
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/include1"
-        android:columnWidth="90dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="30dp" >
-
-    </GridView>
-
+        android:text="@string/hello_world" /> -->
+		<include layout="@layout/bar_title_bianli" android:focusable="true"/>
 
 
 </RelativeLayout>

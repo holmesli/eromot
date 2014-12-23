@@ -23,6 +23,6 @@
         android:singleLine="true"
         android:text="@string/bar_title_bianli" />
 
-
+    
 
 </RelativeLayout>
