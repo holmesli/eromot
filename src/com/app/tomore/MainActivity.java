@@ -44,23 +44,7 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		//System.out.println(aRespone.getBodyAsString());
 		
 		
-		AndroidHttpClient httpClient = new AndroidHttpClient("http://54.213.167.5/APIV2/");
-        httpClient.setMaxRetries(5);
-        ParameterMap params = httpClient.newParams()
-                .add("articleIssue", "0");
-             
-        httpClient.post("getArticleByArticleIssue.php", params, new AsyncCallback() {
-            
-            @Override
-            public void onError(Exception e) {
-                e.printStackTrace();
-            }
-			@Override
-			public void onComplete(HttpResponse httpResponse) {
-				// TODO Auto-generated method stub
-				System.out.println(httpResponse.getBodyAsString());
-			}
-        });
+		
 		
 		
         
