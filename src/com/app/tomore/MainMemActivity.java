@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.app.tomore.MainMagActivity.MyBaseAdapter;
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.httpclient.AndroidHttpClient;
