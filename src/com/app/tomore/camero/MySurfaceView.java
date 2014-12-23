@@ -40,21 +40,16 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		//����û�пɴ����SurfaceView
 		if (surfaceHolder.getSurface() == null){
 			return ;
 		}
 		
-		//��ֹͣCamera��Ԥ��
 		try{
 			camera.stopPreview();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		//���������һЩ����Ҫ���ı任��
-		
-		//���¿���Camera��Ԥ������
 		try{
 			camera.setPreviewDisplay(surfaceHolder);
 			camera.startPreview();

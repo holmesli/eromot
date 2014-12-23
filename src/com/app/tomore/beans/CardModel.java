@@ -93,36 +93,7 @@ public class CardModel extends BaseBean implements Serializable, Comparable<Card
 	private String  FrontViewImage;
 	private String  BackViewImage;
 	private String  coupon;
-	
-	
-//	@Override
-//	public String toString() {
-//		return "ArticleModel [ArticleID=" + ArticleID + ", ArticleTitle=" + ArticleTitle
-//				+ ", ArticleContent=" + ArticleContent + ", ArticleLargeImage=" + ArticleLargeImage
-//				+ ", ArticleSmallImage=" + ArticleSmallImage + ", ImagePosition=" + ImagePosition
-//				+ ", ArticleDate=" + ArticleDate + ", Author=" + Author
-//				+ ", ArticleIssue=" + ArticleIssue + ", DisplayStyle=" + DisplayStyle 
-//						+ ",ArticleVideo=" + ArticleVideo
-//								+ ",VideoUrl=" + VideoUrl 
-//										+ ",TextUrl=" + TextUrl + "]";
-//	}
-//	
-//	public ArticleModel(JSONObject json)
-//	{
-//		ArticleID=json.optString("ArticleID");
-//		ArticleTitle =json.optString("ArticleTitle");
-//		ArticleContent = json.optString("ArticleContent");
-//		ArticleLargeImage=json.optString("ArticleLargeImage");
-//		ArticleSmallImage=json.optString("ArticleSmallImage");
-//		ImagePosition = json.optString("ImagePosition");
-//		ArticleDate = json.optString("ArticleDate");
-//		Author = json.optString("Author");
-//		ArticleIssue = json.optString("ArticleIssue");
-//		DisplayStyle = json.optString("DisplayStyle");
-//		ArticleVideo = json.optString("ArticleVideo");
-//		VideoUrl = json.optString("VideoUrl");
-//		TextUrl = json.optString("TextUrl");
-//	}
+
 
 	@Override
 	public Object parseJSON(JSONObject jsonObj) {
