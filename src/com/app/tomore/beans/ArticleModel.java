@@ -5,10 +5,11 @@ import java.io.Serializable;
 import org.json.JSONObject;
 
 
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public class ArticleModel extends BaseBean implements Serializable, Comparable<ArticleModel>  {
+public class ArticleModel extends BaseBean  {
 	
 	public String getArticleTitle() {
 		return ArticleTitle;
@@ -127,41 +128,10 @@ public class ArticleModel extends BaseBean implements Serializable, Comparable<A
 	private String ArticleVideo;
 	private String  VideoUrl;
 	private String  TextUrl;
-	
-//	@Override
-//	public String toString() {
-//		return "ArticleModel [ArticleID=" + ArticleID + ", ArticleTitle=" + ArticleTitle
-//				+ ", ArticleContent=" + ArticleContent + ", ArticleLargeImage=" + ArticleLargeImage
-//				+ ", ArticleSmallImage=" + ArticleSmallImage + ", ImagePosition=" + ImagePosition
-//				+ ", ArticleDate=" + ArticleDate + ", Author=" + Author
-//				+ ", ArticleIssue=" + ArticleIssue + ", DisplayStyle=" + DisplayStyle 
-//						+ ",ArticleVideo=" + ArticleVideo
-//								+ ",VideoUrl=" + VideoUrl 
-//										+ ",TextUrl=" + TextUrl + "]";
-//	}
-//	
-//	public ArticleModel(JSONObject json)
-//	{
-//		ArticleID=json.optString("ArticleID");
-//		ArticleTitle =json.optString("ArticleTitle");
-//		ArticleContent = json.optString("ArticleContent");
-//		ArticleLargeImage=json.optString("ArticleLargeImage");
-//		ArticleSmallImage=json.optString("ArticleSmallImage");
-//		ImagePosition = json.optString("ImagePosition");
-//		ArticleDate = json.optString("ArticleDate");
-//		Author = json.optString("Author");
-//		ArticleIssue = json.optString("ArticleIssue");
-//		DisplayStyle = json.optString("DisplayStyle");
-//		ArticleVideo = json.optString("ArticleVideo");
-//		VideoUrl = json.optString("VideoUrl");
-//		TextUrl = json.optString("TextUrl");
-//	}
-
 	@Override
 	public Object parseJSON(JSONObject jsonObj) {
 		// TODO Auto-generated method stub
-			
-		return jsonObj;
+		return null;
 	}
 
 	@Override
@@ -181,11 +151,5 @@ public class ArticleModel extends BaseBean implements Serializable, Comparable<A
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public int compareTo(ArticleModel another) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 }
