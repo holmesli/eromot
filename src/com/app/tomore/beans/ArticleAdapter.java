@@ -37,20 +37,20 @@ public class ArticleAdapter extends ArrayAdapter<ImageAndText> {
   
             // Inflate the views from XML  
             View rowView = convertView;  
-            ViewCache viewCache;  
+            MagViewCache magviewCache;  
             if (rowView == null) {  
                 LayoutInflater inflater = activity.getLayoutInflater();  
                 rowView = inflater.inflate(R.layout.mag_listview, null);  
-                viewCache = new ViewCache(rowView);  
-                rowView.setTag(viewCache);  
+                magviewCache = new MagViewCache(rowView);  
+                rowView.setTag(magviewCache);  
             } else {  
-                viewCache = (ViewCache) rowView.getTag();  
+            	magviewCache = (MagViewCache) rowView.getTag();  
             }  
             ImageAndText imageAndText = getItem(position);  
   
             // Load the image and set it on the ImageView  
             String imageUrl = imageAndText.getImageUrl();  
-            ImageView imageView = viewCache.getImageView();  
+            ImageView imageView = magviewCache.getImageView();  
             imageView.setTag(imageUrl);  
             Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl, new ImageCallback() {  
                 public void imageLoaded(Drawable imageDrawable, String imageUrl) {  
@@ -62,7 +62,7 @@ public class ArticleAdapter extends ArrayAdapter<ImageAndText> {
             });  
             imageView.setImageDrawable(cachedImage);    
             // Set the text on the TextView  
-            TextView textView = viewCache.getTextView();  
+            TextView textView = magviewCache.getTextView();  
             textView.setText(imageAndText.getText());  
             return rowView;  
         }  
