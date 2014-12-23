@@ -22,13 +22,11 @@ public class ToMoreHttpRequest {
 	public ToMoreHttpRequest(Context context) {
 		mContext = context;
 	}
-	
 	private String getUrl(String u, String a) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(url).append(u).append("/").append(a);
 		return sb.toString();
 	}
-	private String returnString = null;
 	/*
 	 * get all BL Categories
 	 * 
@@ -41,30 +39,17 @@ public class ToMoreHttpRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getIcons.php", null);
         return httpResponse.getBodyAsString();
 	}
-	
 	/*
 	 * //get all magazines by id
 	 */
 	//http://54.213.167.5/APIV2/getArticleByArticleIssue.php?articleIssue=1
 	public String getMagById(String magId)
 			throws IOException, TimeoutException {
-//		baseRequest = new AndroidHttpClient(url);
-//		baseRequest.setMaxRetries(5);
-//		ParameterMap params = baseRequest.newParams()
-//                .add("articleIssue", magId);
-//		baseRequest.post("APIV2/getArticleByArticleIssue.php", params, new AsyncCallback() {
-//            
-//            @Override
-//            public void onComplete(HttpResponse httpResponse)
-//            {
-//            	returnString =  httpResponse.getBodyAsString();
-//            }
-//            @Override
-//            public void onError(Exception e) {
-//            	returnString =  e.toString();
-//            }
-//        });
-		
-		return returnString;
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+                .add("articleIssue", magId);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleByArticleIssue.php", params);
+        return httpResponse.getBodyAsString();
 	}
 }

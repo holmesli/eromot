@@ -15,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.app.tomore.beans.ArticleAdapter;
-import com.app.tomore.data_connection.GetJSONFromUrl;
 
 import android.app.Activity;
 import android.content.Context;
@@ -49,17 +48,7 @@ public class MainMagActivity extends Activity{
 	public void getData()
 	{
 		String result = "";
-	    try {
-			result =  new GetJSONFromUrl().execute("http://54.213.167.5/APIV2/getArticleByArticleIssue.php?articleIssue=1").get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		//resultView.setText(result);
+	    //resultView.setText(result);
 		GetBL(result);
 	}
 	
