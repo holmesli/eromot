@@ -1,8 +1,12 @@
-package com.app.tomore;
+package com.app.tomore.adapters;
 
 import java.util.List;
 
-import com.app.tomore.AsyncImageLoader.ImageCallback;
+import com.app.tomore.R;
+import com.app.tomore.ViewCache;
+import com.app.tomore.beans.ImageAndText;
+import com.app.tomore.utils.AsyncImageLoader;
+import com.app.tomore.utils.AsyncImageLoader.ImageCallback;
 
 import android.app.Activity;  
 import android.graphics.drawable.Drawable;  
@@ -13,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;  
 import android.widget.ImageView;  
 import android.widget.TextView;  
+
   
 public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {  
   
@@ -27,7 +32,6 @@ public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {
         public View getView(int position, View convertView, ViewGroup parent) {  
             Activity activity = (Activity) getContext();  
   
-            // Inflate the views from XML  
             View rowView = convertView;  
             ViewCache viewCache;  
             if (rowView == null) {  

@@ -1,21 +1,19 @@
-package com.app.tomore.beans;
+package com.app.tomore.adapters;
 
 import java.util.List;
 
-import com.app.tomore.AsyncImageLoader;
-import com.app.tomore.AsyncImageLoader.ImageCallback;
-import com.app.tomore.ImageAndText;
+import com.app.tomore.beans.ImageAndText;
+import com.app.tomore.beans.MagViewCache;
+import com.app.tomore.utils.AsyncImageLoader;
+import com.app.tomore.utils.AsyncImageLoader.ImageCallback;
 import com.app.tomore.R;
-import com.app.tomore.ViewCache;
 
 import android.app.Activity;  
-import android.content.Context;
 import android.graphics.drawable.Drawable;  
 import android.view.LayoutInflater;  
 import android.view.View;  
 import android.view.ViewGroup;  
 import android.widget.ArrayAdapter;  
-import android.widget.GridView;  
 import android.widget.ImageView;  
 import android.widget.ListView;
 import android.widget.TextView;  
@@ -35,7 +33,6 @@ public class ArticleAdapter extends ArrayAdapter<ImageAndText> {
         public View getView(int position, View convertView, ViewGroup parent) {  
             Activity activity = (Activity) getContext();  
   
-            // Inflate the views from XML  
             View rowView = convertView;  
             MagViewCache magviewCache;  
             if (rowView == null) {  

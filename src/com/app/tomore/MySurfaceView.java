@@ -1,4 +1,4 @@
-package com.app.tomore.camero;
+package com.app.tomore;
 
 import android.content.Context;
 import android.graphics.Canvas;

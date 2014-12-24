@@ -1,4 +1,4 @@
-package com.app.tomore;
+package com.app.tomore.utils;
 
 import java.io.InputStream;
 import java.lang.ref.SoftReference;

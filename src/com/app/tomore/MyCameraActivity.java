@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import com.app.tomore.camero.MySurfaceView;
 
 
 public class MyCameraActivity extends Activity {
