@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;  
 import android.widget.GridView;  
 import android.widget.ImageView;  
+import android.widget.ListView;
 import android.widget.TextView;  
 
   
@@ -23,9 +24,9 @@ public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {
   
         private GridView gridView;  
         private AsyncImageLoader asyncImageLoader;  
-        public ImageAndTextListAdapter(Activity activity, List<ImageAndText> imageAndTexts, GridView gridView1) {  
+        public ImageAndTextListAdapter(Activity activity, List<ImageAndText> imageAndTexts, GridView gridView2) {  
             super(activity, 0, imageAndTexts);  
-            this.gridView = gridView1;  
+            this.gridView = gridView2;  
             asyncImageLoader = new AsyncImageLoader();  
         }  
   

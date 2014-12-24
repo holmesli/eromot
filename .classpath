@@ -6,14 +6,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="ImgLoadSrc"/>
-	<classpathentry kind="lib" path="D:/Husion/android-sdk-windows/platforms/android-19/android.jar" sourcepath="D:/Husion/android-sdk-windows/sources/android-19">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/D:/Husion/android-sdk-windows/docs/reference"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
-	</classpathentry>
 	<classpathentry kind="src" path="/ToMore"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
