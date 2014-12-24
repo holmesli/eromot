@@ -31,9 +31,18 @@ public class ToMoreParse {
 		return lcs;
 	}
 	
-	public ArrayList<ArticleModel> parseArticleResponse(String jsonArticle)
+	public ArrayList<ArticleModel> parseArticleResponse(String jsonArticle) throws JsonSyntaxException 
 	{
-		return null;
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(jsonArticle);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<ArticleModel> articlelist = new ArrayList<ArticleModel>();
+		for (JsonElement obj : jarray) {
+			ArticleModel cse = gson.fromJson(obj, ArticleModel.class);
+			articlelist.add(cse);
+		}
+		return articlelist;
 	}
 	
 	public CommonModel CommonPares(String str) {
