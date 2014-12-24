@@ -13,8 +13,6 @@ import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
 
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MagDetailActivity extends Activity{
-	
+public class MagDetailActivity extends Activity {
+
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articlelist;
 	ArticleModel article = new ArticleModel();
@@ -42,23 +40,21 @@ public class MagDetailActivity extends Activity{
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MagDetailActivity.this, 1).execute("");
 	}
-	
-	private void BindDataToGridView()
-	{
+
+	private void BindDataToGridView() {
 		ArticleModel article = new ArticleModel();
 		int postion;
 		List<ImageAndText> imageAndTextlist = new ArrayList<ImageAndText>();
-			for(ArticleModel a:articlelist)
-				{
-					imageAndTextlist.add(new ImageAndText(a.getArticleLargeImage(),a.getArticleTitle()));
-				}
-//			ImageView imageview = (ListView) findViewById(R.id.mag_listviews);
-//			listView.setAdapter(new ArticleAdapter(this, imageAndTextlist,
-//				listView));
+		for (ArticleModel a : articlelist) {
+			imageAndTextlist.add(new ImageAndText(a.getArticleLargeImage(), a
+					.getArticleTitle()));
+		}
+		// ImageView imageview = (ListView) findViewById(R.id.mag_listviews);
+		// listView.setAdapter(new ArticleAdapter(this, imageAndTextlist,
+		// listView));
 
-		
 	}
-	
+
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;
@@ -85,16 +81,6 @@ public class MagDetailActivity extends Activity{
 			ToMoreHttpRequest request = new ToMoreHttpRequest(
 					MagDetailActivity.this);
 
-			try {
-				Log.d("doInBackground", "start request");
-				result = request.getMagById(null);
-				Log.d("doInBackground", "returned");
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (TimeoutException e) {
-				e.printStackTrace();
-			}
-
 			return result;
 		}
 
@@ -104,27 +90,8 @@ public class MagDetailActivity extends Activity{
 				dialog.dismiss();
 			}
 			Log.d("onPostExecute", "postExec state");
-			if (result == null || result.equals("")) {
-				// show empty alert
-			} else {
-				articlelist = new ArrayList<ArticleModel>();
-				try {
-					articlelist = new ToMoreParse().parseArticleResponse(result);
-					BindDataToGridView();
-				} catch (JsonSyntaxException e) {
-					e.printStackTrace();
-				}
-				if (articlelist != null) {
-					Intent intent = new Intent(MagDetailActivity.this,
-							MyCameraActivity.class); // fake redirect..
-					intent.putExtra("menuList", (Serializable) articlelist);
-					//startActivity(intent);
-				} else {
-					// show empty alert
-				}
-			}
-		
-		
+			
+
 		}
 	}
 }
