@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public class ArticleModel   {
+public class ArticleModel implements Serializable{ 
 	
 	public String getArticleTitle() {
 		return ArticleTitle;
