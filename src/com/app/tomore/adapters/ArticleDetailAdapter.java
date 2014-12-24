@@ -18,16 +18,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;  
   
-public class ArtilceHeadAdapter extends ArrayAdapter<ImageAndText> {  
+public class ArticleDetailAdapter extends ArrayAdapter<ImageAndText> {  
   
       
-		private TextView textview;
-		private ImageView imageview;
-		private ListView listview;  
+
+		private ImageView imageview;  
         private AsyncImageLoader asyncImageLoader;  
-        public ArtilceHeadAdapter(Activity activity, List<ImageAndText> imageAndTexts, ListView listview1) {  
+        public ArticleDetailAdapter(Activity activity, List<ImageAndText> imageAndTexts, ImageView imageview1) {  
             super(activity, 0, imageAndTexts);  
-            this.listview = listview1;  
+            this.imageview = imageview1;  
             asyncImageLoader = new AsyncImageLoader();  
         }  
   
@@ -38,7 +37,7 @@ public class ArtilceHeadAdapter extends ArrayAdapter<ImageAndText> {
             MagViewCache magviewCache;  
             if (rowView == null) {  
                 LayoutInflater inflater = activity.getLayoutInflater();  
-                rowView = inflater.inflate(R.layout.mag_headview, null);  
+                rowView = inflater.inflate(R.layout.magdetail, null);  
                 magviewCache = new MagViewCache(rowView);  
                 rowView.setTag(magviewCache);  
             } else {  
@@ -52,7 +51,7 @@ public class ArtilceHeadAdapter extends ArrayAdapter<ImageAndText> {
             imageView.setTag(imageUrl);  
             Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl, new ImageCallback() {  
                 public void imageLoaded(Drawable imageDrawable, String imageUrl) {  
-                    ImageView imageViewByTag = (ImageView) listview.findViewWithTag(imageUrl);  
+                    ImageView imageViewByTag = (ImageView) imageview.findViewWithTag(imageUrl);  
                     if (imageViewByTag != null) {  
                         imageViewByTag.setImageDrawable(imageDrawable);  
                     }  

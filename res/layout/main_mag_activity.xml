@@ -13,7 +13,12 @@
         
             <include layout="@layout/bar_title_meg" android:focusable="true"/>
 
-           
+<!--            <ImageView -->
+<!--        		 android:layout_width="fill_parent" -->
+<!--        		 android:layout_height="wrap_content" -->
+<!--       	  android:id="@+id/imageView"> -->
+<!--    			 </ImageView> -->
+
             <ListView   
 	     	android:dividerHeight="1dip" 
 	     	android:id="@+id/mag_listviews" 
