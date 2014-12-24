@@ -2,14 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip"
-    android:background="@drawable/mag_list_selector"  >
+    android:padding="3dip"  >
 
 
 <ImageView  
     android:id="@+id/img"  
-    android:layout_width="60dp"  
-    android:layout_height="60dp"  
+    android:layout_width="30dp"  
+    android:layout_height="30dp"  
   ></ImageView>  
   <TextView  
     android:id="@+id/info"  

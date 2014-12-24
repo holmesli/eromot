@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
+
 import java.util.concurrent.TimeoutException;
+
 import com.google.gson.JsonSyntaxException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +20,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.GridView;
+
+import com.app.tomore.adapters.ImageAndTextListAdapter;
 import com.app.tomore.beans.CategoryModel;
+import com.app.tomore.beans.ImageAndText;
 
 public class MainBLActivity extends Activity {
 	private DialogActivity dialog;
