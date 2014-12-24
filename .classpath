@@ -6,6 +6,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="ImgLoadSrc"/>
-	<classpathentry kind="src" path="/ToMore"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
