@@ -14,7 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.app.tomore.beans.ArticleAdapter;
+import com.app.tomore.adapters.ArticleAdapter;
+import com.app.tomore.beans.ImageAndText;
 
 import android.app.Activity;
 import android.content.Context;

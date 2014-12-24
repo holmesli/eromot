@@ -1,4 +1,4 @@
-package com.app.tomore;
+package com.app.tomore.beans;
 
 public class ImageAndText {
 
