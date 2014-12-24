@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.app.tomore.net.ToMoreHttpRequest;
-import com.app.tomore.net.ToMoreParse;
+import com.app.tomore.net.YellowPageParse;
+import com.app.tomore.net.YellowPageRequest;
 
 import java.util.concurrent.TimeoutException;
 
@@ -72,9 +72,8 @@ public class MainBLActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			ToMoreHttpRequest request = new ToMoreHttpRequest(
+			YellowPageRequest request = new YellowPageRequest(
 					MainBLActivity.this);
-
 			try {
 				Log.d("doInBackground", "start request");
 				result = request.getAllBLCategories();
@@ -99,7 +98,7 @@ public class MainBLActivity extends Activity {
 			} else {
 				cateList = new ArrayList<CategoryModel>();
 				try {
-					cateList = new ToMoreParse().parseCtegoryResponse(result);
+					cateList = new YellowPageParse().parseCtegoryResponse(result);
 					BindDataToGridView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
