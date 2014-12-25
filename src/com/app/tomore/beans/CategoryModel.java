@@ -1,7 +1,9 @@
 package com.app.tomore.beans;
 
+import java.io.Serializable;
 
-public class CategoryModel {
+
+public class CategoryModel implements Serializable{
 	private String IconID;
 	private String Type;
 	private String Name;

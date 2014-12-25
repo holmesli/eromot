@@ -1,9 +1,6 @@
 package com.app.tomore.net;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import android.util.Log;
-
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.CommonModel;
@@ -17,33 +14,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class ToMoreParse {
 
-	public ArrayList<CategoryModel> parseCtegoryResponse(String jsonCategory)  throws JsonSyntaxException 
-	{
-		Gson gson = new Gson();
-		JsonElement jelement = new JsonParser().parse(jsonCategory);
-	    JsonObject  jobject = jelement.getAsJsonObject();
-	    JsonArray jarray = jobject.getAsJsonArray("data");
-		ArrayList<CategoryModel> lcs = new ArrayList<CategoryModel>();
-		for (JsonElement obj : jarray) {
-			CategoryModel cse = gson.fromJson(obj, CategoryModel.class);
-			lcs.add(cse);
-		}
-		return lcs;
-	}
-	
-	public ArrayList<ArticleModel> parseArticleResponse(String jsonArticle) throws JsonSyntaxException 
-	{
-		Gson gson = new Gson();
-		JsonElement jelement = new JsonParser().parse(jsonArticle);
-	    JsonObject  jobject = jelement.getAsJsonObject();
-	    JsonArray jarray = jobject.getAsJsonArray("data");
-		ArrayList<ArticleModel> articlelist = new ArrayList<ArticleModel>();
-		for (JsonElement obj : jarray) {
-			ArticleModel cse = gson.fromJson(obj, ArticleModel.class);
-			articlelist.add(cse);
-		}
-		return articlelist;
-	}
 	
 	public CommonModel CommonPares(String str) {
 		Gson gson = new Gson();
