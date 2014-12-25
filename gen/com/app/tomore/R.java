@@ -343,9 +343,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int ItemImage=0x7f050021;
         public static final int ItemText=0x7f050022;
-        public static final int action_settings=0x7f050051;
-        public static final int albums=0x7f050042;
-        public static final int arrow=0x7f050046;
+        public static final int action_settings=0x7f050054;
+        public static final int albums=0x7f050045;
+        public static final int arrow=0x7f050049;
         public static final int bar_title_bt_duoliao=0x7f05001b;
         public static final int bar_title_bt_duoyao=0x7f05001c;
         public static final int bar_title_bt_member=0x7f050020;
@@ -354,11 +354,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int btMember=0x7f05001f;
         public static final int btn_back=0x7f050028;
         public static final int btn_sure=0x7f050027;
-        public static final int camera_capture=0x7f050043;
-        public static final int camera_preview=0x7f050041;
+        public static final int camera_capture=0x7f050046;
+        public static final int camera_preview=0x7f050044;
         public static final int cardimg=0x7f050024;
         public static final int cardinfo=0x7f050023;
-        public static final int description=0x7f050048;
+        public static final int des=0x7f050042;
+        public static final int description=0x7f05004b;
         public static final int disabled=0x7f050000;
         public static final int duo=0x7f050033;
         public static final int flip=0x7f050007;
@@ -373,7 +374,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int img=0x7f05002b;
         public static final int include1=0x7f050031;
         public static final int info=0x7f05002c;
-        public static final int iv01=0x7f050044;
+        public static final int iv01=0x7f050047;
         public static final int ivTitleBtnLeft=0x7f050019;
         public static final int ivTitleBtnRigh=0x7f05001a;
         public static final int left=0x7f050008;
@@ -401,10 +402,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int news_image=0x7f05002e;
         public static final int news_title_text=0x7f05002d;
         public static final int probLoading=0x7f050025;
-        public static final int progress_bar=0x7f050047;
+        public static final int progress_bar=0x7f05004a;
         public static final int pullDownFromTop=0x7f050001;
         public static final int pullUpFromBottom=0x7f050002;
-        public static final int pull_to_refresh_head=0x7f050045;
+        public static final int pull_to_refresh_head=0x7f050048;
         public static final int radio_button0=0x7f050013;
         public static final int radio_button1=0x7f050014;
         public static final int radio_button2=0x7f050015;
@@ -414,15 +415,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int rlCommenTitleBG=0x7f050018;
         public static final int rotate=0x7f050006;
         public static final int slidingMenu=0x7f050030;
-        public static final int toolbox_aboutus=0x7f05004a;
-        public static final int toolbox_blacklist=0x7f05004c;
-        public static final int toolbox_btm=0x7f05004b;
-        public static final int toolbox_fensi=0x7f05004d;
-        public static final int toolbox_guanzhu=0x7f05004e;
-        public static final int toolbox_logout=0x7f05004f;
-        public static final int toolbox_tiezi=0x7f050050;
+        public static final int title=0x7f050041;
+        public static final int tomoreCard=0x7f050043;
+        public static final int toolbox_aboutus=0x7f05004d;
+        public static final int toolbox_blacklist=0x7f05004f;
+        public static final int toolbox_btm=0x7f05004e;
+        public static final int toolbox_fensi=0x7f050050;
+        public static final int toolbox_guanzhu=0x7f050051;
+        public static final int toolbox_logout=0x7f050052;
+        public static final int toolbox_tiezi=0x7f050053;
         public static final int tv_message=0x7f050026;
-        public static final int updated_at=0x7f050049;
+        public static final int updated_at=0x7f05004c;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -455,15 +458,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_left_fragment=0x7f03001b;
         public static final int main_mag_activity=0x7f03001c;
         public static final int main_member_activity=0x7f03001d;
-        public static final int mycamera_layout=0x7f03001e;
-        public static final int pull_to_refresh=0x7f03001f;
-        public static final int toolbox_item_aboutus=0x7f030020;
-        public static final int toolbox_item_backtomain=0x7f030021;
-        public static final int toolbox_item_blacklist=0x7f030022;
-        public static final int toolbox_item_fensi=0x7f030023;
-        public static final int toolbox_item_guanzhu=0x7f030024;
-        public static final int toolbox_item_logout=0x7f030025;
-        public static final int toolbox_item_tiezi=0x7f030026;
+        public static final int member_listview_item=0x7f03001e;
+        public static final int mycamera_layout=0x7f03001f;
+        public static final int pull_to_refresh=0x7f030020;
+        public static final int toolbox_item_aboutus=0x7f030021;
+        public static final int toolbox_item_backtomain=0x7f030022;
+        public static final int toolbox_item_blacklist=0x7f030023;
+        public static final int toolbox_item_fensi=0x7f030024;
+        public static final int toolbox_item_guanzhu=0x7f030025;
+        public static final int toolbox_item_logout=0x7f030026;
+        public static final int toolbox_item_tiezi=0x7f030027;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

@@ -27,8 +27,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainMagActivity extends Activity{
-	
+public class MainMagActivity extends Activity {
+
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articlelist;
 	ArticleModel article = new ArticleModel();
@@ -39,38 +39,37 @@ public class MainMagActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_mag_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		new GetData(MainMagActivity.this, 1).execute("");
+		//new GetData(MainMagActivity.this, 1).execute("");
 	}
-	
-	private void BindDataToGridView()
-	{
+
+	private void BindDataToGridView() {
 		ArticleModel article = new ArticleModel();
 		int postion;
 		List<ImageAndText> imageAndTextlist = new ArrayList<ImageAndText>();
-//		postion = article.getImagePosition();
-//		if(postion==1)
-//		{
-			for(ArticleModel a:articlelist)
-				{
-					imageAndTextlist.add(new ImageAndText(a.getArticleSmallImage(),a.getArticleTitle()));
-				}
-			ListView listView = (ListView) findViewById(R.id.mag_listviews);
-			listView.setAdapter(new ArticleAdapter(this, imageAndTextlist,
-				listView));
-		//}
-//		else if(postion==2)
-//		{
-//			for(ArticleModel a:articlelist)
-//			{
-//				imageAndTextlist.add(new ImageAndText(a.getArticleSmallImage(),a.getArticleTitle()));
-//			}
-//				ListView listView1 = (ListView) findViewById(R.id.mag_listviews);
-//				listView1.setAdapter(new ArticleAdapter(this, imageAndTextlist,
-//						listView1));
-//		}
-		
+		// postion = article.getImagePosition();
+		// if(postion==1)
+		// {
+		for (ArticleModel a : articlelist) {
+			imageAndTextlist.add(new ImageAndText(a.getArticleSmallImage(), a
+					.getArticleTitle()));
+		}
+		ListView listView = (ListView) findViewById(R.id.mag_listviews);
+		listView.setAdapter(new ArticleAdapter(this, imageAndTextlist, listView));
+		// }
+		// else if(postion==2)
+		// {
+		// for(ArticleModel a:articlelist)
+		// {
+		// imageAndTextlist.add(new
+		// ImageAndText(a.getArticleSmallImage(),a.getArticleTitle()));
+		// }
+		// ListView listView1 = (ListView) findViewById(R.id.mag_listviews);
+		// listView1.setAdapter(new ArticleAdapter(this, imageAndTextlist,
+		// listView1));
+		// }
+
 	}
-	
+
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;
@@ -94,8 +93,7 @@ public class MainMagActivity extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			MagRequest request = new MagRequest(
-					MainMagActivity.this);
+			MagRequest request = new MagRequest(MainMagActivity.this);
 
 			try {
 				Log.d("doInBackground", "start request");
@@ -130,39 +128,41 @@ public class MainMagActivity extends Activity{
 					Intent intent = new Intent(MainMagActivity.this,
 							MyCameraActivity.class); // fake redirect..
 					intent.putExtra("menuList", (Serializable) articlelist);
-					//startActivity(intent);
+					// startActivity(intent);
 				} else {
 					// show empty alert
 				}
 			}
-		
-		
-		listveiw.setOnItemClickListener(new OnItemClickListener() {
- 		   @Override
- 		    public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
- 			   System.out.println("listview counts = >"+parent.getCount());
- 			   if(position >= articlelist.size()){
- 				   return;
- 			   }else{
- 				   
- 				   Intent intent = new Intent();
- 				   intent.putExtra("articleid",article.getArticleID());
- 				   intent.setClass(MainMagActivity.this, MagDetailActivity.class);
- 				   startActivity(intent);
- 			   }
- 			   //View v =  parent.getChildAt(position);
- 			   
- 		        //for(int i=0;i<parent.getCount();i++){
- 		            //View v=parent.getChildAt(parent.getCount()-1-i);
- 		          //  if (position == i) {
- 		               // v.setBackgroundColor(Color.RED);
- 		                
- 		            //} else {
- 		              //  v.setBackgroundColor(Color.TRANSPARENT);
- 		            //}
- 		        //}
- 		    }
- 		});
+
+		/*	listveiw.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					System.out.println("listview counts = >"
+							+ parent.getCount());
+					if (position >= articlelist.size()) {
+						return;
+					} else {
+
+					Intent intent = new Intent();
+//						intent.setClass(MainMagActivity.this,
+//								MagDetailActivity.class);
+						startActivity(intent);
+					}
+					// View v = parent.getChildAt(position);
+
+					// for(int i=0;i<parent.getCount();i++){
+					// View v=parent.getChildAt(parent.getCount()-1-i);
+					// if (position == i) {
+					// v.setBackgroundColor(Color.RED);
+
+					// } else {
+					// v.setBackgroundColor(Color.TRANSPARENT);
+					// }
+					// }
+				}
+			});*/
+		}
+
 	}
 }
-	}
