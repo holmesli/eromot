@@ -39,7 +39,7 @@ public class MainMagActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_mag_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		new GetData(MainMagActivity.this, 1).execute("");
+		//new GetData(MainMagActivity.this, 1).execute("");
 	}
 
 	private void BindDataToGridView() {
