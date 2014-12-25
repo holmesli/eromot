@@ -14,7 +14,6 @@ import com.app.tomore.net.MagRequest;
 import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
-import com.sohu.sport.ui.image.ImageExplorer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -147,7 +146,7 @@ public class MainMagActivity extends Activity{
  			   }else{
  				   
  				   Intent intent = new Intent();
- 				   intent.putExtra(listveiw,article.getArticleID());
+ 				   intent.putExtra("articleid",article.getArticleID());
  				   intent.setClass(MainMagActivity.this, MagDetailActivity.class);
  				   startActivity(intent);
  			   }
@@ -166,3 +165,4 @@ public class MainMagActivity extends Activity{
  		});
 	}
 }
+	}

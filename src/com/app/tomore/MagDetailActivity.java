@@ -9,11 +9,14 @@ import java.util.concurrent.TimeoutException;
 import com.app.tomore.adapters.ArticleAdapter;
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.ImageAndText;
-import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
+import com.app.tomore.net.MagParse;
+import com.app.tomore.net.MagRequest;
 
 
+
+import com.app.tomore.net.ToMoreHttpRequest;
 
 import android.app.Activity;
 import android.content.Context;
@@ -82,7 +85,7 @@ public class MagDetailActivity extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			ToMoreHttpRequest request = new ToMoreHttpRequest(
+			MagRequest request = new MagRequest(
 					MagDetailActivity.this);
 
 			try {
@@ -109,7 +112,7 @@ public class MagDetailActivity extends Activity{
 			} else {
 				articlelist = new ArrayList<ArticleModel>();
 				try {
-					articlelist = new ToMoreParse().parseArticleResponse(result);
+					articlelist = new MagParse().parseArticleResponse(result);
 					BindDataToGridView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
