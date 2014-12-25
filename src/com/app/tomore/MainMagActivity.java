@@ -134,7 +134,7 @@ public class MainMagActivity extends Activity {
 				}
 			}
 
-			listveiw.setOnItemClickListener(new OnItemClickListener() {
+		/*	listveiw.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
@@ -161,7 +161,7 @@ public class MainMagActivity extends Activity {
 					// }
 					// }
 				}
-			});
+			});*/
 		}
 
 	}
