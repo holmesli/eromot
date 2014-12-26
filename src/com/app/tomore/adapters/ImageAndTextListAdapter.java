@@ -5,29 +5,28 @@ import java.util.List;
 import com.app.tomore.R;
 import com.app.tomore.ViewCache;
 import com.app.tomore.beans.ImageAndText;
-import com.app.tomore.utils.AsyncImageLoader;
-import com.app.tomore.utils.AsyncImageLoader.ImageCallback;
-
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import android.app.Activity;  
-import android.graphics.drawable.Drawable;  
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;  
 import android.view.View;  
 import android.view.ViewGroup;  
 import android.widget.ArrayAdapter;  
 import android.widget.GridView;  
 import android.widget.ImageView;  
-import android.widget.ListView;
 import android.widget.TextView;  
 
   
 public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {  
   
         private GridView gridView;  
-        private AsyncImageLoader asyncImageLoader;  
         public ImageAndTextListAdapter(Activity activity, List<ImageAndText> imageAndTexts, GridView gridView2) {  
             super(activity, 0, imageAndTexts);  
             this.gridView = gridView2;  
-            asyncImageLoader = new AsyncImageLoader();  
+            ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
+
         }  
   
         public View getView(int position, View convertView, ViewGroup parent) {  
@@ -46,18 +45,19 @@ public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {
             ImageAndText imageAndText = getItem(position);  
   
             // Load the image and set it on the ImageView  
-            String imageUrl = imageAndText.getImageUrl();  
+            final String imageUrl = imageAndText.getImageUrl();  
             ImageView imageView = viewCache.getImageView();  
             imageView.setTag(imageUrl);  
-            Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl, new ImageCallback() {  
-                public void imageLoaded(Drawable imageDrawable, String imageUrl) {  
-                    ImageView imageViewByTag = (ImageView) gridView.findViewWithTag(imageUrl);  
+           
+            ImageLoader.getInstance().loadImage(imageUrl, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                	ImageView imageViewByTag = (ImageView) gridView.findViewWithTag(imageUrl);  
                     if (imageViewByTag != null) {  
-                        imageViewByTag.setImageDrawable(imageDrawable);  
+                        imageViewByTag.setImageBitmap(loadedImage); 
                     }  
-                }  
-            });  
-            imageView.setImageDrawable(cachedImage);    
+                }
+            }); 
             // Set the text on the TextView  
             TextView textView = viewCache.getTextView();  
             textView.setText(imageAndText.getText());  

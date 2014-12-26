@@ -12,6 +12,8 @@ import com.app.tomore.beans.ImageAndTexts;
 import com.app.tomore.net.CardsParse;
 import com.app.tomore.net.CardsRequest;
 import com.google.gson.JsonSyntaxException;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.app.Activity;
 import android.content.Context;
@@ -37,31 +39,28 @@ public class MainMemActivity extends Activity{
 		setContentView(R.layout.main_member_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainMemActivity.this, 1).execute("");
-		
-//		listView=(ListView)findViewById(R.id.member_listview);
-//		//myBaseAdapter=new MyBaseAdapter();
-//		//listView.setAdapter(myBaseAdapter);
-//		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				if(cardList==null){
-//					return;
-//				}
-//				CardModel cardItem = cardList.get(position);
-//				cardID = Integer.parseInt(cardItem.getCardID());
-//				Object obj=(Object)cardList.get(position);
-//				new GetData(MainMemActivity.this,0).execute("");
-//				if(obj instanceof String){
-//					return;
-//				}
-//				Intent intent = new Intent(MainMemActivity.this,
-//						MemberDetailActivity.class);
-//				intent.putExtra("cardInfo", "info");
-//				startActivity(intent);
-//			}
-//
-//		});
+		ListView listView = (ListView) findViewById(R.id.member_listview);
+
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view,
+				int position, long id) {
+			if(cardList==null){
+				return;
+			}
+			CardModel cardItem = cardList.get(position);
+			cardID = Integer.parseInt(cardItem.getCardID());
+			Object obj=(Object)cardList.get(position);
+			new GetData(MainMemActivity.this,0).execute("");
+			if(obj instanceof String){
+				return;
+			}
+			Intent intent = new Intent(MainMemActivity.this,
+					MemberDetailActivity.class);
+			intent.putExtra("cardInfo", "info");
+			startActivity(intent);
+		}
+	});
 	}
 	
 	private class GetData extends AsyncTask<String, String, String> {
@@ -143,6 +142,27 @@ public class MainMemActivity extends Activity{
 		ListView listView = (ListView) findViewById(R.id.member_listview);
 		listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
 				listView));
+		
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view,
+				int position, long id) {
+			if(cardList==null){
+				return;
+			}
+			CardModel cardItem = cardList.get(position);
+			cardID = Integer.parseInt(cardItem.getCardID());
+			Object obj=(Object)cardList.get(position);
+			new GetData(MainMemActivity.this,0).execute("");
+			if(obj instanceof String){
+				return;
+			}
+			Intent intent = new Intent(MainMemActivity.this,
+					MemberDetailActivity.class);
+			intent.putExtra("cardInfo", "info");
+			startActivity(intent);
+		}
+	});
 	}
 }
 
