@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.adapters.MemberAdapter;
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.beans.ImageAndTexts;
 import com.app.tomore.net.CardsParse;
@@ -25,13 +24,18 @@ import android.widget.ListView;
 public class MemberDetailActivity extends Activity{
 
 	private DialogActivity dialog;
-	private ArrayList<CardModel> cardList;
+	private CardModel cardItem;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.member_detail);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+		
+		Intent intent = getIntent();
+		cardItem = (CardModel) intent.getSerializableExtra("cardList");
+		
 		new GetData(MemberDetailActivity.this, 1).execute("");
 	}
 	
@@ -57,11 +61,9 @@ public class MemberDetailActivity extends Activity{
 
 		@Override
 		protected String doInBackground(String... params) {
-			String result=null;
+			String result= null;
 			//try {
-				Log.d("doInBackground", "start request");
-				Intent intent = getIntent();
-				result = intent.getStringExtra("cardList");
+				Log.d("doInBackground", "start request");	
 				Log.d("doInBackground", "returned");
 			//} 
 //			catch (IOException e) {
@@ -82,17 +84,17 @@ public class MemberDetailActivity extends Activity{
 			if (result == null || result.equals("")) {
 				// show empty alert
 			} else {
-				cardList = new ArrayList<CardModel>();
+				//cardList = new ArrayList<CardModel>();
 				try {
 					//cardList = new CardsParse().parseCardResponse(result);
 					//BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
-				if (cardList != null) {
-					Intent intent = new Intent(MemberDetailActivity.this,
-							MyCameraActivity.class); // fake redirect..
-					intent.putExtra("cardList", (Serializable) cardList);
+				if (cardItem != null) {
+					//Intent intent = new Intent(MemberDetailActivity.this,
+						//	MyCameraActivity.class); // fake redirect..
+					//intent.putExtra("cardList", (Serializable) cardList);
 					//startActivity(intent);
 				} else {
 					// show empty alert
@@ -104,13 +106,13 @@ public class MemberDetailActivity extends Activity{
 	private void BindDataToListView()
 	{
 		List<ImageAndTexts> imageAndTextlist = new ArrayList<ImageAndTexts>();
-		for(CardModel c:cardList)
+		//for(CardModel c:cardList)
 		{
-			imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
+		//	imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
 		}
 		ListView listView = (ListView) findViewById(R.id.member_listview);
-		listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
-				listView));
+		//listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
+		//		listView));
 	}
 }
 

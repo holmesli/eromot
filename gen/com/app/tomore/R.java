@@ -344,7 +344,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int toolbox_item_bg_selector=0x7f020029;
     }
     public static final class id {
-        public static final int BackViewImg=0x7f050042;
+        public static final int BackViewImg=0x7f050048;
         public static final int ItemImage=0x7f050021;
         public static final int ItemText=0x7f050022;
         public static final int action_settings=0x7f05005d;
@@ -353,8 +353,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int bar_title_bt_duoliao=0x7f05001b;
         public static final int bar_title_bt_duoyao=0x7f05001c;
         public static final int bar_title_bt_member=0x7f050020;
-        public static final int barcodeImg=0x7f050043;
-        public static final int barcodeLable=0x7f050044;
+        public static final int barcodeImg=0x7f050049;
+        public static final int barcodeLable=0x7f050041;
         public static final int both=0x7f050003;
         public static final int btMeg=0x7f05001e;
         public static final int btMember=0x7f05001f;
@@ -365,17 +365,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int cardimg=0x7f050024;
         public static final int cardinfo=0x7f050023;
         public static final int des=0x7f05004b;
-        public static final int desLable=0x7f050048;
+        public static final int desLable=0x7f050045;
         public static final int description=0x7f050054;
         public static final int disabled=0x7f050000;
         public static final int duo=0x7f050033;
-        public static final int editBarcode=0x7f050045;
-        public static final int editDes=0x7f050049;
-        public static final int editTitle=0x7f050047;
+        public static final int editBarcode=0x7f050042;
+        public static final int editDes=0x7f050046;
+        public static final int editTitle=0x7f050044;
         public static final int flip=0x7f050007;
         public static final int format=0x7f050004;
         public static final int format1=0x7f050005;
-        public static final int frontViewImg=0x7f050041;
+        public static final int frontViewImg=0x7f050047;
         public static final int fullscreen=0x7f05000b;
         public static final int grade_textview=0x7f050037;
         public static final int gridView=0x7f050032;
@@ -427,7 +427,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int rotate=0x7f050006;
         public static final int slidingMenu=0x7f050030;
         public static final int title=0x7f05004a;
-        public static final int titleLable=0x7f050046;
+        public static final int titleLable=0x7f050043;
         public static final int tomoreCard=0x7f05004c;
         public static final int toolbox_aboutus=0x7f050056;
         public static final int toolbox_blacklist=0x7f050058;

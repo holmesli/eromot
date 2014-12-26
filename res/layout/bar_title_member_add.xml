@@ -22,7 +22,8 @@
         android:tag="1"
         android:text="@string/bar_title_member_back"
         android:textColor="@android:color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:background="@drawable/background_gradient" />
 
     <TextView
         android:id="@+id/btMember"
