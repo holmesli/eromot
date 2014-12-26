@@ -1,17 +1,25 @@
 package com.app.tomore.adapters;
 
+import java.io.Serializable;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 
+import com.app.tomore.MainMemActivity;
+import com.app.tomore.MemberDetailActivity;
+import com.app.tomore.MyCameraActivity;
 import com.app.tomore.R;
 import com.app.tomore.beans.ImageAndText;
 import com.app.tomore.beans.ImageAndTexts;
@@ -58,6 +66,7 @@ public class MemberAdapter extends ArrayAdapter<ImageAndTexts> {
             }  
         });  
         imageView.setImageDrawable(cachedImage);    
+         
         // Set the text on the TextView  
         TextView textView1 = memberTextAndImage.getTitleView();  
         textView1.setText(imageAndTexts.getTitle());
