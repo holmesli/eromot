@@ -10,6 +10,7 @@ import com.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -107,11 +108,16 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		case R.id.my_aboutus_bt:
 			Toast.makeText(context, "点我1", 1).show();
 			break;
-		case R.id.my_logout_bt:
-			Toast.makeText(context, "点我1", 1).show();
-			break;
+//		case R.id.my_logout_bt:		
+////			Toast.makeText(context, "点我1", 1).show();
+//			break;
 		}
 
+	}
+	
+	public void onLogoutClick (View view){		
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);   
 	}
 }
 
