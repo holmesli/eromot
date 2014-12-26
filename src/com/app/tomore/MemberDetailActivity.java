@@ -20,48 +20,19 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class MainMemActivity extends Activity{
+public class MemberDetailActivity extends Activity{
 
 	private DialogActivity dialog;
 	private ArrayList<CardModel> cardList;
-	private ListView listView;
-	private int cardID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_member_activity);
+		setContentView(R.layout.member_detail);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		new GetData(MainMemActivity.this, 1).execute("");
-		
-//		listView=(ListView)findViewById(R.id.member_listview);
-//		//myBaseAdapter=new MyBaseAdapter();
-//		//listView.setAdapter(myBaseAdapter);
-//		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				if(cardList==null){
-//					return;
-//				}
-//				CardModel cardItem = cardList.get(position);
-//				cardID = Integer.parseInt(cardItem.getCardID());
-//				Object obj=(Object)cardList.get(position);
-//				new GetData(MainMemActivity.this,0).execute("");
-//				if(obj instanceof String){
-//					return;
-//				}
-//				Intent intent = new Intent(MainMemActivity.this,
-//						MemberDetailActivity.class);
-//				intent.putExtra("cardInfo", "info");
-//				startActivity(intent);
-//			}
-//
-//		});
+		new GetData(MemberDetailActivity.this, 1).execute("");
 	}
 	
 	private class GetData extends AsyncTask<String, String, String> {
@@ -86,21 +57,18 @@ public class MainMemActivity extends Activity{
 
 		@Override
 		protected String doInBackground(String... params) {
-			String result = null;
-			CardsRequest request = new CardsRequest(
-					MainMemActivity.this);
-			try {
-				String memberID="34";
-				String limit="5";
-				String page="1";
+			String result=null;
+			//try {
 				Log.d("doInBackground", "start request");
-				result = request.getCardByMemberID(memberID, limit, page);
+				Intent intent = getIntent();
+				result = intent.getStringExtra("cardList");
 				Log.d("doInBackground", "returned");
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (TimeoutException e) {
-				e.printStackTrace();
-			}
+			//} 
+//			catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (TimeoutException e) {
+//				e.printStackTrace();
+//			}
 
 			return result;
 		}
@@ -122,9 +90,9 @@ public class MainMemActivity extends Activity{
 					e.printStackTrace();
 				}
 				if (cardList != null) {
-					Intent intent = new Intent(MainMemActivity.this,
+					Intent intent = new Intent(MemberDetailActivity.this,
 							MyCameraActivity.class); // fake redirect..
-					intent.putExtra("menuList", (Serializable) cardList);
+					intent.putExtra("cardList", (Serializable) cardList);
 					//startActivity(intent);
 				} else {
 					// show empty alert
