@@ -1,16 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:layout_gravity="center"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:padding="15dip" >
 
-    <ImageView
+    <include
+        layout="@layout/bar_title_member_add"
+        android:focusable="true" />
+
+
+
+    <TextView
+        android:id="@+id/barcodeLable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dip"
+        android:text="test"
+        android:textSize="15sp" 
+        android:textColor="#0000FF"/>
+
+    <EditText
+        android:id="@+id/editBarcode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/member_barcode" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/titleLable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dip"
+        android:text="@string/member_title"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/member_title" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/desLable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dip"
+        android:text="@string/member_des"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/editDes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/member_des" >
+
+        <requestFocus />
+    </EditText>
+
+        <ImageView
         android:id="@+id/frontViewImg"
         android:layout_width="100dp"
-        android:layout_height="120dp"
-        >
+        android:layout_height="120dp" >
     </ImageView>
 
     <ImageView
@@ -22,64 +81,6 @@
     <ImageView
         android:id="@+id/barcodeImg"
         android:layout_width="100dp"
-        android:layout_height="120dp">
+        android:layout_height="120dp" >
     </ImageView>
-
-    <TextView
-        android:id="@+id/barcodeLable"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dip"
-        android:textColor="#000000"
-        android:textSize="15sp" 
-        android:text="条形码"/>
-
-    <EditText
-        android:id="@+id/editBarcode"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="输入条形码">
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/titleLable"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dip"
-        android:textColor="#000000"
-        android:textSize="15sp" 
-        android:text="标题"/>
-
-    <EditText
-        android:id="@+id/editTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="输入卡片名字">
-
-        <requestFocus />
-    </EditText>
-    
-        <TextView
-        android:id="@+id/desLable"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dip"
-        android:textColor="#000000"
-        android:textSize="15sp" 
-        android:text="描述"/>
-
-    <EditText
-        android:id="@+id/editDes"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="输入卡片描述">
-
-        <requestFocus />
-    </EditText>
-
 </LinearLayout>

@@ -39,7 +39,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="多点卡"
+            android:text="@string/member_tomore_card"
             android:paddingTop="15dip"
             android:textColor="#0000FF"
             android:gravity="right|center_vertical"/>
