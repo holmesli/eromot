@@ -32,7 +32,8 @@ public class MainMagActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articlelist;
 	ArticleModel article = new ArticleModel();
-	ListView listveiw;
+	private ListView listveiw;
+	private int articleId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,29 @@ public class MainMagActivity extends Activity {
 		setContentView(R.layout.main_mag_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainMagActivity.this, 1).execute("");
+		
+//		listveiw=(ListView)findViewById(R.id.member_listview);
+//		listveiw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				if(articlelist==null){
+//					return;
+//				}
+//				ArticleModel articleid = articlelist.get(position);
+//				articleId = Integer.parseInt(articleid.getArticleID());
+//				Object obj=(Object)articlelist.get(position);
+//				new GetData(MainMagActivity.this,0).execute("");
+//				if(obj instanceof String){
+//					return;
+//				}
+//				Intent intent = new Intent(MainMagActivity.this,
+//						MemberDetailActivity.class);
+//				intent.putExtra("cardInfo", "info");
+//				startActivity(intent);
+//			}
+//
+//		});
 	}
 
 	private void BindDataToGridView() {

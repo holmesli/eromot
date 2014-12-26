@@ -19,7 +19,7 @@
 <!--       	  android:id="@+id/imageView"> -->
 <!--    			 </ImageView> -->
 
-            <ListView   
+            <com.example.autolistview.widget.AutoListView 
 	     	android:dividerHeight="1dip" 
 	     	android:id="@+id/mag_listviews" 
 	     	android:divider="#e0e0e0" 
@@ -27,9 +27,9 @@
 	     	android:layout_height="wrap_content" 
 	     	android:cacheColorHint="#00000000" 
 	     	android:listSelector="@drawable/mag_list_selector" 
-	     	>
+	     	/>
         
-    </ListView> 
+<!--     </ListView>  -->
     </LinearLayout>
 
 
