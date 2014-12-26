@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="15dip" >
+
+    <include
+        layout="@layout/bar_title_member_add"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/frontViewImg"
         android:layout_width="100dp"
-        android:layout_height="120dp"
-        >
+        android:layout_height="120dp" >
     </ImageView>
 
     <ImageView
@@ -22,7 +24,7 @@
     <ImageView
         android:id="@+id/barcodeImg"
         android:layout_width="100dp"
-        android:layout_height="120dp">
+        android:layout_height="120dp" >
     </ImageView>
 
     <TextView
@@ -30,16 +32,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15dip"
+        android:text="@string/member_barcode"
         android:textColor="#000000"
-        android:textSize="15sp" 
-        android:text="条形码"/>
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/editBarcode"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="输入条形码">
+        android:hint="输入条形码" >
 
         <requestFocus />
     </EditText>
@@ -49,35 +51,35 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15dip"
+        android:text="@string/member_title"
         android:textColor="#000000"
-        android:textSize="15sp" 
-        android:text="标题"/>
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/editTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="输入卡片名字">
+        android:hint="输入卡片名字" >
 
         <requestFocus />
     </EditText>
-    
-        <TextView
+
+    <TextView
         android:id="@+id/desLable"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15dip"
+        android:text="@string/member_des"
         android:textColor="#000000"
-        android:textSize="15sp" 
-        android:text="描述"/>
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/editDes"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="输入卡片描述">
+        android:hint="输入卡片描述" >
 
         <requestFocus />
     </EditText>

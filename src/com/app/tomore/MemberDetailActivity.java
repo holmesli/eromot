@@ -84,8 +84,8 @@ public class MemberDetailActivity extends Activity{
 			} else {
 				cardList = new ArrayList<CardModel>();
 				try {
-					cardList = new CardsParse().parseCardResponse(result);
-					BindDataToListView();
+					//cardList = new CardsParse().parseCardResponse(result);
+					//BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}

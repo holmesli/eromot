@@ -49,15 +49,15 @@ public class MainMemActivity extends Activity{
 				return;
 			}
 			CardModel cardItem = cardList.get(position);
-			cardID = Integer.parseInt(cardItem.getCardID());
+			//cardID = Integer.parseInt(cardItem.getCardID());
 			Object obj=(Object)cardList.get(position);
-			new GetData(MainMemActivity.this,0).execute("");
+			//new GetData(MainMemActivity.this,0).execute("");
 			if(obj instanceof String){
 				return;
 			}
 			Intent intent = new Intent(MainMemActivity.this,
 					MemberDetailActivity.class);
-			intent.putExtra("cardInfo", "info");
+			intent.putExtra("cardList", (Serializable)cardItem);
 			startActivity(intent);
 		}
 	});
@@ -123,7 +123,7 @@ public class MainMemActivity extends Activity{
 				if (cardList != null) {
 					Intent intent = new Intent(MainMemActivity.this,
 							MyCameraActivity.class); // fake redirect..
-					intent.putExtra("menuList", (Serializable) cardList);
+					intent.putExtra("cardList", (Serializable) cardList);
 					//startActivity(intent);
 				} else {
 					// show empty alert
@@ -143,26 +143,26 @@ public class MainMemActivity extends Activity{
 		listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
 				listView));
 		
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view,
-				int position, long id) {
-			if(cardList==null){
-				return;
-			}
-			CardModel cardItem = cardList.get(position);
-			cardID = Integer.parseInt(cardItem.getCardID());
-			Object obj=(Object)cardList.get(position);
-			new GetData(MainMemActivity.this,0).execute("");
-			if(obj instanceof String){
-				return;
-			}
-			Intent intent = new Intent(MainMemActivity.this,
-					MemberDetailActivity.class);
-			intent.putExtra("cardInfo", "info");
-			startActivity(intent);
-		}
-	});
+//		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//		@Override
+//		public void onItemClick(AdapterView<?> parent, View view,
+//				int position, long id) {
+//			if(cardList==null){
+//				return;
+//			}
+//			CardModel cardItem = cardList.get(position);
+//			cardID = Integer.parseInt(cardItem.getCardID());
+//			Object obj=(Object)cardList.get(position);
+//			new GetData(MainMemActivity.this,0).execute("");
+//			if(obj instanceof String){
+//				return;
+//			}
+//			Intent intent = new Intent(MainMemActivity.this,
+//					MemberDetailActivity.class);
+//			intent.putExtra("cardInfo", "info");
+//			startActivity(intent);
+//		}
+//	});
 	}
 }
 
