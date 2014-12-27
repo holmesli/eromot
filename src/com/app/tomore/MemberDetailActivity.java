@@ -1,50 +1,29 @@
 package com.app.tomore;
 
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
-
 import com.app.tomore.beans.CardModel;
-import com.app.tomore.beans.ImageAndTexts;
+import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.CardsParse;
 import com.app.tomore.net.CardsRequest;
+import com.app.tomore.net.ToMoreParse;
 import com.app.tomore.util.TouchImageView;
 import com.google.gson.JsonSyntaxException;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -127,6 +106,81 @@ public class MemberDetailActivity extends Activity {
 
 			}
 		});
+		
+		Button btnSubmit = (Button) getWindow().getDecorView()
+				.findViewById(R.id.btnSubmit);
+		
+		btnSubmit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (cardItem == null) {
+					return;
+				}
+				TouchImageView frontImageView = (TouchImageView) getWindow()
+						.getDecorView().findViewById(R.id.frontViewImg);
+				TouchImageView backImageView = (TouchImageView) getWindow()
+						.getDecorView().findViewById(R.id.backViewImg);
+
+				Button btnFrontEdit = (Button) getWindow().getDecorView()
+						.findViewById(R.id.btnFrontEdit);
+				Button btnBackEdit = (Button) getWindow().getDecorView()
+						.findViewById(R.id.btnBackEdit);
+				Button btnGenerateBarcode = (Button) getWindow().getDecorView()
+						.findViewById(R.id.btnGenerateBarcode);
+				Button btnSubmit = (Button) getWindow().getDecorView()
+						.findViewById(R.id.btnSubmit);
+				EditText editTitle = (EditText) getWindow().getDecorView()
+						.findViewById(R.id.editTitle);
+				EditText editDes = (EditText) getWindow().getDecorView()
+						.findViewById(R.id.editDes);
+				EditText editBarcode = (EditText) getWindow().getDecorView()
+						.findViewById(R.id.editBarcode);
+				TextView barcodeValueLable = (TextView) getWindow()
+						.getDecorView().findViewById(R.id.barcodeValueLable);
+				
+				String cardID, cardTitle, cardBarcode, cardDes;
+				
+				cardID = cardItem.getCardID();
+				cardTitle = editTitle.getText().toString();
+				cardDes = editDes.getText().toString();
+				cardBarcode = editBarcode.getText().toString();
+				
+				//need image uploader
+
+				String result=null;
+				CardsRequest request = new CardsRequest(MemberDetailActivity.this);
+
+					
+					try {
+						Log.d("doInBackground", "start request");
+						result = request.updateCardInfo(cardID, cardTitle, cardBarcode, cardDes);
+						Log.d("doInBackground", "returned");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (TimeoutException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+					CommonModel returnResult = new ToMoreParse().CommonPares(result);
+					//result alert
+					
+			
+			}
+		});
+		
+		
+		final Button btnBack = (Button) rl
+				.findViewById(R.id.bar_title_bt_member);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
+		
 	}
 
 	private class GetData extends AsyncTask<String, String, String> {
