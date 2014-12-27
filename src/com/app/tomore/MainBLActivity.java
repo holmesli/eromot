@@ -3,6 +3,7 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.app.tomore.net.YellowPageParse;
@@ -19,8 +20,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.view.View;
 
+import com.app.tomore.BL.GeneralBLActivity;
 import com.app.tomore.adapters.ImageAndTextListAdapter;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.ImageAndText;
@@ -39,7 +44,8 @@ public class MainBLActivity extends Activity {
 	
 	private void BindDataToGridView()
 	{
-		List<ImageAndText> imageAndTextlist = new ArrayList<ImageAndText>();
+		final List<ImageAndText> imageAndTextlist = new ArrayList<ImageAndText>();
+		int Postion = 0;
 		for(CategoryModel c:cateList)
 		{
 			imageAndTextlist.add(new ImageAndText(c.getImage(),c.getName()));
@@ -47,6 +53,24 @@ public class MainBLActivity extends Activity {
 		GridView gridView = (GridView) findViewById(R.id.gridView);
 		gridView.setAdapter(new ImageAndTextListAdapter(this, imageAndTextlist,
 				gridView));
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+		    @Override
+		    public void onItemClick(AdapterView<?> parent, View view, 
+		            int position, long id) {
+		    	CategoryModel item = cateList.get(position);
+		    	Open_Activity(item.getIconID(),Integer.parseInt(item.getType()));		    	
+		    }
+		});
+	}
+	private void Open_Activity(String BLID, int BLType){
+        Intent intent;
+        if (BLType == 1)
+        {
+	        intent=new Intent();//.setClass(this, GeneralBLActivity.class);
+	        intent.setClassName(this, "com.app.tomore.BL.GeneralBLActivity");
+	        intent.putExtra("BLID",BLID);
+	        startActivityForResult(intent, 100);
+        }
 	}
 
 	private class GetData extends AsyncTask<String, String, String> {

@@ -40,5 +40,7 @@
 	<string name="updated_at">上次更新于%1$s前</string>
 	<string name="updated_just_now">刚刚更新</string>
 	<string name="time_error">时间有问题</string>
-
+	<string name="mandarin">汉</string>
+	<string name="cantonese">粤</string>
+	<string name="english">英</string>
 </resources>

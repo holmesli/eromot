@@ -50,7 +50,8 @@
         <activity android:name=".MainTabsActivity"></activity>
         <activity android:name=".CameroActivity"  > </activity>  
         <activity android:name=".MyCameraActivity"  > </activity>  
-        <activity android:name=".ViewAlbums"  > </activity>  
+        <activity android:name=".ViewAlbums"  > </activity> 
+        <activity android:name="com.app.tomore.BL.GeneralBLActivity"  > </activity>
     </application>
 
 </manifest>
