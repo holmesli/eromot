@@ -14,6 +14,7 @@ import com.app.tomore.beans.ImageAndTexts;
 import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
+import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,9 +24,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MagDetailActivity extends Activity {
@@ -42,7 +45,7 @@ public class MagDetailActivity extends Activity {
 		
 		Intent intent = getIntent();
 		articleItem = (ArticleModel) intent.getSerializableExtra("articleList");
-		
+		BindData();
 		new GetData(MagDetailActivity.this, 1).execute("");
 	}
 	
@@ -95,6 +98,7 @@ public class MagDetailActivity extends Activity {
 				try {
 					//cardList = new CardsParse().parseCardResponse(result);
 					//BindDataToListView();
+					BindData();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
@@ -110,15 +114,25 @@ public class MagDetailActivity extends Activity {
 		}
 	}
 	
-	private void BindDataToListView()
+	private void BindData()
 	{
-		List<ImageAndTexts> imageAndTextlist = new ArrayList<ImageAndTexts>();
-		//for(CardModel c:cardList)
-		{
-		//	imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
-		}
-		ListView listView = (ListView) findViewById(R.id.mag_listviews);
-		//listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
-		//		listView));
+		TextView detailTitle = (TextView) getWindow().getDecorView()
+				.findViewById(R.id.news_title_text);
+		ImageView detailImage = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.news_image);
+		WebView detailWeb = (WebView) getWindow().getDecorView()
+				.findViewById(R.id.news_content_text);
+		
+		detailTitle.setText(articleItem.getArticleTitle());
+		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
+		//detailWeb.sett
+//		List<ImageAndTexts> imageAndTextlist = new ArrayList<ImageAndTexts>();
+//		//for(CardModel c:cardList)
+//		{
+//		//	imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
+//		}
+//		ListView listView = (ListView) findViewById(R.id.mag_listviews);
+//		//listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
+//		//		listView));
 	}
 }
