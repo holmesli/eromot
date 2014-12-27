@@ -52,7 +52,7 @@
         <activity android:name=".MyCameraActivity"  > </activity>  
         <activity android:name=".ViewAlbums"  > </activity>  
         <activity android:name=".MemberDetailActivity"  > </activity> 
-        <activity android:name=".LoginActivity"  > </activity> 
+         <activity android:name=".MagDetailActivity"  > </activity> 
     </application>
 
 </manifest>
