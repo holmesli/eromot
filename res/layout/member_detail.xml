@@ -10,6 +10,7 @@
         android:padding="15dip" >
 
         <include
+            android:id="@+id/bar_title_member_add"
             layout="@layout/bar_title_member_add"
             android:focusable="true" />
 
