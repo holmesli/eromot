@@ -35,7 +35,7 @@
         android:paddingLeft="96.0dip"
         android:paddingRight="96.0dip"
         android:singleLine="true"
-        android:text="@string/bar_title_member_add"
+        android:text="@string/bar_title_member_detail"
         android:textColor="@android:color/white" />
 
     <Button
