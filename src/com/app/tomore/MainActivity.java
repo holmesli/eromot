@@ -87,24 +87,24 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
 				switch (checkedId) {
-				case R.id.main_duoliao://Ìí¼Ó¿¼ÊÔ
+				case R.id.main_duoliao:
 					tabHost.setCurrentTabByTag("多聊");
 					break;
-				case R.id.main_mag://ÎÒµÄ¿¼ÊÔ
+				case R.id.main_mag:
 					tabHost.setCurrentTabByTag("杂志");
 					break;
-				case R.id.main_camero://ÎÒµÄ¿¼ÊÔ
+				case R.id.main_camero:
 					tabHost.setCurrentTabByTag("相机");
 					MainActivity.hideTabs();
 					break;
-				case R.id.main_bianli://ÎÒµÄÍ¨Öª
+				case R.id.main_bianli:
 					tabHost.setCurrentTabByTag("便利");
 					break;
-				case R.id.main_member://ÉèÖÃ
+				case R.id.main_member:
 					tabHost.setCurrentTabByTag("卡包");
 					break;
 				default:
-					//tabHost.setCurrentTabByTag("ÎÒµÄ¿¼ÊÔ");
+					tabHost.setCurrentTabByTag("多聊");
 					break;
 				
 			}

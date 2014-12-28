@@ -97,9 +97,9 @@ public class MainMagActivity extends Activity {
 			String result = null;
 			MagRequest request = new MagRequest(MainMagActivity.this);
 			try {
-				String magId = "";
+				//String magId = "";
 				Log.d("doInBackground", "start request");
-				result = request.getMagById(magId);
+				result = request.getMagById(null);
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
