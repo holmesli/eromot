@@ -120,19 +120,16 @@ public class MagDetailActivity extends Activity {
 				.findViewById(R.id.news_title_text);
 		ImageView detailImage = (ImageView) getWindow().getDecorView()
 				.findViewById(R.id.news_image);
-		WebView detailWeb = (WebView) getWindow().getDecorView()
-				.findViewById(R.id.news_content_text);
+		WebView detailWeb = (WebView)findViewById(R.id.news_content_text);
+
+		detailWeb.getSettings().setJavaScriptEnabled(true);
+
+		detailWeb.loadDataWithBaseURL(null,articleItem.getArticleContent(),
+	    "text/html", "utf-8",null );
 		
 		detailTitle.setText(articleItem.getArticleTitle());
-		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
-		//detailWeb.sett
-//		List<ImageAndTexts> imageAndTextlist = new ArrayList<ImageAndTexts>();
-//		//for(CardModel c:cardList)
-//		{
-//		//	imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
-//		}
-//		ListView listView = (ListView) findViewById(R.id.mag_listviews);
-//		//listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
-//		//		listView));
+		//detailImage.setImageBitmap(articleItem.getArticleLargeImage());
+		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).resize(200, 200).into(detailImage);
+		
 	}
 }

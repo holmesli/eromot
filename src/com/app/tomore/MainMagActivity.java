@@ -157,6 +157,8 @@ public class MainMagActivity extends Activity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Activity activity = (Activity) getContext();
+
+			
 			View rowView = convertView;
 			if (rowView == null) {
 				LayoutInflater inflater = activity.getLayoutInflater();
