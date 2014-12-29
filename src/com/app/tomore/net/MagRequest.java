@@ -29,7 +29,7 @@ public class MagRequest {
 		baseRequest = new BasicHttpClient(url);
         baseRequest.setConnectionTimeout(2000);
         ParameterMap params = baseRequest.newParams()
-                .add("articleIssue", "2");
+                .add("articleIssue", magId);
         HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleByArticleIssue.php", params);
         return httpResponse.getBodyAsString();
 	}

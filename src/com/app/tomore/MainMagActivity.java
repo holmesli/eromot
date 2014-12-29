@@ -97,9 +97,9 @@ public class MainMagActivity extends Activity {
 			String result = null;
 			MagRequest request = new MagRequest(MainMagActivity.this);
 			try {
-				//String magId = "";
+				String magId = "3";
 				Log.d("doInBackground", "start request");
-				result = request.getMagById(null);
+				result = request.getMagById(magId);
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -146,6 +146,7 @@ public class MainMagActivity extends Activity {
 	private class ArticleAdapter extends ArrayAdapter<ArticleModel> {
 
 		private ListView listview;
+		
 
 		public ArticleAdapter(Activity activity, List<ArticleModel> articleList,
 				ListView listview1) {
@@ -158,17 +159,38 @@ public class MainMagActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Activity activity = (Activity) getContext();
 
-			
-			View rowView = convertView;
-			if (rowView == null) {
-				LayoutInflater inflater = activity.getLayoutInflater();
-				rowView = inflater.inflate(R.layout.mag_listview, null);
-			} else {
-				
-			}
 			ArticleModel articleItem = getItem(position);
 			final String imageUrl = articleItem.getArticleSmallImage();
-			ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+			final String imagePosition = articleItem.getImagePosition();
+			ImageView imageView;
+			
+			View rowView = convertView;
+		//if (rowView == null) {
+				
+				
+				
+				if(imagePosition.equals("2"))
+				{
+					LayoutInflater inflater = activity.getLayoutInflater();
+					rowView = inflater.inflate(R.layout.mag_listview, null);
+					
+					
+					
+				}
+				
+				else if(imagePosition.equals("1"))
+				{
+					LayoutInflater inflater = activity.getLayoutInflater();
+					rowView = inflater.inflate(R.layout.mag_largeicon_listview_item, null);
+					
+				}
+				
+				
+		//	} else {
+				
+		//	}
+			
+			imageView = (ImageView) rowView.findViewById(R.id.img);
 			imageView.setTag(imageUrl);
 			ImageLoader.getInstance().loadImage(imageUrl,
 					new SimpleImageLoadingListener() {
@@ -184,12 +206,14 @@ public class MainMagActivity extends Activity {
 					});
 
 			// Set the text on the TextView
+			
 			TextView textViewTitle = (TextView) rowView
 					.findViewById(R.id.info);
 			textViewTitle.setText(articleItem.getArticleTitle());
-
 			return rowView;
 		}
 
 	}
 }
+
+
