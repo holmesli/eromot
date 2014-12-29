@@ -143,21 +143,21 @@ public class MagDetailActivity extends Activity {
 				.findViewById(R.id.news_title_text);
 		TouchImageView detailImage = (TouchImageView)getWindow().getDecorView().findViewById(R.id.news_image);
 		WebView detailWeb = (WebView)findViewById(R.id.news_content_text);
-		VideoView detailView = (VideoView)findViewById(R.id.videoView);
+		//VideoView detailView = (VideoView)findViewById(R.id.videoView);
 		//String video = articleItem.getArticleVideo();
 		String webUrl = articleItem.getArticleContent();
-		Uri uri = Uri.parse(articleItem.getArticleVideo());
+		//Uri uri = Uri.parse(articleItem.getArticleVideo());
 		detailWeb.setWebChromeClient(new WebChromeClient());
 		detailWeb.loadUrl(articleItem.getArticleContent());
 		detailWeb.getSettings().setJavaScriptEnabled(true);
 
-			MediaController videoMediaController = new MediaController(this);
-		    videoMediaController.setMediaPlayer(detailView);
-			detailView.setVideoURI(uri);
-		      detailView.setMediaController(videoMediaController);
-		      detailView.requestFocus();
-		      detailView.start();
-		      super.onStart();
+//			MediaController videoMediaController = new MediaController(this);
+//		    videoMediaController.setMediaPlayer(detailView);
+//			detailView.setVideoURI(uri);
+//		      detailView.setMediaController(videoMediaController);
+//		      detailView.requestFocus();
+//		      detailView.start();
+//		      super.onStart();
 
 		detailWeb.getSettings().setJavaScriptEnabled(true);
 		detailWeb.loadDataWithBaseURL(null,webUrl,
