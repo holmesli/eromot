@@ -5,17 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
-
-import com.app.tomore.adapters.ArticleAdapter;
 import com.app.tomore.beans.ArticleModel;
-import com.app.tomore.beans.CardModel;
-import com.app.tomore.beans.ImageAndText;
-import com.app.tomore.net.CardsParse;
-import com.app.tomore.net.CardsRequest;
 import com.app.tomore.net.MagParse;
 import com.app.tomore.net.MagRequest;
-import com.app.tomore.net.ToMoreHttpRequest;
-import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -37,10 +29,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class MainMagActivity extends Activity {
-	
+
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articleList;
 
@@ -52,6 +43,8 @@ public class MainMagActivity extends Activity {
 		new GetData(MainMagActivity.this, 1).execute("");
 		ListView listView = (ListView) findViewById(R.id.mag_listviews);
 
+		ImageLoader.getInstance().init(
+				ImageLoaderConfiguration.createDefault(this));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -146,50 +139,30 @@ public class MainMagActivity extends Activity {
 	private class ArticleAdapter extends ArrayAdapter<ArticleModel> {
 
 		private ListView listview;
-		
 
-		public ArticleAdapter(Activity activity, List<ArticleModel> articleList,
-				ListView listview1) {
+		public ArticleAdapter(Activity activity,
+				List<ArticleModel> articleList, ListView listview1) {
 			super(activity, 0, articleList);
 			this.listview = listview1;
-			ImageLoader.getInstance().init(
-					ImageLoaderConfiguration.createDefault(activity));
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Activity activity = (Activity) getContext();
-
+			View rowView = convertView;
 			ArticleModel articleItem = getItem(position);
 			final String imageUrl = articleItem.getArticleSmallImage();
 			final String imagePosition = articleItem.getImagePosition();
 			ImageView imageView;
-			
-			View rowView = convertView;
-		//if (rowView == null) {
-				
-				
-				
-				if(imagePosition.equals("2"))
-				{
+			if (convertView == null) {
+				if (imagePosition.equals("2")) {
 					LayoutInflater inflater = activity.getLayoutInflater();
 					rowView = inflater.inflate(R.layout.mag_listview, null);
-					
-					
-					
-				}
-				
-				else if(imagePosition.equals("1"))
-				{
+				} else if (imagePosition.equals("1")) {
 					LayoutInflater inflater = activity.getLayoutInflater();
-					rowView = inflater.inflate(R.layout.mag_largeicon_listview_item, null);
-					
+					rowView = inflater.inflate(
+							R.layout.mag_largeicon_listview_item, null);
 				}
-				
-				
-		//	} else {
-				
-		//	}
-			
+			} 
 			imageView = (ImageView) rowView.findViewById(R.id.img);
 			imageView.setTag(imageUrl);
 			ImageLoader.getInstance().loadImage(imageUrl,
@@ -205,15 +178,10 @@ public class MainMagActivity extends Activity {
 						}
 					});
 
-			// Set the text on the TextView
-			
-			TextView textViewTitle = (TextView) rowView
-					.findViewById(R.id.info);
+			TextView textViewTitle = (TextView) rowView.findViewById(R.id.info);
 			textViewTitle.setText(articleItem.getArticleTitle());
 			return rowView;
 		}
 
 	}
 }
-
-

@@ -65,8 +65,8 @@ public class MainBLActivity extends Activity {
         Intent intent;
         if (BLType == 1)
         {
-	        intent=new Intent();//.setClass(this, GeneralBLActivity.class);
-	        intent.setClassName(this, "com.app.tomore.GeneralBLActivity");
+	        intent = new Intent(MainBLActivity.this,
+	        		GeneralBLActivity.class);
 	        intent.putExtra("BLID",BLID);
 	        startActivityForResult(intent, 100);
         }
