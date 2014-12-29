@@ -56,8 +56,14 @@
         <activity android:name=".MainTabsActivity"></activity>
         <activity android:name=".CameroActivity"  > </activity>  
         <activity android:name=".MyCameraActivity"  > </activity>  
-        <activity android:name=".ViewAlbums"  > </activity> 
-        <activity android:name="com.app.tomore.BL.GeneralBLActivity"  > </activity>
+        <activity android:name=".ViewAlbums"  > </activity>
+        <activity android:name=".LoginActivity"  > </activity>
+        <activity android:name=".RegisterActivity"  > </activity>
+        <activity android:name=".MagDetailActivity"  > </activity>
+        <activity android:name=".GeneralBLActivity"  > </activity>
+        <activity android:name=".GeneralBLDetailActivity"  > </activity>
+        <activity android:name=".MemberAddActivity"  > </activity>
+        <activity android:name=".MemberDetailActivity"  > </activity>
     </application>
 
 </manifest>

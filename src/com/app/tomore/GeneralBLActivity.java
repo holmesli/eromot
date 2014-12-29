@@ -66,8 +66,8 @@ public class GeneralBLActivity extends Activity  {
 	}
 	private void Open_Activity(int position){
         Intent intent;
-	    intent=new Intent();//.setClass(this, GeneralBLActivity.class);
-	    intent.setClassName(this, "com.app.tomore.GeneralBLDetailActivity");
+	    intent= new Intent(GeneralBLActivity.this,
+	    		GeneralBLDetailActivity.class);
 	    intent.putExtra("BLdata",dataList.get(position));
 	    startActivityForResult(intent, 100);
 	}
