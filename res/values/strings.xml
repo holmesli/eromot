@@ -18,6 +18,7 @@
     <string name="toolbox_item_logout">退出</string>
     <string name="bar_title_bt_duoliao">多聊</string>
     <string name="bar_title_bt_duoyao">多摇</string>
+    <string name="bar_title_member_detail">我的卡片</string>
     <string name="bar_title_meg">杂志</string>
     <string name="bar_title_member">会员卡</string>
     <string name="bar_title_add">添加</string>
@@ -64,6 +65,12 @@
     <string name="login_title">登陆</string>
     <string name="register">注册</string>
     <string name="back">返回</string>
+     <string name="member_barcode_hint">输入条形码</string>
+    <string name="member_title_hint">输入卡片名字</string>
+    <string name="member_des_hint">输入卡片描述</string>
+    <string name="member_edit">编辑</string>
+    <string name="member_submit">提交</string>
+    <string name="member_generate_barcode">生成条形码</string>
 
     <color name="login_background_color">#3191dd</color>
     <color name="login_button_color">#0b52c4</color>
@@ -71,7 +78,12 @@
     <color name="register_button_color">#5191ff</color>
     <color name="black">#000000</color>
     <color name="grey">#ffffff</color>
-     
+    <string name="lastUpdateTime">最近更新：%s</string>
+    <string name="load_full">已加载全部</string>
+    <string name="no_data">暂无数据</string>
+    <string name="more">加载中</string>
+    <!-- 消除警告，可忽略 -->
+    <string name="d">图片描述</string>
 
     <string-array name="schoolArray">
         <item>Sports</item>
