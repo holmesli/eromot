@@ -36,7 +36,6 @@
         android:icon="@drawable/tomorelogo"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
-        
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -74,7 +73,12 @@
         </activity>
         <activity android:name=".RegisterActivity" >
         </activity>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MagDetailActivity" >
+        </activity>
+        <activity android:name=".SpaceImageDetailActivity" >
+        </activity>
+        <activity android:name=".MemberAddActivity" >
         </activity>
     </application>
 

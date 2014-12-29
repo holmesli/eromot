@@ -32,6 +32,24 @@
     <string name="loading">loading</string>
     <string name="network_failure">network_failure</string>
     <string name="cancel">Cancel</string>
+    <string name="login_email">邮箱/电话</string>
+    <string name="login_password">密码</string>
+    <string name="login_button">登陆</string>
+    <string name="submit">提交</string>
+    <string name="register_email">邮箱，必填</string>
+    <string name="register_user_name">用户名，必填</string>
+    <string name="register_password_notice">注册后不可更改，3~20位字符，可包含英文、数字和“_”</string>
+    <string name="register_password">密码，必填</string>
+    <string name="register_confirm_password">确认密码，必填</string>
+    <string name="register_school_notice">请填写您在读或毕业院校</string>
+    <string name="register_school">学校</string>
+    <string name="register_major_notice">您的相关专业</string>
+    <string name="register_major">专业</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="agreement">隐私协议和服务条款</string>
+    <string name="pull_to_refresh">下拉可以刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
     <string name="refreshing">正在刷新…</string>
     <string name="not_updated_yet">暂未更新过</string>
     <string name="updated_at">上次更新于%1$s前</string>
@@ -41,28 +59,25 @@
     <string name="member_title">标题</string>
     <string name="member_tomore_card">多点卡</string>
     <string name="member_des">描述</string>
-    <string name="bar_title_member_detail">我的卡片</string>
+    <string name="bar_title_member_add">添加卡片</string>
     <string name="bar_title_member_back">会员卡</string>
-    <string name="member_barcode_hint">输入条形码</string>
-    <string name="member_title_hint">输入卡片名字</string>
-    <string name="member_des_hint">输入卡片描述</string>
-    <string name="member_edit">编辑</string>
-    <string name="member_submit">提交</string>
-    <string name="member_generate_barcode">生成条形码</string>
-    <!-- 自定义组件 -->
-    <string name="pull_to_refresh">下拉可以刷新</string>
-    <string name="release_to_refresh">松开可以刷新</string>
-    <string name="lastUpdateTime">最近更新：%s</string>
-    <string name="load_full">已加载全部</string>
-    <string name="no_data">暂无数据</string>
-    <string name="more">加载中</string>
-    <!-- 消除警告，可忽略 -->
-    <string name="d">图片描述</string>
-    <string name="login_email">邮箱/电话</string>
-    <string name="login_password">密码</string>
-    <string name="login_button">登陆</string>
+    <string name="login_title">登陆</string>
+    <string name="register">注册</string>
+    <string name="back">返回</string>
+
     <color name="login_background_color">#3191dd</color>
-	<color name="login_button_color">#0b52c4</color>
-    
+    <color name="login_button_color">#0b52c4</color>
+    <color name="register_background_color">#f7f7f7</color>
+    <color name="register_button_color">#5191ff</color>
+    <color name="black">#000000</color>
+    <color name="grey">#ffffff</color>
+     
+
+    <string-array name="schoolArray">
+        <item>Sports</item>
+        <item>Entertainment</item>
+    </string-array>
+
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
