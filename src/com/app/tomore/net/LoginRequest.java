@@ -18,10 +18,10 @@ public class LoginRequest {
 	}
 
 	/*
-	 * get all BL Categories
+	 * send login info
 	 * 
 	 */
-	//http://54.213.167.5/APIV2/getIcons.php
+	//http://54.213.167.5/APIV2/Login.php
 	public String getLoginResponse(String email, String password)
 			throws IOException, TimeoutException {
 		baseRequest = new BasicHttpClient(url);

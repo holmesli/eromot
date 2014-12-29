@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/register_background_color" >
+    
+<RelativeLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/black" >
+        
+        <Button
+            android:id="@+id/btnTitleRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/grey"
+            android:background="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/back" 
+            android:onClick="onBackClick"/>
+
+        <TextView
+            android:id="@+id/tvTitleName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="25sp"
+            android:textColor="@color/grey"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/register" />
+
+    </RelativeLayout>
+    
+    <EditText
+        android:id="@+id/etRegisterEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rlTitle"
+        android:ems="10"
+        android:inputType="textEmailAddress" 
+        android:hint="@string/register_email"
+        android:textColor="@color/black" >
+
+        <requestFocus />
+        </EditText>
+    
+    <EditText
+        android:id="@+id/etRegisterUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etRegisterEmail"
+        android:layout_alignRight="@+id/etRegisterEmail"
+        android:layout_below="@+id/etRegisterEmail"
+        android:ems="10"         
+        android:hint="@string/register_user_name"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/evRegisterPasswordNotice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etRegisterUserName"
+        android:layout_alignRight="@+id/etRegisterUserName"
+        android:layout_below="@+id/etRegisterUserName"
+        android:text="@string/register_password_notice"
+        android:textColor="@color/black" />
+    
+    <EditText
+        android:id="@+id/etRegisterPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/evRegisterPasswordNotice"
+        android:layout_alignRight="@+id/evRegisterPasswordNotice"
+        android:layout_below="@+id/evRegisterPasswordNotice"
+        android:ems="10"
+        android:inputType="textPassword" 
+        android:hint="@string/register_password" 
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/etRegisterConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etRegisterPassword"
+        android:layout_alignRight="@+id/etRegisterPassword"
+        android:layout_below="@+id/etRegisterPassword"
+        android:ems="10"
+        android:inputType="textPassword" 
+        android:hint="@string/register_confirm_password" 
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/evRegisterSchoolNotice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etRegisterConfirmPassword"
+        android:layout_alignRight="@+id/etRegisterConfirmPassword"
+        android:layout_below="@+id/etRegisterConfirmPassword"
+        android:text="@string/register_school_notice"
+        android:textColor="@color/black" />
+
+    <Spinner
+        android:id="@+id/spRegisterSchool"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/evRegisterSchoolNotice"
+        android:hint="@string/register_school" />
+    
+    <TextView
+        android:id="@+id/evRegisterMajorNotice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spRegisterSchool"
+        android:layout_alignRight="@+id/spRegisterSchool"
+        android:layout_below="@+id/spRegisterSchool"
+        android:text="@string/register_major_notice"
+        android:textColor="@color/black" />
+    
+    <EditText
+        android:id="@+id/etRegisterMajor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/evRegisterMajorNotice"
+        android:layout_alignRight="@+id/evRegisterMajorNotice"
+        android:layout_below="@+id/evRegisterMajorNotice"
+        android:ems="10"
+        android:hint="@string/register_major" 
+        android:textColor="@color/black" />
+    
+    <RadioGroup
+        android:id="@+id/rgRegisterGenderGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etRegisterMajor"
+        android:layout_alignLeft="@+id/etRegisterMajor"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rbRegisterMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/male" 
+            android:onClick="onRadioButtonClicked"
+            android:textColor="@color/black" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female" 
+            android:onClick="onRadioButtonClicked"
+            android:textColor="@color/black" />
+    </RadioGroup>
+    
+    <CheckBox
+        android:id="@+id/cbAgreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/rgRegisterGenderGroup"
+        android:layout_alignBottom="@+id/rgRegisterGenderGroup"
+        android:layout_alignParentRight="true"
+        android:text="@string/agreement"
+        android:onClick="onCheckedClick"
+        android:textColor="@color/black" />
+    
+    <Button
+        android:id="@+id/btSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:textSize="20sp"
+        android:layout_alignLeft="@+id/etRegisterMajor"
+        android:layout_alignRight="@+id/etRegisterMajor"
+        android:layout_below="@+id/rgRegisterGenderGroup"
+        android:text="@string/submit"
+        android:onClick="onRegisterClick"
+        android:background="@color/register_button_color" />
+    
+</RelativeLayout>

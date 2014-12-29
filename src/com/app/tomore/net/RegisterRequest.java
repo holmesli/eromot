@@ -9,28 +9,30 @@ import com.app.tomore.httpclient.BasicHttpClient;
 import com.app.tomore.httpclient.HttpResponse;
 import com.app.tomore.httpclient.ParameterMap;
 
-public class MagRequest {
-	
+public class RegisterRequest {
 	private final String url = "http://54.213.167.5/";
-
 	protected Context mContext;
-
 	private BasicHttpClient baseRequest;
-	public MagRequest(Context context) {
+	public RegisterRequest(Context context) {
 		mContext = context;
 	}
-	
 	/*
-	 * //get all magazines by id
+	 * send register info
+	 * 
 	 */
-	//http://54.213.167.5/APIV2/getArticleByArticleIssue.php?articleIssue=1
-	public String getMagById(String magId)
+	//http://54.213.167.5/APIV2/register.php
+	public String getLoginResponse(String email, String userName, String password, String school, String major, String gender)
 			throws IOException, TimeoutException {
 		baseRequest = new BasicHttpClient(url);
         baseRequest.setConnectionTimeout(2000);
         ParameterMap params = baseRequest.newParams()
-                .add("articleIssue", "2");
-        HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleByArticleIssue.php", params);
+                .add("email", email)
+                .add("accountName", userName)
+                .add("password", password)
+                .add("school", password)
+                .add("major", major)
+                .add("gender", gender);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/register.php", params);
         return httpResponse.getBodyAsString();
 	}
 }

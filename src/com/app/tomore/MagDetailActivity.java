@@ -13,23 +13,31 @@ import com.app.tomore.beans.ImageAndText;
 import com.app.tomore.beans.ImageAndTexts;
 import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
+import com.app.tomore.util.TouchImageView;
 import com.google.gson.JsonSyntaxException;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.VideoView;
 
 public class MagDetailActivity extends Activity {
 
@@ -118,21 +126,38 @@ public class MagDetailActivity extends Activity {
 	{
 		TextView detailTitle = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.news_title_text);
-		ImageView detailImage = (ImageView) getWindow().getDecorView()
-				.findViewById(R.id.news_image);
-		WebView detailWeb = (WebView) getWindow().getDecorView()
-				.findViewById(R.id.news_content_text);
-		
-		detailTitle.setText(articleItem.getArticleTitle());
-		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
-		//detailWeb.sett
-//		List<ImageAndTexts> imageAndTextlist = new ArrayList<ImageAndTexts>();
-//		//for(CardModel c:cardList)
+		TouchImageView detailImage = (TouchImageView)getWindow().getDecorView().findViewById(R.id.news_image);
+		WebView detailWeb = (WebView)findViewById(R.id.news_content_text);
+		VideoView detailView = (VideoView)findViewById(R.id.videoView);
+		String video = articleItem.getArticleVideo();
+		String webUrl = articleItem.getArticleContent();
+		Uri uri = Uri.parse(articleItem.getArticleVideo());
+		detailWeb.setWebChromeClient(new WebChromeClient());
+		detailWeb.loadUrl(articleItem.getArticleContent());
+		detailWeb.getSettings().setJavaScriptEnabled(true);
+//		if(articleItem.getArticleVideo()==null)
 //		{
-//		//	imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
+//			detailView.setVisibility(View.INVISIBLE);
 //		}
-//		ListView listView = (ListView) findViewById(R.id.mag_listviews);
-//		//listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
-//		//		listView));
+//		else
+//		{
+//			detailView.setVisibility(View.VISIBLE);
+			MediaController videoMediaController = new MediaController(this);
+			detailView.setVideoPath(video);
+		    videoMediaController.setMediaPlayer(detailView);
+			//detailView.setVideoURI(uri);
+		      detailView.setMediaController(videoMediaController);
+		      detailView.requestFocus();
+		      detailView.start();
+//		}
+		//detailWeb.addJavascriptInterface(new JavascriptInterface(mContext),"imagelistner");
+		detailWeb.getSettings().setJavaScriptEnabled(true);
+		detailWeb.loadDataWithBaseURL(null,webUrl,
+	    "text/html", "utf-8",null );
+		detailWeb.setWebChromeClient(new WebChromeClient()); 
+		detailTitle.setText(articleItem.getArticleTitle());
+
+		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
+		
 	}
 }

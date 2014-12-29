@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.net.CardsParse;
 import com.app.tomore.net.CardsRequest;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class MainMemActivity extends Activity {
 
 	private DialogActivity dialog;
 	private ArrayList<CardModel> cardList;
+	private ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class MainMemActivity extends Activity {
 		setContentView(R.layout.main_member_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainMemActivity.this, 1).execute("");
-		ListView listView = (ListView) findViewById(R.id.member_listview);
+		listView = (ListView)findViewById(R.id.member_listview);
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -62,6 +65,7 @@ public class MainMemActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
 	}
 
 	private class GetData extends AsyncTask<String, String, String> {
@@ -133,7 +137,7 @@ public class MainMemActivity extends Activity {
 	}
 
 	private void BindDataToListView() {
-		ListView listView = (ListView) findViewById(R.id.member_listview);
+		listView = (ListView)findViewById(R.id.member_listview);
 		listView.setAdapter(new MemberAdapter(this, cardList, listView));
 	}
 
@@ -196,5 +200,111 @@ public class MainMemActivity extends Activity {
 			return rowView;
 		}
 
+	}
+	
+	private class LoadMoreDataTask extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+
+			if (isCancelled()) {
+				return null;
+			}
+
+			// Simulates a background task
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+
+			//for (int i = 0; i < mNames.length; i++)
+			//	mListItems.add(mNames[i]);
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+		//	mListItems.add("Added after load more");
+
+			// We need notify the adapter that the data have been changed
+		//	((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+
+			// Call onLoadMoreComplete when the LoadMore task, has finished
+		//	((PullAndLoadListView) getListView()).onLoadMoreComplete();
+
+			super.onPostExecute(result);
+		}
+
+		@Override
+		protected void onCancelled() {
+			// Notify the loading more operation has finished
+		//	((PullAndLoadListView) getListView()).onLoadMoreComplete();
+		}
+	}
+
+	private class PullToRefreshDataTask extends AsyncTask<String, String, String> {
+		
+		@Override
+		protected String doInBackground(String... params) {
+			String result = null;
+			CardsRequest request = new CardsRequest(MainMemActivity.this);
+			
+			if (isCancelled()) {
+				return null;
+			}
+			
+			try {
+				String memberID = "34";
+				String limit = "5";
+				String page = "1";
+				Log.d("doInBackground", "start request");
+				result = request.getCardByMemberID(memberID, limit, page);
+				Log.d("doInBackground", "returned");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		
+		@Override
+		protected void onPostExecute(String result) {
+			if (null != dialog) {
+				dialog.dismiss();
+			}
+			Log.d("onPostExecute", "postExec state");
+			if (result == null || result.equals("")) {
+				// show empty alert
+			} else {
+				cardList = new ArrayList<CardModel>();
+				try {
+					cardList = new CardsParse().parseCardResponse(result);
+					BindDataToListView();
+					//((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+					//(listView).onRefreshComplete();
+					super.onPostExecute(result);
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+				if (cardList != null) {
+					Intent intent = new Intent(MainMemActivity.this,
+							MyCameraActivity.class); // fake redirect..
+					intent.putExtra("cardList", (Serializable) cardList);
+					// startActivity(intent);
+				} else {
+					// show empty alert
+				}
+			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			// Notify the loading more operation has finished
+			//(listView).onLoadMoreComplete();
+		}
 	}
 }
