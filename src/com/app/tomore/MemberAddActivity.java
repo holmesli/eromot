@@ -33,10 +33,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MemberDetailActivity extends Activity {
+public class MemberAddActivity extends Activity {
 
 	private DialogActivity dialog;
-	private CardModel cardItem;
+	private String memberID;
 	private ImageView frontImageView;
 	private ImageView backImageView;
 	private ImageView barcodeImageView;
@@ -58,7 +58,7 @@ public class MemberDetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
-		cardItem = (CardModel) intent.getSerializableExtra("cardList");
+		memberID = intent.getStringExtra("memberID");
 		setContentView(R.layout.member_detail);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 
@@ -92,99 +92,30 @@ public class MemberDetailActivity extends Activity {
 		desLable = (TextView) getWindow().getDecorView().findViewById(
 				R.id.desLable);
 		
-		RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
-				.findViewById(R.id.bar_title_member_add);
-		
-		btnEdit = (Button) rl.findViewById(R.id.bar_title_bt_edit);
-		
-		try {
-			bitmap = encodeAsBitmap(cardItem.getCardBarcode(),
-					BarcodeFormat.CODE_128, 600, 250);
-			barcodeImageView.setImageBitmap(bitmap);
-		} catch (WriterException e) {
-			e.printStackTrace();
-		}
-		BindData();
-		new GetData(MemberDetailActivity.this, 1).execute("");		
-
-		btnEdit.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (cardItem == null) {
-					return;
-				}
-
-				if (btnEdit.getText().equals("取消")) {
-
-					btnFrontEdit.setVisibility(View.INVISIBLE);
-					btnBackEdit.setVisibility(View.INVISIBLE);
-					btnGenerateBarcode.setVisibility(View.INVISIBLE);
-					btnSubmit.setVisibility(View.INVISIBLE);
-
-					if (cardItem.getCardType().equals("1")) {
-						editTitle.setVisibility(View.INVISIBLE);
-						editDes.setVisibility(View.INVISIBLE);
-						editBarcode.setVisibility(View.INVISIBLE);
-						titleLable.setVisibility(View.INVISIBLE);
-						desLable.setVisibility(View.INVISIBLE);
-						barcodeLable.setVisibility(View.INVISIBLE);
-					}
-
-					editTitle.setEnabled(false);
-					editDes.setEnabled(false);
-					editBarcode.setEnabled(false);
-
-					btnEdit.setText("编辑");
-					return;
-				} else {
-
-					btnFrontEdit.setVisibility(View.VISIBLE);
-					btnBackEdit.setVisibility(View.VISIBLE);
-					btnGenerateBarcode.setVisibility(View.VISIBLE);
-					btnSubmit.setVisibility(View.VISIBLE);
-
-					
-					editTitle.setVisibility(View.VISIBLE);
-					editDes.setVisibility(View.VISIBLE);
-					editBarcode.setVisibility(View.VISIBLE);
-					titleLable.setVisibility(View.VISIBLE);
-					desLable.setVisibility(View.VISIBLE);
-					barcodeLable.setVisibility(View.VISIBLE);
-
-					editTitle.setEnabled(true);
-					editDes.setEnabled(true);
-					editBarcode.setEnabled(true);
-
-					btnEdit.setText("取消");
-				}
-
-			}
-		});
-
 		btnSubmit.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (cardItem == null) {
+				if (memberID == null) {
 					return;
 				}
 
-				String cardID, cardTitle, cardBarcode, cardDes;
+				String  cardTitle, cardBarcode, cardDes, cardType;
 
-				cardID = cardItem.getCardID();
 				cardTitle = editTitle.getText().toString();
 				cardDes = editDes.getText().toString();
 				cardBarcode = editBarcode.getText().toString();
+				cardType = "1";
 
 				// need image uploader
 
 				String result = null;
 				CardsRequest request = new CardsRequest(
-						MemberDetailActivity.this);
+						MemberAddActivity.this);
 
 				try {
 					Log.d("doInBackground", "start request");
-					result = request.updateCardInfo(cardID, cardTitle,
-							cardBarcode, cardDes);
+					result = request.uploadCard(cardTitle,
+							cardBarcode, cardDes, cardType, memberID);
 					Log.d("doInBackground", "returned");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -200,61 +131,7 @@ public class MemberDetailActivity extends Activity {
 
 			}
 		});
-
-		final Button btnBack = (Button) rl
-				.findViewById(R.id.bar_title_bt_member);
-
-		btnBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				finish();
-			}
-		});
-
-		frontImageView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				// loadPhoto(frontImageView,200,200);
-				Intent intent = new Intent(MemberDetailActivity.this,
-						SpaceImageDetailActivity.class);
-				// intent.putExtra("images", (ArrayList<String>) datas);
-				// intent.putExtra("position", position);
-				int[] location = new int[2];
-				frontImageView.getLocationOnScreen(location);
-				intent.putExtra("locationX", location[0]);
-				intent.putExtra("locationY", location[1]);
-
-				intent.putExtra("Url", cardItem.getFrontViewImage());
-
-				intent.putExtra("width", frontImageView.getWidth());
-				intent.putExtra("height", frontImageView.getHeight());
-				startActivity(intent);
-				overridePendingTransition(0, 0);
-			}
-		});
-
-		backImageView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				// loadPhoto(frontImageView,200,200);
-				Intent intent = new Intent(MemberDetailActivity.this,
-						SpaceImageDetailActivity.class);
-				// intent.putExtra("images", (ArrayList<String>) datas);
-				// intent.putExtra("position", position);
-				int[] location = new int[2];
-				frontImageView.getLocationOnScreen(location);
-				intent.putExtra("locationX", location[0]);
-				intent.putExtra("locationY", location[1]);
-
-				intent.putExtra("Url", cardItem.getBackViewImage());
-
-				intent.putExtra("width", backImageView.getWidth());
-				intent.putExtra("height", backImageView.getHeight());
-				startActivity(intent);
-				overridePendingTransition(0, 0);
-			}
-		});
-
+		
 		btnGenerateBarcode.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -269,6 +146,7 @@ public class MemberDetailActivity extends Activity {
 				}
 			}
 		});
+	
 
 	}
 
@@ -297,7 +175,6 @@ public class MemberDetailActivity extends Activity {
 			String result = null;
 			// try {
 			Log.d("doInBackground", "start request");
-
 			Log.d("doInBackground", "returned");
 			// }
 			// catch (IOException e) {
@@ -325,7 +202,7 @@ public class MemberDetailActivity extends Activity {
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
-				if (cardItem != null) {
+				if (memberID != null) {
 					// Intent intent = new Intent(MemberDetailActivity.this,
 					// MyCameraActivity.class); // fake redirect..
 					// intent.putExtra("cardList", (Serializable) cardList);
@@ -337,94 +214,7 @@ public class MemberDetailActivity extends Activity {
 		}
 	}
 
-	private void BindData() {
 
-		// Picasso.with(MemberDetailActivity.this)
-		// .load(cardItem.getFrontViewImage()).resize(550, 280)
-		// .into(frontImageView);
-		// Picasso.with(MemberDetailActivity.this)
-		// .load(cardItem.getBackViewImage()).resize(550, 280)
-		// .into(backImageView);
-
-		final String frontImageUrl = cardItem.getFrontViewImage();
-		frontImageView.setTag(frontImageUrl);
-		ImageLoader.getInstance().loadImage(frontImageUrl,
-				new SimpleImageLoadingListener() {
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-						ImageView imageViewByTag = (ImageView) getWindow()
-								.getDecorView().findViewWithTag(imageUri);
-						if (imageViewByTag != null) {
-							// imageViewByTag.setImageBitmap(loadedImage);
-
-							int bwidth = loadedImage.getWidth();
-							int bheight = loadedImage.getHeight();
-							int swidth = imageViewByTag.getWidth();
-							int sheight = imageViewByTag.getHeight();
-							int new_width = swidth;
-							int new_height = (int) Math.floor((double) bheight
-									* ((double) new_width / (double) bwidth));
-							Bitmap newbitMap = Bitmap.createScaledBitmap(
-									loadedImage, new_width, new_height, true);
-							imageViewByTag.setImageBitmap(newbitMap);
-						}
-					}
-				});
-
-		final String backImageUrl = cardItem.getBackViewImage();
-		backImageView.setTag(backImageUrl);
-		ImageLoader.getInstance().loadImage(backImageUrl,
-				new SimpleImageLoadingListener() {
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-						ImageView imageViewByTag = (ImageView) getWindow()
-								.getDecorView().findViewWithTag(imageUri);
-						if (imageViewByTag != null) {
-							// imageViewByTag.setImageBitmap(loadedImage);
-
-							int bwidth = loadedImage.getWidth();
-							int bheight = loadedImage.getHeight();
-							int swidth = imageViewByTag.getWidth();
-							int sheight = imageViewByTag.getHeight();
-							int new_width = swidth;
-							int new_height = (int) Math.floor((double) bheight
-									* ((double) new_width / (double) bwidth));
-							Bitmap newbitMap = Bitmap.createScaledBitmap(
-									loadedImage, new_width, new_height, true);
-							imageViewByTag.setImageBitmap(newbitMap);
-						}
-					}
-				});
-
-		btnFrontEdit.setVisibility(View.INVISIBLE);
-		btnBackEdit.setVisibility(View.INVISIBLE);
-		btnGenerateBarcode.setVisibility(View.INVISIBLE);
-		btnSubmit.setVisibility(View.INVISIBLE);
-
-		editTitle.setText(cardItem.getCardTitle());
-		editTitle.setEnabled(false);
-		editDes.setText(cardItem.getCardDes());
-		editDes.setEnabled(false);
-		editBarcode.setText(cardItem.getCardBarcode());
-		editBarcode.setEnabled(false);
-		barcodeValueLable.setText(cardItem.getCardBarcode());
-
-		if (cardItem.getCardType().equals("1")) {
-			editTitle.setVisibility(View.INVISIBLE);
-			editDes.setVisibility(View.INVISIBLE);
-			editBarcode.setVisibility(View.INVISIBLE);
-			titleLable.setVisibility(View.INVISIBLE);
-			desLable.setVisibility(View.INVISIBLE);
-			barcodeLable.setVisibility(View.INVISIBLE);
-		}
-		else if(cardItem.getCardType().equals("0"))
-		{
-			btnEdit.setVisibility(View.INVISIBLE);
-		}
-
-	}
 
 	/**************************************************************
 	 * getting from com.google.zxing.client.android.encode.QRCodeEncoder

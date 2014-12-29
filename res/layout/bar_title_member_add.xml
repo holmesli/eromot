@@ -17,13 +17,13 @@
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/background_gradient"
         android:paddingBottom="2dp"
         android:paddingTop="4dp"
         android:tag="1"
         android:text="@string/bar_title_member_back"
         android:textColor="@android:color/white"
-        android:textSize="13sp"
-        android:background="@drawable/background_gradient" />
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/btMember"
@@ -35,6 +35,21 @@
         android:paddingLeft="96.0dip"
         android:paddingRight="96.0dip"
         android:singleLine="true"
-        android:text="@string/bar_title_member_add" />
+        android:text="@string/bar_title_member_detail"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/bar_title_bt_edit"
+        android:layout_width="63dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_gradient"
+        android:paddingBottom="2dp"
+        android:paddingTop="4dp"
+        android:tag="2"
+        android:text="@string/member_edit"
+        android:textColor="@android:color/white"
+        android:textSize="13sp" />
 
 </RelativeLayout>
