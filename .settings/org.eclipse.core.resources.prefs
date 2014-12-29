@@ -1,5 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/com/app/tomore/MainActivity.java=UTF-8
-encoding//src/com/app/tomore/MainMemActivity.java=UTF-8
+encoding//src/com/app/tomore/MemberAddActivity.java=UTF-8
 encoding//src/com/app/tomore/MemberDetailActivity.java=UTF-8
 encoding//src/com/app/tomore/MySurfaceView.java=UTF-8
+encoding//src/com/app/tomore/utils/AndroidShare.java=UTF-8
+encoding//src/com/uit/pullrefresh/base/PullRefreshBase.java=UTF-8
+encoding//src/com/uit/pullrefresh/scroller/RefreshLayoutBase.java=UTF-8
+encoding//src/com/uit/pullrefresh/scroller/impl/RefreshSlideDeleteListView.java=UTF-8
+encoding//src/com/uit/pullrefresh/swipe/RefreshLayout.java=UTF-8
