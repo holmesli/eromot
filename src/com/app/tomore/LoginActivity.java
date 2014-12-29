@@ -43,6 +43,11 @@ public class LoginActivity extends Activity{
 		new Login(LoginActivity.this, 1).execute("");
 	}
 	
+	public void onRegisterClick(View view){				
+    	Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+		startActivity(intent);   		
+	}
+	
 	private class Login extends AsyncTask<String, String, String> {
 		private int mType;
 
@@ -61,6 +66,7 @@ public class LoginActivity extends Activity{
 			}
 			super.onPreExecute();
 		}
+		
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
@@ -85,19 +91,18 @@ public class LoginActivity extends Activity{
 			}
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-		    	Toast.makeText(getApplicationContext(), "Please enter valided email and password!",
+		    	Toast.makeText(getApplicationContext(), "请输入有效的邮箱和密码",
 						Toast.LENGTH_SHORT).show();
 			}else {
 				Gson gson = new Gson();
 				JsonElement jelement = new JsonParser().parse(result);
 			    JsonObject  jobject = jelement.getAsJsonObject();
 			    String loninResult = jobject.get("result").toString();
-			    System.out.println("loninResult: " + loninResult);
 			    if(loninResult.equals("\"succ\"")){					
 			    	Intent intent = new Intent(LoginActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   
 			    }else {
-			    	Toast.makeText(getApplicationContext(), "Please enter valided email and password!!",
+			    	Toast.makeText(getApplicationContext(), "请输入有效的邮箱和密码",
 							Toast.LENGTH_SHORT).show();
 			    }
 			}
