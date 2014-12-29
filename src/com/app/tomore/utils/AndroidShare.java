@@ -41,7 +41,7 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 	private LinearLayout mLayout;
 	private GridView mGridView;
 	private float mDensity;
-	private String msgText = "鍒嗕韩浜�..鍝堝搱";
+	private String msgText = "";
 	private String mImgPath;
 	private int mScreenOrientation;
 	private List<ShareItem> mListData;
@@ -108,19 +108,16 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 		dm = context.getResources().getDisplayMetrics();
 		this.mDensity = dm.density;
 		this.mListData = new ArrayList<ShareItem>();
-		this.mListData.add(new ShareItem("微信", R.drawable.logo_wechat,
-				"com.tencent.mm.ui.tools.ShareImgUI", "com.tencent.mm"));
-		this.mListData.add(new ShareItem("朋友圈", R.drawable.logo_wechatmoments,
-				"com.tencent.mm.ui.tools.ShareToTimeLineUI", "com.tencent.mm"));
+		
 		this.mListData.add(new ShareItem("qq", R.drawable.logo_qq,
 				"com.tencent.mobileqq.activity.JumpActivity","com.tencent.mobileqq"));
-//		this.mListData.add(new ShareItem("qq控件", R.drawable.logo_qzone,
+//		this.mListData.add(new ShareItem("qq鎺т欢", R.drawable.logo_qzone,
 //				"com.qzone.ui.operation.QZonePublishMoodActivity","com.qzone"));
-		this.mListData.add(new ShareItem("新浪微博", R.drawable.logo_sinaweibo,
+		this.mListData.add(new ShareItem("鏂版氮寰崥", R.drawable.logo_sinaweibo,
 				"com.sina.weibo.EditActivity", "com.sina.weibo"));
-//		this.mListData.add(new ShareItem("腾讯微博", R.drawable.logo_tencentweibo,
+//		this.mListData.add(new ShareItem("鑵捐寰崥", R.drawable.logo_tencentweibo,
 //				"com.tencent.WBlog.intentproxy.TencentWeiboIntent","com.tencent.WBlog"));
-//		this.mListData.add(new ShareItem("鍏朵粬", R.drawable.logo_other,
+//		this.mListData.add(new ShareItem("閸忔湹绮�, R.drawable.logo_other,
 //				"",""));
 
 		this.mLayout = new LinearLayout(context);
@@ -211,13 +208,13 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		ShareItem share = (ShareItem) this.mListData.get(position);
-		shareMsg(getContext(), "鍒嗕韩鍒�..", this.msgText, this.mImgPath, share);
+		shareMsg(getContext(), "閸掑棔闊╅崚锟�.", this.msgText, this.mImgPath, share);
 	}
 
 	private void shareMsg(Context context, String msgTitle, String msgText,
 			String imgPath, ShareItem share) {
 		if (!share.packageName.isEmpty() && !isAvilible(getContext(), share.packageName)) {
-			Toast.makeText(getContext(), "分享到" + share.title, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "鍒嗕韩鍒邦棖" + share.title, Toast.LENGTH_SHORT).show();
 			return;
 		}
 
