@@ -86,8 +86,53 @@
     <string name="d">图片描述</string>
 
     <string-array name="schoolArray">
-        <item>Sports</item>
-        <item>Entertainment</item>
+        <item>Brock University</item>
+        <item>Carleton University</item>
+        <item>College Dominicain</item>
+        <item>College of New Caledonia</item>
+        <item>Charles Sturt University</item>
+        <item>Dominican University College</item>
+        <item>Lakehead University</item>
+        <item>Laurentian University</item>
+        <item>Algoma University College</item>
+        <item>Huntington University</item>
+        <item>Thorneloe University</item>
+        <item>Université de Hearst</item>
+        <item>University of Sudbury</item>
+        <item>McMaster University</item>
+        <item>Nipissing University</item>
+        <item>Ontario College of Art and Design</item>
+        <item>Queen's University</item>
+        <item>Royal Military College of Canada</item>
+        <item>Ryerson University</item>
+        <item>Trent University</item>
+        <item>University of Guelph</item>
+        <item>University of Guelph</item>
+        <item>University of Ontario Institute of Technology</item>
+        <item>University of Ottawa</item>
+        <item>Saint Paul University</item>
+        <item>University of Toronto</item>
+        <item>U of T at Mississauga</item>
+        <item>U of T at Scarborough</item>
+        <item>Ontario Institute for Studies in Education</item>
+        <item>St. Michael's College</item>
+        <item>Trinity College</item>
+        <item>Victoria University</item>
+        <item>University of Waterloo</item>
+        <item>Renison College</item>
+        <item>St. Jerome's University</item>
+        <item>St. Paul's United College</item>
+        <item>University of Western Ontario</item>
+        <item>Brescia College</item>
+        <item>Huron College</item>
+        <item>King's University College</item>
+        <item>University of Windsor</item>
+        <item>Assumption University</item>
+        <item>Wilfrid Laurier University</item>
+        <item>Waterloo Lutheran Seminary</item>
+        <item>York University</item>
+        <item>Glendon College</item>
+        <item>其它</item>
     </string-array>
 
     <string name="title_activity_login">LoginActivity</string>
