@@ -87,7 +87,17 @@
     <string name="register">注册</string>
     <string name="back">返回</string>
 
-
+    <string name="servicelanuage"></string>
+    <string name="contact"></string>
+    <string name="detailinfo"></string>
+    <string name="addressinfo"></string>
+    <string name="phone"></string>
+    <string name="sent"></string>
+    <string name="cantonese"></string>
+    <string name="english"></string>
+    <string name="mandarin"></string>
+    
+    
     <color name="register_background_color">#f7f7f7</color>
     <color name="register_button_color">#5191ff</color>
     <color name="black">#000000</color>
