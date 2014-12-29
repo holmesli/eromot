@@ -15,6 +15,7 @@ import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.app.tomore.util.TouchImageView;
 import com.google.gson.JsonSyntaxException;
+import com.app.tomore.utils.AndroidShare;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
@@ -22,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -29,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -50,6 +53,18 @@ public class MagDetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.magdetail);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+		
+		
+		findViewById(R.id.bar_title_bt_share).setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				AndroidShare as = new AndroidShare(
+						MagDetailActivity.this,
+						"我正在使用多伦多最潮的ToMore应用，快来看看吧 www.tomoreapp.com",
+						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+				as.show();
+			}
+		});
 		
 		Intent intent = getIntent();
 		articleItem = (ArticleModel) intent.getSerializableExtra("articleList");
@@ -128,29 +143,22 @@ public class MagDetailActivity extends Activity {
 				.findViewById(R.id.news_title_text);
 		TouchImageView detailImage = (TouchImageView)getWindow().getDecorView().findViewById(R.id.news_image);
 		WebView detailWeb = (WebView)findViewById(R.id.news_content_text);
-		VideoView detailView = (VideoView)findViewById(R.id.videoView);
-		String video = articleItem.getArticleVideo();
+		//VideoView detailView = (VideoView)findViewById(R.id.videoView);
+		//String video = articleItem.getArticleVideo();
 		String webUrl = articleItem.getArticleContent();
-		Uri uri = Uri.parse(articleItem.getArticleVideo());
+		//Uri uri = Uri.parse(articleItem.getArticleVideo());
 		detailWeb.setWebChromeClient(new WebChromeClient());
 		detailWeb.loadUrl(articleItem.getArticleContent());
 		detailWeb.getSettings().setJavaScriptEnabled(true);
-//		if(articleItem.getArticleVideo()==null)
-//		{
-//			detailView.setVisibility(View.INVISIBLE);
-//		}
-//		else
-//		{
-//			detailView.setVisibility(View.VISIBLE);
-			MediaController videoMediaController = new MediaController(this);
-			detailView.setVideoPath(video);
-		    videoMediaController.setMediaPlayer(detailView);
-			//detailView.setVideoURI(uri);
-		      detailView.setMediaController(videoMediaController);
-		      detailView.requestFocus();
-		      detailView.start();
-//		}
-		//detailWeb.addJavascriptInterface(new JavascriptInterface(mContext),"imagelistner");
+
+//			MediaController videoMediaController = new MediaController(this);
+//		    videoMediaController.setMediaPlayer(detailView);
+//			detailView.setVideoURI(uri);
+//		      detailView.setMediaController(videoMediaController);
+//		      detailView.requestFocus();
+//		      detailView.start();
+//		      super.onStart();
+
 		detailWeb.getSettings().setJavaScriptEnabled(true);
 		detailWeb.loadDataWithBaseURL(null,webUrl,
 	    "text/html", "utf-8",null );
