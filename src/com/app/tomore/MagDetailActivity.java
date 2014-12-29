@@ -8,10 +8,13 @@ import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.adapters.ArticleAdapter;
 import com.app.tomore.beans.ArticleModel;
+import com.app.tomore.beans.CardModel;
 import com.app.tomore.beans.ImageAndText;
+import com.app.tomore.beans.ImageAndTexts;
 import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
+import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,40 +24,31 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MagDetailActivity extends Activity {
 
 	private DialogActivity dialog;
-	private ArrayList<ArticleModel> articlelist;
-	ArticleModel article = new ArticleModel();
-	ListView listveiw;
+	private ArticleModel articleItem;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.magdetail);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+		
+		Intent intent = getIntent();
+		articleItem = (ArticleModel) intent.getSerializableExtra("articleList");
+		BindData();
 		new GetData(MagDetailActivity.this, 1).execute("");
 	}
-
-	private void BindDataToGridView() {
-		ArticleModel article = new ArticleModel();
-		int postion;
-		List<ImageAndText> imageAndTextlist = new ArrayList<ImageAndText>();
-		for (ArticleModel a : articlelist) {
-			imageAndTextlist.add(new ImageAndText(a.getArticleLargeImage(), a
-					.getArticleTitle()));
-		}
-		// ImageView imageview = (ListView) findViewById(R.id.mag_listviews);
-		// listView.setAdapter(new ArticleAdapter(this, imageAndTextlist,
-		// listView));
-
-	}
-
+	
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;
@@ -77,9 +71,16 @@ public class MagDetailActivity extends Activity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			String result = null;
-			ToMoreHttpRequest request = new ToMoreHttpRequest(
-					MagDetailActivity.this);
+			String result= null;
+			//try {
+				Log.d("doInBackground", "start request");	
+				Log.d("doInBackground", "returned");
+			//} 
+//			catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (TimeoutException e) {
+//				e.printStackTrace();
+//			}
 
 			return result;
 		}
@@ -90,8 +91,48 @@ public class MagDetailActivity extends Activity {
 				dialog.dismiss();
 			}
 			Log.d("onPostExecute", "postExec state");
-			
-
+			if (result == null || result.equals("")) {
+				// show empty alert
+			} else {
+				//cardList = new ArrayList<CardModel>();
+				try {
+					//cardList = new CardsParse().parseCardResponse(result);
+					//BindDataToListView();
+					BindData();
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+				if (articleItem != null) {
+					//Intent intent = new Intent(MemberDetailActivity.this,
+						//	MyCameraActivity.class); // fake redirect..
+					//intent.putExtra("cardList", (Serializable) cardList);
+					//startActivity(intent);
+				} else {
+					// show empty alert
+				}
+			}
 		}
+	}
+	
+	private void BindData()
+	{
+		TextView detailTitle = (TextView) getWindow().getDecorView()
+				.findViewById(R.id.news_title_text);
+		ImageView detailImage = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.news_image);
+		WebView detailWeb = (WebView) getWindow().getDecorView()
+				.findViewById(R.id.news_content_text);
+		
+		detailTitle.setText(articleItem.getArticleTitle());
+		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
+		//detailWeb.sett
+//		List<ImageAndTexts> imageAndTextlist = new ArrayList<ImageAndTexts>();
+//		//for(CardModel c:cardList)
+//		{
+//		//	imageAndTextlist.add(new ImageAndTexts(c.getFrontViewImage(),c.getCardTitle(),c.getCardDes(),c.getCardType()));
+//		}
+//		ListView listView = (ListView) findViewById(R.id.mag_listviews);
+//		//listView.setAdapter(new MemberAdapter(this, imageAndTextlist,
+//		//		listView));
 	}
 }

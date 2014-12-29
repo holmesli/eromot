@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dip" >
+
+        <include
+            android:id="@+id/bar_title_member_add"
+            layout="@layout/bar_title_member_add"
+            android:focusable="true" />
+
+        <FrameLayout
+            android:layout_width="270dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:paddingTop="30dip" >
+
+            <ImageView
+                android:id="@+id/frontViewBackgroundImg"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="center"
+                android:src="@drawable/front_view" >
+            </ImageView>
+
+            <Button
+                android:id="@+id/btnFrontEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:background="#0066FF"
+                android:padding="6dip"
+                android:text="@string/member_edit"
+                android:textColor="#ffffffff" />
+
+            <com.app.tomore.util.TouchImageView
+                android:id="@+id/frontViewImg"
+                android:layout_width="180dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center|center_vertical"
+                android:scaleType="center" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="270dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:paddingTop="30dip" >
+
+            <ImageView
+                android:id="@+id/BackViewBackgroundImg"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:scaleType="center"
+                android:src="@drawable/back_view" >
+            </ImageView>
+
+            <Button
+                android:id="@+id/btnBackEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:background="#0066FF"
+                android:padding="6dip"
+                android:text="@string/member_edit"
+                android:textColor="#ffffffff" />
+
+            <com.app.tomore.util.TouchImageView
+                android:id="@+id/backViewImg"
+                android:layout_width="180dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center|center_vertical"
+                android:scaleType="center" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/barcodeImg"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:paddingTop="10dip"
+            android:scaleType="center"
+            android:src="@drawable/barcode" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/barcodeValueLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            android:textColor="#0066FF"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/barcodeLable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dip"
+                android:text="@string/member_barcode"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btnGenerateBarcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="#0066FF"
+                android:padding="6dip"
+                android:text="@string/member_generate_barcode"
+                android:textColor="#ffffffff" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editBarcode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/member_barcode_hint" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/titleLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dip"
+            android:text="@string/member_title"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/editTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/member_title_hint" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/desLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dip"
+            android:text="@string/member_des"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/editDes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/member_des_hint" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:background="#0066FF"
+            android:padding="6dip"
+            android:text="@string/member_submit"
+            android:textColor="#ffffffff" />
+    </LinearLayout>
+
+</ScrollView>

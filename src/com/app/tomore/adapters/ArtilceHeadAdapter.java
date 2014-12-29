@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.app.tomore.beans.ImageAndText;
 import com.app.tomore.beans.MagViewCache;
-import com.app.tomore.utils.AsyncImageLoader;
-import com.app.tomore.utils.AsyncImageLoader.ImageCallback;
 import com.app.tomore.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.Activity;  
-import android.graphics.drawable.Drawable;  
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;  
 import android.view.View;  
 import android.view.ViewGroup;  
@@ -20,15 +21,14 @@ import android.widget.TextView;
   
 public class ArtilceHeadAdapter extends ArrayAdapter<ImageAndText> {  
   
-      
 		private TextView textview;
 		private ImageView imageview;
 		private ListView listview;  
-        private AsyncImageLoader asyncImageLoader;  
         public ArtilceHeadAdapter(Activity activity, List<ImageAndText> imageAndTexts, ListView listview1) {  
             super(activity, 0, imageAndTexts);  
             this.listview = listview1;  
-            asyncImageLoader = new AsyncImageLoader();  
+            ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
+
         }  
   
         public View getView(int position, View convertView, ViewGroup parent) {  
@@ -47,18 +47,18 @@ public class ArtilceHeadAdapter extends ArrayAdapter<ImageAndText> {
             ImageAndText imageAndText = getItem(position);  
   
             // Load the image and set it on the ImageView  
-            String imageUrl = imageAndText.getImageUrl();  
+           final String imageUrl = imageAndText.getImageUrl();  
             ImageView imageView = magviewCache.getImageView();  
             imageView.setTag(imageUrl);  
-            Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl, new ImageCallback() {  
-                public void imageLoaded(Drawable imageDrawable, String imageUrl) {  
-                    ImageView imageViewByTag = (ImageView) listview.findViewWithTag(imageUrl);  
+            ImageLoader.getInstance().loadImage(imageUrl, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                	ImageView imageViewByTag = (ImageView) listview.findViewWithTag(imageUrl);  
                     if (imageViewByTag != null) {  
-                        imageViewByTag.setImageDrawable(imageDrawable);  
-                    }  
-                }  
-            });  
-            imageView.setImageDrawable(cachedImage);    
+                    	imageViewByTag.setImageBitmap(loadedImage);
+                    } 
+                }
+            });   
             // Set the text on the TextView  
             TextView textView = magviewCache.getTextView();  
             textView.setText(imageAndText.getText());  

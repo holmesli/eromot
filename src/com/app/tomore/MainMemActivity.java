@@ -1,145 +1,200 @@
 package com.app.tomore;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.CardModel;
-import com.app.tomore.httpclient.AndroidHttpClient;
-import com.app.tomore.httpclient.AsyncCallback;
-import com.app.tomore.httpclient.HttpResponse;
-import com.app.tomore.httpclient.ParameterMap;
+import com.app.tomore.net.CardsParse;
+import com.app.tomore.net.CardsRequest;
+import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainMemActivity extends Activity{
-	
-	private Intent intent;
-	private String mobelNo;
-	private ArrayList<CardModel> cardlist;
-	private MyBaseAdapter myBaseAdapter;
-	private Bitmap bitmap;
-	private CardModel cardmodel;
-	public ImageLoader imageLoader; 
-	private String[] data;
-	private TextView textview;
+public class MainMemActivity extends Activity {
+
+	private DialogActivity dialog;
+	private ArrayList<CardModel> cardList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_member_activity);
-		
-		AndroidHttpClient httpClient = new AndroidHttpClient("http://54.213.167.5/APIV2/");
-        httpClient.setMaxRetries(5);
-        ParameterMap params = httpClient.newParams()
-                .add("memberID", "25");
-             
-        httpClient.post("getCardByMemberID.php", params, new AsyncCallback() {
-            
-            @Override
-            public void onError(Exception e) {
-                e.printStackTrace();
-            }
+		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+		new GetData(MainMemActivity.this, 1).execute("");
+		ListView listView = (ListView) findViewById(R.id.member_listview);
+
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onComplete(HttpResponse httpResponse) {
-				// TODO Auto-generated method stub
-				String response = httpResponse.getBodyAsString();
-				//System.out.println(response);
-				cardlist=parserRecommend(response);
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (cardList == null) {
+					return;
+				}
+				CardModel cardItem = cardList.get(position);
+				Object obj = (Object) cardList.get(position);
+				if (obj instanceof String) {
+					return;
+				}
+				Intent intent = new Intent(MainMemActivity.this,
+						MemberDetailActivity.class);
+				intent.putExtra("cardList", (Serializable) cardItem);
+				startActivity(intent);
 			}
-        });
-		
-		
-		ListView listView=(ListView)findViewById(R.id.member_listview);
-		myBaseAdapter=new MyBaseAdapter();
-		listView.setAdapter(myBaseAdapter);		
-		
-		
+		});
 	}
-	
-	
-	
-	class MyBaseAdapter extends BaseAdapter{
-		
-		//public ImageLoader imageloader;
 
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return 1;
+	private class GetData extends AsyncTask<String, String, String> {
+		// private Context mContext;
+		private int mType;
+
+		private GetData(Context context, int type) {
+			// this.mContext = context;
+			this.mType = type;
+			dialog = new DialogActivity(context, type);
 		}
 
 		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return position;
+		protected void onPreExecute() {
+			if (mType == 1) {
+				if (null != dialog && !dialog.isShowing()) {
+					dialog.show();
+				}
+			}
+			super.onPreExecute();
 		}
 
 		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return position;
+		protected String doInBackground(String... params) {
+			String result = null;
+			CardsRequest request = new CardsRequest(MainMemActivity.this);
+			try {
+				String memberID = "34";
+				String limit = "5";
+				String page = "1";
+				Log.d("doInBackground", "start request");
+				result = request.getCardByMemberID(memberID, limit, page);
+				Log.d("doInBackground", "returned");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+			}
+
+			return result;
 		}
 
 		@Override
+		protected void onPostExecute(String result) {
+			if (null != dialog) {
+				dialog.dismiss();
+			}
+			Log.d("onPostExecute", "postExec state");
+			if (result == null || result.equals("")) {
+				// show empty alert
+			} else {
+				cardList = new ArrayList<CardModel>();
+				try {
+					cardList = new CardsParse().parseCardResponse(result);
+					BindDataToListView();
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+				if (cardList != null) {
+					Intent intent = new Intent(MainMemActivity.this,
+							MyCameraActivity.class); // fake redirect..
+					intent.putExtra("cardList", (Serializable) cardList);
+					// startActivity(intent);
+				} else {
+					// show empty alert
+				}
+			}
+		}
+	}
+
+	private void BindDataToListView() {
+		ListView listView = (ListView) findViewById(R.id.member_listview);
+		listView.setAdapter(new MemberAdapter(this, cardList, listView));
+	}
+
+	private class MemberAdapter extends ArrayAdapter<CardModel> {
+
+		private ListView listview;
+
+		public MemberAdapter(Activity activity, List<CardModel> cardList,
+				ListView listview1) {
+			super(activity, 0, cardList);
+			this.listview = listview1;
+			ImageLoader.getInstance().init(
+					ImageLoaderConfiguration.createDefault(activity));
+		}
+
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if(cardlist==null){
-				return convertView;
-			}
-			final View view=convertView.inflate(MainMemActivity.this, R.layout.card_listview,null);
-			ImageView mem_item_image=(ImageView)view.findViewById(R.id.cardimg);
-			TextView mem_item_title=(TextView)view.findViewById(R.id.cardinfo);
-			cardmodel = cardlist.get(position);
-				//mag_item_image.setImageBitmap(Article.getArticleSmallImage());
-				//mag_item_title.setText(article.getArticleTitle());
-				//imageLoader.displayImage(data[position], mag_item_image);
-			mem_item_title.setText(cardmodel.getCardTitle());
-//			}else{
-//			}
-			return view;
-			}
-	}
-	
-
-	public static ArrayList<CardModel> parserRecommend(String content) {
-		ArrayList<CardModel> list = new ArrayList<CardModel>();
-		CardModel cardmodel = null;
-		try {
-
-			JSONArray jsonArray = new JSONArray(content);
-			for (int i = 0; i < jsonArray.length(); ++i) {
-				JSONObject o = (JSONObject) jsonArray.get(i);
-				cardmodel = new CardModel();
-				cardmodel.setCardTitle(o.getString("CardTitle"));
-				cardmodel.setCardID(o.getString("CardID"));
-				cardmodel.setCardType(o.getString("CardType"));
-				cardmodel.setCardBarcode(o.getString("CardBarcode"));
-				cardmodel.setCardNumber(o.getString("CardNumber"));
-				cardmodel.setCardDes(o.getString("CardDes"));
-				cardmodel.setFrontViewImage(o.getString("FrontViewImage"));
-				cardmodel.setBackViewImage(o.getString("BackViewImage"));
-				cardmodel.setcoupon(o.getString("coupon"));
+			Activity activity = (Activity) getContext();
+			View rowView = convertView;
+			if (rowView == null) {
+				LayoutInflater inflater = activity.getLayoutInflater();
+				rowView = inflater.inflate(R.layout.member_listview_item, null);
+			} else {
 				
-
-				list.add(cardmodel);
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+			CardModel cardItem = getItem(position);
+			final String imageUrl = cardItem.getFrontViewImage();
+			ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+			imageView.setTag(imageUrl);
+			ImageLoader.getInstance().loadImage(imageUrl,
+					new SimpleImageLoadingListener() {
+						@Override
+						public void onLoadingComplete(String imageUri,
+								View view, Bitmap loadedImage) {
+							ImageView imageViewByTag = (ImageView) listview
+									.findViewWithTag(imageUrl);
+							if (imageViewByTag != null) {
+								imageViewByTag.setImageBitmap(loadedImage);
+							}
+						}
+					});
+
+			// Set the text on the TextView
+			TextView textViewTitle = (TextView) rowView
+					.findViewById(R.id.title);
+			textViewTitle.setText(cardItem.getCardTitle());
+
+			TextView textViewDes = (TextView) rowView.findViewById(R.id.des);
+			textViewDes.setText(cardItem.getCardDes());
+
+			TextView textViewTomoreCard = (TextView) rowView
+					.findViewById(R.id.tomoreCard);
+			String cardType = cardItem.getCardType();
+
+			if (!cardType.equals("0")) {
+				textViewTomoreCard.setVisibility(View.INVISIBLE);
+			} else if (cardType.equals("0")) {
+				textViewTomoreCard.setVisibility(View.VISIBLE);
+			}
+
+			return rowView;
 		}
-		return list;
+
 	}
-
 }
-

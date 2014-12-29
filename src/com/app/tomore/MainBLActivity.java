@@ -25,7 +25,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.view.View;
 
-import com.app.tomore.BL.GeneralBLActivity;
 import com.app.tomore.adapters.ImageAndTextListAdapter;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.ImageAndText;
@@ -67,7 +66,7 @@ public class MainBLActivity extends Activity {
         if (BLType == 1)
         {
 	        intent=new Intent();//.setClass(this, GeneralBLActivity.class);
-	        intent.setClassName(this, "com.app.tomore.BL.GeneralBLActivity");
+	        intent.setClassName(this, "com.app.tomore.GeneralBLActivity");
 	        intent.putExtra("BLID",BLID);
 	        startActivityForResult(intent, 100);
         }

@@ -11,7 +11,7 @@ public class GeneralBLModel implements Serializable{
 	private String UpdateDate;
 	private String ServiceRegion;
 	private String Address;
-	private String Longtitude;
+	private String Longitude;
 	private String Latitude;
 	private String AccountName;
 	private String Email;
@@ -87,12 +87,12 @@ public class GeneralBLModel implements Serializable{
 	public String getAddress() {
 		return Address;
 	}
-	public String getLongtitude() {
-		return Longtitude;
+	public String getLongitude() {
+		return Longitude;
 	}
 	
-	public void setLongtitude(String longtitude) {
-		Longtitude = longtitude;
+	public void setLongitude(String longitude) {
+		Longitude = longitude;
 	}
 	
 	public String getLatitude() {
