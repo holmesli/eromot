@@ -15,7 +15,17 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.app.tomore.R;
+import com.app.tomore.utils.AppUtil;
+import com.app.tomore.utils.ToastUtils;
+import com.app.tomore.utils.PullToRefreshListView;
+import com.app.tomore.utils.PullToRefreshBase;
+import com.app.tomore.utils.PullToRefreshBase.OnLastItemVisibleListener;
+import com.app.tomore.utils.PullToRefreshBase.OnRefreshListener;
+import com.app.tomore.utils.PullToRefreshListView;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,13 +38,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainMemActivity extends Activity {
 
@@ -42,6 +55,13 @@ public class MainMemActivity extends Activity {
 	private ArrayList<CardModel> cardList;
 	private ListView listView;
 	private DisplayImageOptions otp;
+	private PullToRefreshListView mListView;
+	private Activity mContext;
+	private TextView noneData;
+	private View no_net_lay;
+	private ImageView adImg;
+	
+	private boolean onRefresh = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,8 +70,19 @@ public class MainMemActivity extends Activity {
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
+		setContentView(R.layout.main_mag_activity);
 
-
+			mListView = (PullToRefreshListView) findViewById(R.id.list);
+			mListView.setOnRefreshListener(onRefreshListener);
+			mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
+			mListView.setOnItemClickListener(itemClickListener);
+			noneData = (TextView)findViewById(R.id.noneData);
+			no_net_lay = findViewById(R.id.no_net_lay);
+			Button reloadData = (Button)findViewById(R.id.reloadData);
+			reloadData.setOnClickListener(reloadClickListener);
+			adImg = (ImageView)findViewById(R.id.adImg);
+	
+		
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -73,6 +104,62 @@ public class MainMemActivity extends Activity {
 
 	}
 
+	protected void setUi() {
+		if (onRefresh) {
+			onRefresh = false;
+			cardList.clear();
+		}
+		//ArrayList<News> newsData = newsWrapper.getNews();
+		//allData.addAll(newsData);
+		//listView.setAdapter(new MemberAdapter(this, cardList, listView));
+		MemberAdapter newsListAdapter = new MemberAdapter(this, cardList, listView);
+		
+		if (newsListAdapter == null) {
+			newsListAdapter = new MemberAdapter(this, cardList, listView);
+			mListView.setAdapter(newsListAdapter);
+		} else {
+			newsListAdapter.notifyDataSetChanged();
+		}
+		if(cardList!=null && cardList.size()>0){
+			showDataUi();
+		}else{
+			showNoDataUi();
+		}
+	}
+	
+	void showDataUi(){
+		mListView.setVisibility(View.VISIBLE);
+		noneData.setVisibility(View.GONE);
+		no_net_lay.setVisibility(View.GONE);
+	}
+
+	void showNoDataUi(){
+		mListView.setVisibility(View.GONE);
+		noneData.setVisibility(View.VISIBLE);
+		no_net_lay.setVisibility(View.GONE); 
+	}
+
+	protected void showNoNetUi() {
+		no_net_lay.setVisibility(View.VISIBLE);
+		noneData.setVisibility(View.GONE);
+		mListView.setVisibility(View.GONE);
+	}
+	
+	ProgressDialog pd;
+	private void showDialog() {
+		if (pd == null) {
+			pd = new ProgressDialog(mContext);
+			pd.setMessage("正在加载数据");
+		}
+		pd.show();
+	}
+
+	private void closeDialog() {
+		if (pd != null && pd.isShowing()) {
+			pd.dismiss();
+		}
+	}
+	
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;
@@ -145,7 +232,67 @@ public class MainMemActivity extends Activity {
 		//listView = (AutoListView) findViewById(R.id.member_listview);
 		listView.setAdapter(new MemberAdapter(this, cardList, listView));
 	}
+	
 
+	private OnItemClickListener itemClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			if(!AppUtil.networkAvailable(mContext)){
+				ToastUtils.showToast(mContext, "请连接网络");
+				return;
+			}
+			
+		}
+	};
+	
+
+	Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			mListView.onRefreshComplete();
+		}
+	};
+
+	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
+		@Override
+		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+			if(AppUtil.networkAvailable(mContext)){
+				onRefresh = true;
+//				currPage = 1;
+//				getData();
+			}else{
+				ToastUtils.showToast(mContext, "没有网|络");
+				mListView.onRefreshComplete();
+			}
+		}
+	};
+
+	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
+
+		@Override
+		public void onLastItemVisible() {
+			if(AppUtil.networkAvailable(mContext)){
+//				if ((currPage - 1) * pageCount < total) {
+//					currPage++;
+//					getData();
+//				}
+			}else{
+				ToastUtils.showToast(mContext, "没有网络");
+			}
+		}
+	};
+
+OnClickListener reloadClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			onRefresh = true;
+			//currPage = 1;
+			//getData();
+		}
+	};
+	
 	private class MemberAdapter extends ArrayAdapter<CardModel> {
 
 		public MemberAdapter(Activity activity, List<CardModel> cardList,
