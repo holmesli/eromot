@@ -53,7 +53,6 @@ public class MainMemActivity extends Activity {
 
 	private DialogActivity dialog;
 	private ArrayList<CardModel> cardList;
-	private ListView listView;
 	private DisplayImageOptions otp;
 	private PullToRefreshListView mListView;
 	private Activity mContext;
@@ -65,12 +64,13 @@ public class MainMemActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_member_activity);
+
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainMemActivity.this, 1).execute("");
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
-		setContentView(R.layout.main_mag_activity);
 
 			mListView = (PullToRefreshListView) findViewById(R.id.list);
 			mListView.setOnRefreshListener(onRefreshListener);
@@ -83,7 +83,7 @@ public class MainMemActivity extends Activity {
 			adImg = (ImageView)findViewById(R.id.adImg);
 	
 		
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -112,10 +112,10 @@ public class MainMemActivity extends Activity {
 		//ArrayList<News> newsData = newsWrapper.getNews();
 		//allData.addAll(newsData);
 		//listView.setAdapter(new MemberAdapter(this, cardList, listView));
-		MemberAdapter newsListAdapter = new MemberAdapter(this, cardList, listView);
+		MemberAdapter newsListAdapter = new MemberAdapter(this, cardList, mListView);
 		
 		if (newsListAdapter == null) {
-			newsListAdapter = new MemberAdapter(this, cardList, listView);
+			newsListAdapter = new MemberAdapter(this, cardList, mListView);
 			mListView.setAdapter(newsListAdapter);
 		} else {
 			newsListAdapter.notifyDataSetChanged();
@@ -230,7 +230,7 @@ public class MainMemActivity extends Activity {
 
 	private void BindDataToListView() {
 		//listView = (AutoListView) findViewById(R.id.member_listview);
-		listView.setAdapter(new MemberAdapter(this, cardList, listView));
+	//	listView.setAdapter(new MemberAdapter(this, cardList, mListView));
 	}
 	
 
@@ -257,14 +257,14 @@ public class MainMemActivity extends Activity {
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-			if(AppUtil.networkAvailable(mContext)){
-				onRefresh = true;
-//				currPage = 1;
-//				getData();
-			}else{
-				ToastUtils.showToast(mContext, "没有网|络");
-				mListView.onRefreshComplete();
-			}
+//			if(AppUtil.networkAvailable(mContext)){
+//				onRefresh = true;
+////				currPage = 1;
+////				getData();
+//			}else{
+//				ToastUtils.showToast(mContext, "没有网|络");
+//				mListView.onRefreshComplete();
+//			}
 		}
 	};
 
@@ -272,14 +272,14 @@ public class MainMemActivity extends Activity {
 
 		@Override
 		public void onLastItemVisible() {
-			if(AppUtil.networkAvailable(mContext)){
-//				if ((currPage - 1) * pageCount < total) {
-//					currPage++;
-//					getData();
-//				}
-			}else{
-				ToastUtils.showToast(mContext, "没有网络");
-			}
+//			if(AppUtil.networkAvailable(mContext)){
+////				if ((currPage - 1) * pageCount < total) {
+////					currPage++;
+////					getData();
+////				}
+//			}else{
+//				ToastUtils.showToast(mContext, "没有网络");
+//			}
 		}
 	};
 
@@ -296,7 +296,7 @@ OnClickListener reloadClickListener = new OnClickListener() {
 	private class MemberAdapter extends ArrayAdapter<CardModel> {
 
 		public MemberAdapter(Activity activity, List<CardModel> cardList,
-				ListView listview1) {
+				PullToRefreshListView mListView) {
 			super(activity, 0, cardList);
 		}
 

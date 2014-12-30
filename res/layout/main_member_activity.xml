@@ -13,7 +13,7 @@
    		android:scaleType="fitXY"
    		android:visibility="gone"
    		android:id="@+id/adImg"/>
-	<com.tomore.app.utils.PullToRefreshListView
+	<com.app.tomore.utils.PullToRefreshListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
