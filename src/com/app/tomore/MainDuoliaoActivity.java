@@ -35,6 +35,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		
 //		AndroidHttpClient httpClient = new AndroidHttpClient("http://54.213.167.5/APIV2/");
 //        httpClient.setMaxRetries(5);
+		
 //        ParameterMap params = httpClient.newParams()
 //                .add("articleIssue", "0");
 //                //.add("email", "test@example.com")

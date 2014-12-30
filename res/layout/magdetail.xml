@@ -39,7 +39,7 @@
 
 
 
-            <com.app.tomore.util.TouchImageView
+            <com.app.tomore.utils.TouchImageView
                 android:id="@+id/news_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

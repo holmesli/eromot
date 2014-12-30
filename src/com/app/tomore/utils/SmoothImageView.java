@@ -1,4 +1,4 @@
-package com.app.tomore.util;
+package com.app.tomore.utils;
 
 import android.animation.Animator;
 import android.animation.PropertyValuesHolder;

@@ -10,20 +10,11 @@ import java.util.concurrent.TimeoutException;
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.net.CardsParse;
 import com.app.tomore.net.CardsRequest;
-import com.uit.pullrefresh.base.impl.PullRefreshListView;
-//import com.app.tomore.util.PullToRefreshListView;
-//import com.app.tomore.util.PullToRefreshListView.OnRefreshListener;
-//import com.app.tomore.utils.AutoListView;
-//import com.app.tomore.utils.AutoListView.OnLoadListener;
-//import com.app.tomore.utils.AutoListView.OnRefreshListener;
-import com.uit.pullrefresh.listener.OnLoadListener;
-import com.uit.pullrefresh.listener.OnRefreshListener;
-import com.uit.pullrefresh.scroller.impl.RefreshListView;
 import com.google.gson.JsonSyntaxException;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -50,83 +41,16 @@ public class MainMemActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<CardModel> cardList;
 	private ListView listView;
-	private PullRefreshListView mPullRefreshListView;
-
-	// private ListViewAdapter adapter;
-
-	// private Handler handler = new Handler() {
-	// public void handleMessage(Message msg) {
-	// List<CardModel> result = (List<CardModel>) msg.obj;
-	// switch (msg.what) {
-	// case AutoListView.REFRESH:
-	// listView.onRefreshComplete();
-	// cardList.clear();
-	// cardList.addAll(result);
-	// break;
-	// case AutoListView.LOAD:
-	// listView.onLoadComplete();
-	// cardList.addAll(result);
-	// break;
-	// }
-	// listView.setResultSize(result.size());
-	// adapter.notifyDataSetChanged();
-	// };
-	// };
-
+	private DisplayImageOptions otp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.main_member_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-
-		mPullRefreshListView = new PullRefreshListView(this);
-		// listView = (PullRefreshListView )
-		// getWindow().getDecorView().findViewById(
-		// R.id.member_listview);
-		listView = mPullRefreshListView.getContentView();
 		new GetData(MainMemActivity.this, 1).execute("");
-		// adapter = new ListViewAdapter(this, cardList, listView);
-		// listView.setAdapter(adapter);
-		// listView.setOnRefreshListener(this);
-		// listView.setOnLoadListener(this);
-		// initData();
+		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
+				.build();
 
-		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener() {
-
-			@Override
-			public void onRefresh() {
-				Toast.makeText(getApplicationContext(), "refresh",
-						Toast.LENGTH_SHORT).show();
-				mPullRefreshListView.postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						new GetData(MainMemActivity.this, 1).execute("");
-						mPullRefreshListView.refreshComplete();
-					}
-				}, 2000);
-			}
-		});
-
-		// 不设置的话到底部不会自动加载
-		mPullRefreshListView.setOnLoadMoreListener(new OnLoadListener() {
-
-			@Override
-			public void onLoadMore() {
-				Toast.makeText(getApplicationContext(), "load more",
-						Toast.LENGTH_SHORT).show();
-				mPullRefreshListView.postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						mPullRefreshListView.loadMoreComplete();
-					}
-				}, 1500);
-			}
-		});
-
-		setContentView(mPullRefreshListView);
-		// setContentView(R.layout.main_member_activity);
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -218,20 +142,15 @@ public class MainMemActivity extends Activity {
 	}
 
 	private void BindDataToListView() {
-		// listView = (AutoListView) findViewById(R.id.member_listview);
+		//listView = (AutoListView) findViewById(R.id.member_listview);
 		listView.setAdapter(new MemberAdapter(this, cardList, listView));
 	}
 
 	private class MemberAdapter extends ArrayAdapter<CardModel> {
 
-		private ListView listview;
-
 		public MemberAdapter(Activity activity, List<CardModel> cardList,
 				ListView listview1) {
 			super(activity, 0, cardList);
-			this.listview = listview1;
-			ImageLoader.getInstance().init(
-					ImageLoaderConfiguration.createDefault(activity));
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -247,19 +166,9 @@ public class MainMemActivity extends Activity {
 			final String imageUrl = cardItem.getFrontViewImage();
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
 			imageView.setTag(imageUrl);
-			ImageLoader.getInstance().loadImage(imageUrl,
-					new SimpleImageLoadingListener() {
-						@Override
-						public void onLoadingComplete(String imageUri,
-								View view, Bitmap loadedImage) {
-							ImageView imageViewByTag = (ImageView) listview
-									.findViewWithTag(imageUrl);
-							if (imageViewByTag != null) {
-								imageViewByTag.setImageBitmap(loadedImage);
-							}
-						}
-					});
-
+			ImageLoader.getInstance().displayImage(imageUrl,
+					imageView, otp);
+			
 			// Set the text on the TextView
 			TextView textViewTitle = (TextView) rowView
 					.findViewById(R.id.title);
@@ -283,141 +192,4 @@ public class MainMemActivity extends Activity {
 
 	}
 
-	// private void initData() {
-	// loadData(AutoListView.REFRESH);
-	// }
-	//
-	// private void loadData(final int what) {
-	// // 这里模拟从服务器获取数据
-	// new Thread(new Runnable() {
-	//
-	// @Override
-	// public void run() {
-	// try {
-	// Thread.sleep(700);
-	// } catch (InterruptedException e) {
-	// e.printStackTrace();
-	// }
-	// Message msg = handler.obtainMessage();
-	// msg.what = what;
-	// msg.obj = getData();
-	// handler.sendMessage(msg);
-	// }
-	// }).start();
-	// }
-	//
-	// @Override
-	// public void onRefresh() {
-	// new GetData(MainMemActivity.this, 1).execute("");
-	// }
-
-	// @Override
-	// public void onLoad() {
-	// loadData(AutoListView.LOAD);
-	// }
-	//
-	// // 测试数据
-	// public List<CardModel> getData() {
-	// String result = null;
-	// CardsRequest request = new CardsRequest(MainMemActivity.this);
-	//
-	// String memberID = "34";
-	// String limit = "5";
-	// String page = "1";
-	// Log.d("doInBackground", "start request");
-	// try {
-	// result = request.getCardByMemberID(memberID, limit, page);
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (TimeoutException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// Log.d("doInBackground", "returned");
-	//
-	// cardList = new CardsParse().parseCardResponse(result);
-	//
-	// return cardList;
-	// }
-	//
-	// public class ListViewAdapter extends BaseAdapter {
-	//
-	// private List<CardModel> list;
-	// private Context context;
-	// private ListView listview;
-	//
-	// public ListViewAdapter(Context context, List<CardModel> cardList,
-	// AutoListView listview1) {
-	// this.list = cardList;
-	// this.context = context;
-	// this.listview = listview1;
-	// ImageLoader.getInstance().init(
-	// ImageLoaderConfiguration.createDefault(context));
-	// }
-	//
-	// @Override
-	// public int getCount() {
-	// return list.size();
-	// }
-	//
-	// @Override
-	// public Object getItem(int position) {
-	// return null;
-	// }
-	//
-	// @Override
-	// public long getItemId(int position) {
-	// return 0;
-	// }
-	//
-	// @Override
-	// public View getView(int position, View convertView, ViewGroup parent) {
-	// if (convertView == null) {
-	// convertView = LayoutInflater.from(context).inflate(
-	// R.layout.member_listview_item, null);
-	//
-	// } else {
-	// }
-	//
-	// final String imageUrl = list.get(position).getFrontViewImage();
-	// ImageView imageView = (ImageView) convertView
-	// .findViewById(R.id.img);
-	// imageView.setTag(imageUrl);
-	// ImageLoader.getInstance().loadImage(imageUrl,
-	// new SimpleImageLoadingListener() {
-	// @Override
-	// public void onLoadingComplete(String imageUri,
-	// View view, Bitmap loadedImage) {
-	// ImageView imageViewByTag = (ImageView) listview
-	// .findViewWithTag(imageUrl);
-	// if (imageViewByTag != null) {
-	// imageViewByTag.setImageBitmap(loadedImage);
-	// }
-	// }
-	// });
-	//
-	// // Set the text on the TextView
-	// TextView textViewTitle = (TextView) convertView
-	// .findViewById(R.id.title);
-	// textViewTitle.setText(list.get(position).getCardTitle());
-	//
-	// TextView textViewDes = (TextView) convertView
-	// .findViewById(R.id.des);
-	// textViewDes.setText(list.get(position).getCardDes());
-	//
-	// TextView textViewTomoreCard = (TextView) convertView
-	// .findViewById(R.id.tomoreCard);
-	// String cardType = list.get(position).getCardType();
-	//
-	// if (!cardType.equals("0")) {
-	// textViewTomoreCard.setVisibility(View.INVISIBLE);
-	// } else if (cardType.equals("0")) {
-	// textViewTomoreCard.setVisibility(View.VISIBLE);
-	// }
-	//
-	// return convertView;
-	// }
-	//
-	// }
 }
