@@ -3,18 +3,13 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeoutException;
-
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.net.CardsParse;
 import com.app.tomore.net.CardsRequest;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.app.tomore.R;
 import com.app.tomore.utils.AppUtil;
 import com.app.tomore.utils.ToastUtils;
@@ -22,13 +17,9 @@ import com.app.tomore.utils.PullToRefreshListView;
 import com.app.tomore.utils.PullToRefreshBase;
 import com.app.tomore.utils.PullToRefreshBase.OnLastItemVisibleListener;
 import com.app.tomore.utils.PullToRefreshBase.OnRefreshListener;
-import com.app.tomore.utils.PullToRefreshListView;
-
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,17 +31,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-
 public class MainMemActivity extends Activity {
-
 	private DialogActivity dialog;
 	private ArrayList<CardModel> cardList;
 	private DisplayImageOptions otp;
@@ -58,14 +45,13 @@ public class MainMemActivity extends Activity {
 	private Activity mContext;
 	private TextView noneData;
 	private View no_net_lay;
-	private ImageView adImg;
-	
+	MemberAdapter newsListAdapter;
 	private boolean onRefresh = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_member_activity);
-
+		mContext = this;
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainMemActivity.this, 1).execute("");
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
@@ -80,42 +66,15 @@ public class MainMemActivity extends Activity {
 			no_net_lay = findViewById(R.id.no_net_lay);
 			Button reloadData = (Button)findViewById(R.id.reloadData);
 			reloadData.setOnClickListener(reloadClickListener);
-			adImg = (ImageView)findViewById(R.id.adImg);
 	
-		
-			mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (cardList == null) {
-					return;
-				}
-				CardModel cardItem = cardList.get(position);
-				Object obj = (Object) cardList.get(position);
-				if (obj instanceof String) {
-					return;
-				}
-				Intent intent = new Intent(MainMemActivity.this,
-						MemberDetailActivity.class);
-				intent.putExtra("cardList", (Serializable) cardItem);
-				startActivity(intent);
-			}
-		});
-
 	}
 
-	protected void setUi() {
+	private void BindDataToListView() {
 		if (onRefresh) {
 			onRefresh = false;
-			cardList.clear();
 		}
-		//ArrayList<News> newsData = newsWrapper.getNews();
-		//allData.addAll(newsData);
-		//listView.setAdapter(new MemberAdapter(this, cardList, listView));
-		MemberAdapter newsListAdapter = new MemberAdapter(this, cardList, mListView);
-		
 		if (newsListAdapter == null) {
-			newsListAdapter = new MemberAdapter(this, cardList, mListView);
+			newsListAdapter = new MemberAdapter();
 			mListView.setAdapter(newsListAdapter);
 		} else {
 			newsListAdapter.notifyDataSetChanged();
@@ -144,28 +103,9 @@ public class MainMemActivity extends Activity {
 		noneData.setVisibility(View.GONE);
 		mListView.setVisibility(View.GONE);
 	}
-	
-	ProgressDialog pd;
-	private void showDialog() {
-		if (pd == null) {
-			pd = new ProgressDialog(mContext);
-			pd.setMessage("正在加载数据");
-		}
-		pd.show();
-	}
-
-	private void closeDialog() {
-		if (pd != null && pd.isShowing()) {
-			pd.dismiss();
-		}
-	}
-	
 	private class GetData extends AsyncTask<String, String, String> {
-		// private Context mContext;
 		private int mType;
-
 		private GetData(Context context, int type) {
-			// this.mContext = context;
 			this.mType = type;
 			dialog = new DialogActivity(context, type);
 		}
@@ -205,45 +145,49 @@ public class MainMemActivity extends Activity {
 			if (null != dialog) {
 				dialog.dismiss();
 			}
+			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				// show empty alert
+				ToastUtils.showToast(mContext, "列表为空");
 			} else {
-				cardList = new ArrayList<CardModel>();
+				if(cardList!=null && cardList.size()>0)
+				{
+					cardList.clear();
+				}
+				else
+				{
+					cardList = new ArrayList<CardModel>();
+				}
 				try {
 					cardList = new CardsParse().parseCardResponse(result);
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
-				if (cardList != null) {
-					Intent intent = new Intent(MainMemActivity.this,
-							MyCameraActivity.class); // fake redirect..
-					intent.putExtra("cardList", (Serializable) cardList);
-					// startActivity(intent);
-				} else {
-					// show empty alert
-				}
 			}
 		}
 	}
 
-	private void BindDataToListView() {
-		//listView = (AutoListView) findViewById(R.id.member_listview);
-	//	listView.setAdapter(new MemberAdapter(this, cardList, mListView));
-	}
-	
-
 	private OnItemClickListener itemClickListener = new OnItemClickListener() {
-
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> parent, View view,
+				int position, long id) { 
 			if(!AppUtil.networkAvailable(mContext)){
 				ToastUtils.showToast(mContext, "请连接网络");
 				return;
 			}
-			
+			if (cardList == null) {
+				return;
+			}
+			CardModel cardItem = cardList.get(position);
+			Object obj = (Object) cardList.get(position);
+			if (obj instanceof String) {
+				return;
+			}
+			Intent intent = new Intent(MainMemActivity.this,
+					MemberDetailActivity.class);
+			intent.putExtra("cardList", (Serializable) cardItem);
+			startActivity(intent);
 		}
 	};
 	
@@ -257,86 +201,93 @@ public class MainMemActivity extends Activity {
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-//			if(AppUtil.networkAvailable(mContext)){
-//				onRefresh = true;
-////				currPage = 1;
-////				getData();
-//			}else{
-//				ToastUtils.showToast(mContext, "没有网|络");
-//				mListView.onRefreshComplete();
-//			}
+			if(AppUtil.networkAvailable(mContext)){
+				onRefresh = true;
+				new GetData(MainMemActivity.this, 1).execute("");
+			}else{
+				ToastUtils.showToast(mContext, "没有网络");
+				mListView.onRefreshComplete();
+			}
 		}
 	};
 
 	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
-
 		@Override
 		public void onLastItemVisible() {
-//			if(AppUtil.networkAvailable(mContext)){
-////				if ((currPage - 1) * pageCount < total) {
-////					currPage++;
-////					getData();
-////				}
-//			}else{
-//				ToastUtils.showToast(mContext, "没有网络");
-//			}
+			if(AppUtil.networkAvailable(mContext)){
+				//new GetData(MainMemActivity.this, 1).execute("");
+			}else{
+				ToastUtils.showToast(mContext, "没有网络");
+			}
 		}
 	};
 
-OnClickListener reloadClickListener = new OnClickListener() {
-		
+	OnClickListener reloadClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			onRefresh = true;
-			//currPage = 1;
-			//getData();
+
+			new GetData(MainMemActivity.this, 1).execute("");
 		}
 	};
 	
-	private class MemberAdapter extends ArrayAdapter<CardModel> {
+	class ViewHolder {
+		TextView textViewTitle;
+		TextView textViewDes;
+		TextView textViewTomoreCard;
+		ImageView imageView;
+	}
+	
+	private class MemberAdapter extends BaseAdapter {
 
-		public MemberAdapter(Activity activity, List<CardModel> cardList,
-				PullToRefreshListView mListView) {
-			super(activity, 0, cardList);
-		}
-
+		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Activity activity = (Activity) getContext();
-			View rowView = convertView;
-			if (rowView == null) {
-				LayoutInflater inflater = activity.getLayoutInflater();
-				rowView = inflater.inflate(R.layout.member_listview_item, null);
+			CardModel cardItem = (CardModel) getItem(position);
+			ViewHolder viewHolder = null;
+			if (convertView != null) {
+				viewHolder = (ViewHolder) convertView.getTag();
 			} else {
-
+				viewHolder = new ViewHolder();
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.member_listview_item, null);
+				viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.title);
+				viewHolder.textViewDes = (TextView) convertView.findViewById(R.id.des);
+				viewHolder.textViewTomoreCard = (TextView) convertView.findViewById(R.id.tomoreCard);
+				viewHolder.imageView = (ImageView) convertView.findViewById(R.id.img);
+				convertView.setTag(viewHolder);
 			}
-			CardModel cardItem = getItem(position);
-			final String imageUrl = cardItem.getFrontViewImage();
-			ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-			imageView.setTag(imageUrl);
-			ImageLoader.getInstance().displayImage(imageUrl,
-					imageView, otp);
-			
-			// Set the text on the TextView
-			TextView textViewTitle = (TextView) rowView
-					.findViewById(R.id.title);
-			textViewTitle.setText(cardItem.getCardTitle());
+			ImageLoader.getInstance().displayImage(cardItem.getFrontViewImage(),
+			viewHolder.imageView, otp);
+			viewHolder.textViewTitle.setText(cardItem.getCardTitle());
+			viewHolder.textViewDes.setText(cardItem.getCardDes());
 
-			TextView textViewDes = (TextView) rowView.findViewById(R.id.des);
-			textViewDes.setText(cardItem.getCardDes());
-
-			TextView textViewTomoreCard = (TextView) rowView
-					.findViewById(R.id.tomoreCard);
 			String cardType = cardItem.getCardType();
 
 			if (!cardType.equals("0")) {
-				textViewTomoreCard.setVisibility(View.INVISIBLE);
+				viewHolder.textViewTomoreCard.setVisibility(View.INVISIBLE);
 			} else if (cardType.equals("0")) {
-				textViewTomoreCard.setVisibility(View.VISIBLE);
+				viewHolder.textViewTomoreCard.setVisibility(View.VISIBLE);
 			}
 
-			return rowView;
+			return convertView;
 		}
 
-	}
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return cardList.size();
+		}
 
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+		 return cardList.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+	}
 }
