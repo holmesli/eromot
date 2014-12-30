@@ -11,8 +11,8 @@ import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.beans.ImageAndText;
 import com.app.tomore.beans.ImageAndTexts;
-import com.app.tomore.net.RestaurantParse;
-import com.app.tomore.net.RestaurantRequest;
+import com.app.tomore.net.YellowPageParse;
+import com.app.tomore.net.YellowPageRequest;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -96,7 +96,7 @@ public class RestaurantBLActivity  extends Activity{
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			String result = null;
-			RestaurantRequest request = new RestaurantRequest(RestaurantBLActivity.this);
+			YellowPageRequest request = new YellowPageRequest(RestaurantBLActivity.this);
 			try {
 				String page ="1";
 				String limit="5";
@@ -122,7 +122,7 @@ public class RestaurantBLActivity  extends Activity{
 			} else {
 				restlist = new ArrayList<BLRestaurantModel>();
 				try {
-					restlist = new RestaurantParse().parseRestaurantResponse(result);
+					restlist = new YellowPageParse().parseRestaurantResponse(result);
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();

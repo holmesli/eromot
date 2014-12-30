@@ -46,4 +46,22 @@ public class YellowPageRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getAdInfoByAdType.php", params);
         return httpResponse.getBodyAsString();
 	}
+	
+	/*
+	 * //get all Restaurant by id
+	 */ 
+	//http://54.213.167.5/APIV2/getRestInfo.php?page=1&limit=5&region=4
+	public String getRestaurantId(String page,String limit,String region)
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+        		.add("page",page)
+        		.add("limit",limit)
+        		.add("page",page);
+ 
+        
+        HttpResponse httpResponse = baseRequest.post("http://54.213.167.5/APIV2/getRestInfo.php", params);
+        return httpResponse.getBodyAsString();
+	}
 }

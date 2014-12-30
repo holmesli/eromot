@@ -2,6 +2,7 @@ package com.app.tomore.net;
 
 import java.util.ArrayList;
 
+import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.GeneralBLModel;
 import com.google.gson.Gson;
@@ -40,5 +41,19 @@ public class YellowPageParse {
 			lcs.add(cse);
 		}
 		return lcs;
+	}
+	
+	public ArrayList<BLRestaurantModel> parseRestaurantResponse(String jsonRestaurant)  throws JsonSyntaxException 
+	{
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(jsonRestaurant);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<BLRestaurantModel> restaurantlist = new ArrayList<BLRestaurantModel>();
+		for (JsonElement obj : jarray) {
+			BLRestaurantModel cse = gson.fromJson(obj, BLRestaurantModel.class);
+			restaurantlist.add(cse);
+		}
+		return restaurantlist;
 	}
 }
