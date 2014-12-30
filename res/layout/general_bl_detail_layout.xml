@@ -86,11 +86,10 @@
 	
 		<LinearLayout
 		    android:id="@+id/addressinfo"
-		    android:layout_width="wrap_content"
+		    android:layout_width="289dp"
 		    android:layout_height="230dp"
-		    android:layout_weight="0.65"
-		    android:orientation="vertical" 
-		    android:background="@drawable/bl_detail_border">
+		    android:background="@drawable/bl_detail_border"
+		    android:orientation="vertical" >
 
 		    <TextView
 		        android:id="@+id/addressinfotext"
@@ -99,13 +98,13 @@
 		        android:layout_weight="0.08"
 		        android:text="TextView" 
 		        android:textSize="15sp"/>
-
-		    <fragment
-		        android:id="@+id/map"
-		        android:layout_width="wrap_content"
-		        android:layout_height="170dp"
-		        android:layout_weight="0.49"
-		        class="com.google.android.gms.maps.MapFragment" />
+ 
+		     <fragment
+			        android:id="@+id/map"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        class="com.google.android.gms.maps.MapFragment" />
+		     
 				<View
 				  android:layout_width="1dp"
 				  android:layout_height="1dp"

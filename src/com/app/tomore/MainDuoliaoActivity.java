@@ -85,32 +85,21 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		BackToMainActivity newContent = null;
-		switch (v.getId()) {
-		case R.id.my_backtomain_bt:
+		int id = v.getId();
+		if (id == R.id.my_backtomain_bt) {
 			newContent = new BackToMainActivity();
-			//Toast.makeText(context, "µãÎÒ1", 1).show();
-			break;
-		case R.id.my_tiezi_bt:
-			Toast.makeText(context, "µãÎÒ2", 1).show();
-			break;
-		case R.id.my_guanzhu_bt:
-			Toast.makeText(context, "µãÎÒ3", 1).show();
-			break;
-		case R.id.ivTitleBtnLeft:
+		} else if (id == R.id.my_tiezi_bt) {
+			Toast.makeText(context, "ï¿½ï¿½ï¿½ï¿½2", 1).show();
+		} else if (id == R.id.my_guanzhu_bt) {
+			Toast.makeText(context, "ï¿½ï¿½ï¿½ï¿½3", 1).show();
+		} else if (id == R.id.ivTitleBtnLeft) {
 			menu.toggle();
-			break;
-		case R.id.my_fensi_bt:
-			Toast.makeText(context, "µãÎÒ1", 1).show();
-			break;
-		case R.id.my_blacklist_bt:
-			Toast.makeText(context, "µãÎÒ1", 1).show();
-			break;
-		case R.id.my_aboutus_bt:
-			Toast.makeText(context, "µãÎÒ1", 1).show();
-			break;
-//		case R.id.my_logout_bt:		
-////			Toast.makeText(context, "µãÎÒ1", 1).show();
-//			break;
+		} else if (id == R.id.my_fensi_bt) {
+			Toast.makeText(context, "ï¿½ï¿½ï¿½ï¿½1", 1).show();
+		} else if (id == R.id.my_blacklist_bt) {
+			Toast.makeText(context, "ï¿½ï¿½ï¿½ï¿½1", 1).show();
+		} else if (id == R.id.my_aboutus_bt) {
+			Toast.makeText(context, "ï¿½ï¿½ï¿½ï¿½1", 1).show();
 		}
 
 	}

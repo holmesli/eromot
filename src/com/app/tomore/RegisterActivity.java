@@ -68,7 +68,7 @@ public class RegisterActivity extends Activity {
     	Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
 		startActivity(intent);   		
 	}
-	
+	/*
 	public void onRadioButtonClicked(View view) {
 		// Is the button now checked?
 		boolean checked = ((RadioButton) view).isChecked();
@@ -84,7 +84,7 @@ public class RegisterActivity extends Activity {
 				// Ninjas rule
 				break;
 		}
-	}
+	}*/
 	
 	public void onCheckedClick(View view){
 		registerAgreement = ((CheckBox) view).isChecked();
@@ -104,11 +104,11 @@ public class RegisterActivity extends Activity {
 			if(registerPassword.equals(registerConfirmPassword) && registerPassword.length() >= 3 && registerPassword.length() <= 20){
 				new Register(RegisterActivity.this, 1).execute("");
 			}else{
-		    	Toast.makeText(getApplicationContext(), "ÇëÊäÈëÓÐÐ§µÄÃÜÂë",
+		    	Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 						Toast.LENGTH_SHORT).show();				
 			}
 		}else{
-	    	Toast.makeText(getApplicationContext(), "ÐèÒªÍ¬ÒâÒþË½Ð­ÒéºÍ·þÎñÌõ¿î",
+	    	Toast.makeText(getApplicationContext(), "ï¿½ï¿½ÒªÍ¬ï¿½ï¿½ï¿½ï¿½Ë½Ð­ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -156,7 +156,7 @@ public class RegisterActivity extends Activity {
 				dialog.dismiss();
 			}
 			if (result == null || result.equals("")) {
-		    	Toast.makeText(getApplicationContext(), "×¢²áÊ§°Ü",
+		    	Toast.makeText(getApplicationContext(), "×¢ï¿½ï¿½Ê§ï¿½ï¿½",
 						Toast.LENGTH_SHORT).show();
 			}else {
 				Gson gson = new Gson();
@@ -167,13 +167,13 @@ public class RegisterActivity extends Activity {
 			    	Intent intent = new Intent(RegisterActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   
 			    }else if(loninResult.equals("\"2\"")){
-			    	Toast.makeText(getApplicationContext(), "ÓÃ»§ÃûÒÑ´æÔÚ",
+			    	Toast.makeText(getApplicationContext(), "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½",
 							Toast.LENGTH_SHORT).show();
 			    }else if(loninResult.equals("\"3\"")){
-			    	Toast.makeText(getApplicationContext(), "ÓÊÏäÒÑ´æÔÚ",
+			    	Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½",
 							Toast.LENGTH_SHORT).show();
 			    }else{
-			    	Toast.makeText(getApplicationContext(), "×¢²áÊ§°Ü",
+			    	Toast.makeText(getApplicationContext(), "×¢ï¿½ï¿½Ê§ï¿½ï¿½",
 							Toast.LENGTH_SHORT).show();			    	
 			    }
 			}
