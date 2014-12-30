@@ -122,7 +122,8 @@ public class RestaurantBLActivity  extends Activity{
 			} else {
 				restlist = new ArrayList<BLRestaurantModel>();
 				try {
-					restlist = new YellowPageParse().parseRestaurantResponse(result);
+				
+					//restlist = new YellowPageParse().parseRestaurantResponse(result);
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();

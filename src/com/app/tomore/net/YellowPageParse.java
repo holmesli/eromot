@@ -1,6 +1,8 @@
 package com.app.tomore.net;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CategoryModel;
@@ -42,18 +44,30 @@ public class YellowPageParse {
 		}
 		return lcs;
 	}
-	
-	public ArrayList<BLRestaurantModel> parseRestaurantResponse(String jsonRestaurant)  throws JsonSyntaxException 
+	//http://54.213.167.5/APIV2/getRestInfo.php?region=-1&page=1&limit=1000
+	//key = region name, value = region rest list
+	public HashMap<String, ArrayList<BLRestaurantModel>> parseRestaurantResponse(String jsonRestaurant) 
+			throws JsonSyntaxException 
 	{
+		HashMap<String, ArrayList<BLRestaurantModel>> retMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
 		Gson gson = new Gson();
 		JsonElement jelement = new JsonParser().parse(jsonRestaurant);
 	    JsonObject  jobject = jelement.getAsJsonObject();
 	    JsonArray jarray = jobject.getAsJsonArray("data");
-		ArrayList<BLRestaurantModel> restaurantlist = new ArrayList<BLRestaurantModel>();
 		for (JsonElement obj : jarray) {
-			BLRestaurantModel cse = gson.fromJson(obj, BLRestaurantModel.class);
-			restaurantlist.add(cse);
+			JsonObject  jobject2 = obj.getAsJsonObject();
+			JsonArray jarray2 = jobject2.getAsJsonArray("downtown");
+			if(jarray2 != null)
+			{
+				ArrayList<BLRestaurantModel> restaurantlist = new ArrayList<BLRestaurantModel>();
+				for (JsonElement obj2 : jarray2)
+				{
+				BLRestaurantModel cse = gson.fromJson(obj2, BLRestaurantModel.class);
+				restaurantlist.add(cse);
+				}
+				retMap.put("downtown",restaurantlist);
+			}
 		}
-		return restaurantlist;
+		return retMap;
 	}
 }

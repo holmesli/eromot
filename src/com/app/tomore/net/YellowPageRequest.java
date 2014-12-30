@@ -58,10 +58,8 @@ public class YellowPageRequest {
         ParameterMap params = baseRequest.newParams()
         		.add("page",page)
         		.add("limit",limit)
-        		.add("page",page);
- 
-        
-        HttpResponse httpResponse = baseRequest.post("http://54.213.167.5/APIV2/getRestInfo.php", params);
+        		.add("region",region);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getRestInfo.php", params);
         return httpResponse.getBodyAsString();
 	}
 }
