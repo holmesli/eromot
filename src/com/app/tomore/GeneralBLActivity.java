@@ -3,14 +3,10 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeoutException;
-
 import com.app.tomore.DialogActivity;
 import com.app.tomore.R;
 import com.app.tomore.beans.GeneralBLModel;
-import com.app.tomore.beans.GeneralBLText;
-import com.app.tomore.beans.GeneralBLViewCache;
 import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
 import com.app.tomore.utils.AppUtil;
@@ -20,11 +16,8 @@ import com.app.tomore.utils.PullToRefreshBase.OnRefreshListener;
 import com.app.tomore.utils.PullToRefreshListView;
 import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -36,10 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
@@ -49,7 +39,6 @@ public class GeneralBLActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<GeneralBLModel> dataList;
 	int BLID;
-	private DisplayImageOptions otp;
 	private PullToRefreshListView mListView;
 	private Activity mContext;
 	private TextView noneData;
@@ -71,9 +60,6 @@ public class GeneralBLActivity extends Activity {
 		mContext = this;
 		limit = 20;
 		pageNumber = 1;
-		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
-				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
-				.build();
 		mListView = (PullToRefreshListView) findViewById(R.id.list);
 		mListView.setOnRefreshListener(onRefreshListener);
 		mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
@@ -104,7 +90,7 @@ public class GeneralBLActivity extends Activity {
 		Intent intent;
 		intent = new Intent(GeneralBLActivity.this,
 				GeneralBLDetailActivity.class);
-		intent.putExtra("BLdata", dataList.get(position));
+		intent.putExtra("BLdata", (Serializable)dataList.get(position));
 		startActivityForResult(intent, 100);
 	}
 
