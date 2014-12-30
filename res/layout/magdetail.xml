@@ -31,21 +31,29 @@
              android:textColor="#111111"
              android:textSize="22sp" />
 
-       <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:paddingTop="5dip" >
+<!--        <FrameLayout -->
+<!--             android:layout_width="650dp" -->
+<!--             android:layout_height="270dp" -->
+<!--             android:layout_gravity="center" -->
+<!--             android:paddingTop="5dip" > -->
 
-
+<FrameLayout
+                android:layout_width="650dp"
+                android:layout_height="270dp"
+                android:layout_gravity="center">
+                
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dip" >
 
             <com.app.tomore.util.TouchImageView
                 android:id="@+id/news_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center|center_vertical"
-                android:scaleType="center" />
-        </FrameLayout>
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+               />
+<!--         </FrameLayout> -->
 
 <!--         <FrameLayout -->
 <!--             android:id="@+id/videoFrame" -->
@@ -54,13 +62,12 @@
 <!--             android:layout_gravity="center" -->
 <!--             android:paddingTop="5dip" > -->
 
-<!--             <VideoView -->
-<!-- 			    android:id="@+id/videoView" -->
-<!-- 			    android:layout_width="match_parent" -->
-<!-- 			    android:layout_height="match_parent" -->
-<!-- 			    android:layout_centerInParent="true" -->
-<!-- 			    android:layout_gravity="center" /> -->
-<!--         </FrameLayout> -->
+            <VideoView
+			    android:id="@+id/videoView"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent" />
+            </LinearLayout>
+        </FrameLayout>
 		
         <FrameLayout
             android:layout_width="fill_parent"

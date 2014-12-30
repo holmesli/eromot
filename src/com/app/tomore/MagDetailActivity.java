@@ -24,8 +24,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +49,7 @@ public class MagDetailActivity extends Activity {
 
 	private DialogActivity dialog;
 	private ArticleModel articleItem;
-	
+	public VideoView vidPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +154,7 @@ public class MagDetailActivity extends Activity {
 		detailWeb.loadUrl(articleItem.getArticleContent());
 		detailWeb.getSettings().setJavaScriptEnabled(true);
 
+
 //			MediaController videoMediaController = new MediaController(this);
 //		    videoMediaController.setMediaPlayer(detailView);
 //			detailView.setVideoURI(uri);
@@ -168,4 +172,5 @@ public class MagDetailActivity extends Activity {
 		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
 		
 	}
+	
 }

@@ -1,0 +1,22 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:1.0.0'
+  }
+}
+
+allprojects {
+  group 'com.makeramen'
+  version '1.6.0-SNAPSHOT'
+  repositories {
+    mavenCentral()
+  }
+}
+
+ext {
+  compileSdkVersion = 21
+  buildToolsVersion = "21.1.2"
+}
