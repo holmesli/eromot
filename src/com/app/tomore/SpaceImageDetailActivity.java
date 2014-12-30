@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 
-import com.app.tomore.util.SmoothImageView;
+import com.app.tomore.utils.SmoothImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SpaceImageDetailActivity extends Activity {

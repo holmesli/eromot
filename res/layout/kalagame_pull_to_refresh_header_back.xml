@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+         >
+
+    <LinearLayout   
+        android:layout_centerInParent="true"     
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/kalagame_id_pull_to_refresh_bottom_layout"
+        android:orientation="vertical" >
+
+           <!-- android:textAppearance="?android:attr/textAppearanceMedium"   android:textAppearance="?android:attr/textAppearanceSmall" -->
+        <TextView          
+            android:id="@+id/kalagame_id_pull_to_refresh_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"       
+            android:textColor="#646464" 
+            android:layout_gravity="center"
+            android:gravity="center"
+             />
+
+        <TextView        
+            android:id="@+id/kalagame_id_pull_to_refresh_sub_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"  
+            android:textColor="#646464"    
+            android:layout_gravity="center"
+            android:gravity="center"     
+            android:visibility="gone" />
+    </LinearLayout>
+    
+    <!-- android:layout_toLeftOf="@+id/kalagame_id_pull_to_refresh_bottom_layout" -->
+     <FrameLayout
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="30dip"
+        android:minWidth="30dip"
+         >
+
+        <ImageView
+            android:maxWidth="30dip"
+            android:maxHeight="30dip"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            android:id="@+id/kalagame_id_pull_to_refresh_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ProgressBar
+            android:id="@+id/kalagame_id_pull_to_refresh_progress"         
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/kalagame_refresh_progress"
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </FrameLayout>
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:id="@+id/kalagame_id_pull_to_refresh_diviver"
+        android:layout_alignParentBottom="true"
+        >
+    </View>
+    
+    <!-- 足球圈 -->
+    <include layout="@layout/zuqiu_anim_layout"/>
+    
+</RelativeLayout>

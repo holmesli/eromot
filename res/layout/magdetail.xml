@@ -48,7 +48,7 @@
         android:orientation="vertical"
         android:padding="15dip" >
 
-            <com.app.tomore.util.TouchImageView
+            <com.app.tomore.utils.TouchImageView
                 android:id="@+id/news_image"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

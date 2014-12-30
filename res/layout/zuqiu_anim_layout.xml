@@ -1,0 +1,79 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/continer"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- 第一行 -->
+    <ImageView
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu1"
+    	android:layout_centerHorizontal="true"
+    	android:layout_marginTop="-20dip"/>
+    <!-- 第二行 -->
+    <ImageView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu2"
+    	android:layout_marginTop="20dip"
+    	android:layout_below="@id/zuqiu1"
+    	android:layout_centerHorizontal="true"
+    	android:layout_toLeftOf="@id/zuqiu1"
+    	android:layout_marginRight="50dip"/>
+    <ImageView
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu3"
+    	android:layout_marginTop="20dip"
+    	android:layout_centerHorizontal="true"
+    	android:layout_below="@id/zuqiu1"
+    	android:layout_toRightOf="@id/zuqiu1"
+    	android:layout_marginLeft="50dip"/>
+    <!-- 第三行 -->
+    <ImageView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu4"
+    	android:layout_below="@id/zuqiu2"
+    	android:layout_toLeftOf="@id/zuqiu2"
+    	android:layout_marginRight="20dip"
+    	android:layout_marginTop="50dip"
+    	android:layout_centerHorizontal="true"/>
+    <ImageView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu5"
+    	android:layout_below="@id/zuqiu2"
+    	android:layout_toRightOf="@id/zuqiu3"
+    	android:layout_marginLeft="20dip"
+    	android:layout_marginTop="50dip"
+    	android:layout_centerHorizontal="true"/>
+	<!-- 第四行 -->
+	<ImageView
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu6"
+    	android:layout_below="@id/zuqiu4"
+    	android:layout_toLeftOf="@id/zuqiu1"
+    	android:layout_centerHorizontal="true"
+    	android:layout_marginTop="50dip"
+    	android:layout_marginRight="50dip"/>
+	<ImageView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu7"
+    	android:layout_below="@id/zuqiu4"
+    	android:layout_toRightOf="@id/zuqiu1"
+    	android:layout_centerHorizontal="true"
+    	android:layout_marginTop="50dip"
+    	android:layout_marginLeft="50dip"/>
+	<!-- 第五行 -->
+	<ImageView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/zuqiu8"
+    	android:layout_centerHorizontal="true"
+    	android:layout_below="@id/zuqiu6"
+    	android:layout_marginTop="20dip"/>
+</RelativeLayout>
