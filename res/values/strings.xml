@@ -145,6 +145,7 @@
         <item>其它</item>
     </string-array>
     
+    <string name="loadingNow">正在加载数据</string>
     <string name="pull_to_refresh_tap_label" translatable="false">点击刷新</string>
     <string name="pull_to_refresh_pull_label" translatable="false">下拉刷新</string>
     <string name="pull_to_refresh_release_label" translatable="false">松开可以刷新</string>
@@ -152,7 +153,7 @@
     <string name="pull_to_refresh_update_time_label" translatable="false">上次更新时间 </string>
     <string name="pull_to_refresh_load_label" translatable="false">上拉加载更多</string>
      <string name="load_mode_label" translatable="false">加载更多</string>
-<string name="mag_detail_back">杂志</string>
+	<string name="mag_detail_back">杂志</string>
     <string name="mag_content">正文</string>
     <string name="title_activity_login">LoginActivity</string>
 </resources>

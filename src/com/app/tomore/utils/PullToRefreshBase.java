@@ -1477,16 +1477,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             if (diffTime <= 0) {
                 diffTime = 1;
             }
-            timeStamp = diffTime + "绉掑墠";
+            timeStamp = diffTime + "秒前";
         } else if (diffTime >= SECONDS_PER_MINUTE && diffTime < SECONDS_PER_HOUR) {
             minutes = diffTime / SECONDS_PER_MINUTE;
-            timeStamp = minutes + "鍒嗛挓鍓";
+            timeStamp = minutes + "分钟前";
         } else if (diffTime >= SECONDS_PER_HOUR && diffTime < SECONDS_PER_DAY) {
             hours = diffTime / SECONDS_PER_HOUR;
-            timeStamp = hours + "灏忔椂鍓";
+            timeStamp = hours + "小时前";
         } else if (diffTime >= SECONDS_PER_DAY && diffTime < DAYS_PER_WEEK * SECONDS_PER_DAY) {
             day = diffTime / SECONDS_PER_HOUR;
-            timeStamp = day + "澶╁墠";
+            timeStamp = day + "天前";
         } else {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date lastDate = new Date(lastTime);
@@ -1507,7 +1507,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * timeStamp = minutes + "鍒嗛挓鍓?; } else { if(diffTime <= 0){ diffTime =
          * 1; } timeStamp = diffTime+"绉掑墠"; } } }
          */
-        return timeStamp + "鏇存柊";
+        return timeStamp + "更新";
     }
 
     private String formatTimeStamp1(long lastTime) {
@@ -1548,7 +1548,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * timeStamp = minutes + "鍒嗛挓鍓?; } else { if(diffTime <= 0){ diffTime =
          * 1; } timeStamp = diffTime+"绉掑墠"; } } }
          */
-        return "涓婃鏇存柊" + timeStamp;
+        return "上次刷新: " + timeStamp;
     }
 
 }

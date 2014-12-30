@@ -179,14 +179,13 @@ public class MainMemActivity extends Activity {
 			if (cardList == null) {
 				return;
 			}
-			CardModel cardItem = cardList.get(position);
-			Object obj = (Object) cardList.get(position);
+			Object obj = (Object) cardList.get(position-1);
 			if (obj instanceof String) {
 				return;
 			}
 			Intent intent = new Intent(MainMemActivity.this,
 					MemberDetailActivity.class);
-			intent.putExtra("cardList", (Serializable) cardItem);
+			intent.putExtra("cardList", (Serializable) obj);
 			startActivity(intent);
 		}
 	};
