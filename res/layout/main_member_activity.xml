@@ -7,12 +7,6 @@
     <include
         layout="@layout/bar_title_member"
         android:focusable="true" />
-    <ImageView 
-        android:layout_width="fill_parent"
-   		android:layout_height="50dp"
-   		android:scaleType="fitXY"
-   		android:visibility="gone"
-   		android:id="@+id/adImg"/>
 	<com.app.tomore.utils.PullToRefreshListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

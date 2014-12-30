@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.app.tomore.httpclient.BasicHttpClient;
 import com.app.tomore.httpclient.HttpResponse;
+import com.app.tomore.httpclient.ParameterMap;
 
 public class YellowPageRequest {
 
@@ -29,5 +30,20 @@ public class YellowPageRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getIcons.php", null);
         return httpResponse.getBodyAsString();
 	}
-	
+	/*
+	 * get all BL CommonList
+	 * http://54.213.167.5/APIV2/getAdInfoByAdType.php?
+	 */
+	public String getBlList(int pageNum, int number, String categoryId)
+			throws IOException, TimeoutException
+	{
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+        		.add("page",Integer.toString(pageNum))
+        		.add("limit",Integer.toString(number))
+        		.add("adType",categoryId);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getAdInfoByAdType.php", params);
+        return httpResponse.getBodyAsString();
+	}
 }
