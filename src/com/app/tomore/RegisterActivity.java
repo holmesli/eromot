@@ -108,7 +108,7 @@ public class RegisterActivity extends Activity {
 						Toast.LENGTH_SHORT).show();				
 			}
 		}else{
-	    	Toast.makeText(getApplicationContext(), "��Ҫͬ����˽Э��ͷ�������",
+	    	Toast.makeText(getApplicationContext(), "��Ҫͬ����˽Э��ͷ�������",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
