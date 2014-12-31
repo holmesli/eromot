@@ -40,11 +40,13 @@ import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -81,6 +83,9 @@ public class MagDetailActivity extends Activity {
 		myVideoView = (VideoView) findViewById(R.id.videoView);
 		frame = (FrameLayout) findViewById(R.id.videoFrame);
 		
+		RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
+				.findViewById(R.id.bar_title_mag_detail);
+		
 		findViewById(R.id.bar_title_bt_share).setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -97,6 +102,17 @@ public class MagDetailActivity extends Activity {
 		BindData();
 		GetVideo();
 		new GetData(MagDetailActivity.this, 1).execute("");
+		
+		final Button btnBack = (Button) rl
+				.findViewById(R.id.bar_title_bt_mag);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
+
 	}
 	
 	private class GetData extends AsyncTask<String, String, String> {
@@ -259,5 +275,6 @@ public class MagDetailActivity extends Activity {
 		myVideoView.seekTo(position);
 	}
 		
+	
 	
 }

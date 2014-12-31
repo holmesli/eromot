@@ -132,9 +132,11 @@ public class MainMagActivity extends Activity {
 			String result = null;
 			MagRequest request = new MagRequest(MainMagActivity.this);
 			try {
-				String magId = "3";
+				String magId = "";
+				String pre="1";
+				String next="";
 				Log.d("doInBackground", "start request");
-				result = request.getMagById(magId);
+				result = request.getMagById(magId,pre,next);
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
