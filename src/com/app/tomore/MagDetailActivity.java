@@ -21,6 +21,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -29,6 +30,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,18 +40,32 @@ import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 public class MagDetailActivity extends Activity {
 
 	private DialogActivity dialog;
 	private ArticleModel articleItem;
-	public VideoView vidPlayer;
+	
+	private VideoView myVideoView;
+	private int position = 0;
+	private ProgressDialog progressDialog;
+	private MediaController mediaControls;
+	
+	private TouchImageView detailImage;
+	private TextView testView1;
+	private TextView testView2;
+	private WebView detailWeb;
+	private TextView detailTitle;
+	private FrameLayout frame;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +73,13 @@ public class MagDetailActivity extends Activity {
 		setContentView(R.layout.magdetail);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		
+		detailTitle = (TextView) getWindow().getDecorView().findViewById(R.id.news_title_text);
+		detailImage = (TouchImageView)getWindow().getDecorView().findViewById(R.id.news_image);
+		detailWeb = (WebView)findViewById(R.id.news_content_text);
+		//testView1 = (TextView) getWindow().getDecorView().findViewById(R.id.testweb);
+		//testView2 = (TextView) getWindow().getDecorView().findViewById(R.id.testweb2);
+		myVideoView = (VideoView) findViewById(R.id.videoView);
+		frame = (FrameLayout) findViewById(R.id.videoFrame);
 		
 		findViewById(R.id.bar_title_bt_share).setOnClickListener(new OnClickListener() {
 
@@ -72,6 +95,7 @@ public class MagDetailActivity extends Activity {
 		Intent intent = getIntent();
 		articleItem = (ArticleModel) intent.getSerializableExtra("articleList");
 		BindData();
+		GetVideo();
 		new GetData(MagDetailActivity.this, 1).execute("");
 	}
 	
@@ -142,35 +166,98 @@ public class MagDetailActivity extends Activity {
 	
 	private void BindData()
 	{
-		TextView detailTitle = (TextView) getWindow().getDecorView()
-				.findViewById(R.id.news_title_text);
-		TouchImageView detailImage = (TouchImageView)getWindow().getDecorView().findViewById(R.id.news_image);
-		WebView detailWeb = (WebView)findViewById(R.id.news_content_text);
-		//VideoView detailView = (VideoView)findViewById(R.id.videoView);
-		//String video = articleItem.getArticleVideo();
 		String webUrl = articleItem.getArticleContent();
-		//Uri uri = Uri.parse(articleItem.getArticleVideo());
 		detailWeb.setWebChromeClient(new WebChromeClient());
 		detailWeb.loadUrl(articleItem.getArticleContent());
-		detailWeb.getSettings().setJavaScriptEnabled(true);
-
-
-//			MediaController videoMediaController = new MediaController(this);
-//		    videoMediaController.setMediaPlayer(detailView);
-//			detailView.setVideoURI(uri);
-//		      detailView.setMediaController(videoMediaController);
-//		      detailView.requestFocus();
-//		      detailView.start();
-//		      super.onStart();
-
 		detailWeb.getSettings().setJavaScriptEnabled(true);
 		detailWeb.loadDataWithBaseURL(null,webUrl,
 	    "text/html", "utf-8",null );
 		detailWeb.setWebChromeClient(new WebChromeClient()); 
 		detailTitle.setText(articleItem.getArticleTitle());
-
 		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
-		
+//		String videoUrl = articleItem.getVideoUrl();
+//		String textUrl = articleItem.getTextUrl();
+//		
+		//testView1.setText(videoUrl);
+		//testView2.setText(textUrl);
+		String video = articleItem.getArticleVideo();
+		if(video.equals(""))
+		{
+			myVideoView.setVisibility(View.INVISIBLE);
+			frame.setVisibility(View.GONE);
+//			testView1.setVisibility(View.INVISIBLE);
+//			testView2.setVisibility(View.INVISIBLE);
+			detailImage.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			frame.setVisibility(View.VISIBLE);
+			myVideoView.setVisibility(View.VISIBLE);
+//			testView1.setVisibility(View.VISIBLE);
+//			testView2.setVisibility(View.VISIBLE);
+			detailImage.setVisibility(View.GONE);
+			
+		}
+
 	}
+	
+	public void GetVideo()
+	{
+		if (mediaControls == null) {
+			mediaControls = new MediaController(MagDetailActivity.this);
+		}
+
+		// Find your VideoView in your video_main.xml layout
+		//myVideoView = (VideoView) findViewById(R.id.videoView);
+
+		// Create a progressbar
+		progressDialog = new ProgressDialog(MagDetailActivity.this);
+		// Set progressbar title
+//		progressDialog.setTitle("JavaCodeGeeks Android Video View Example");
+//		// Set progressbar message
+//		progressDialog.setMessage("Loading...");
+//
+//		progressDialog.setCancelable(true);
+//		// Show progressbar
+//		progressDialog.show();
+
+		try {
+			myVideoView.setMediaController(mediaControls);
+			myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.kitkat));
+
+		} catch (Exception e) {
+			Log.e("Error", e.getMessage());
+			e.printStackTrace();
+		}
+
+		myVideoView.requestFocus();
+		myVideoView.setOnPreparedListener(new OnPreparedListener() {
+			// Close the progress bar and play the video
+			public void onPrepared(MediaPlayer mp) {
+				progressDialog.dismiss();
+				myVideoView.seekTo(position);
+				if (position == 0) {
+					myVideoView.start();
+				} else {
+					myVideoView.pause();
+				}
+			}
+		});
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putInt("Position", myVideoView.getCurrentPosition());
+		myVideoView.pause();
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		position = savedInstanceState.getInt("Position");
+		myVideoView.seekTo(position);
+	}
+		
 	
 }

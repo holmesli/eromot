@@ -70,6 +70,7 @@
         <activity android:name=".GeneralBLDetailActivity"  > </activity>
         <activity android:name=".MemberAddActivity"  > </activity>
         <activity android:name=".MemberDetailActivity"  > </activity>
+        <activity android:name=".MagVideoActivity"  > </activity>
     </application>
 
 </manifest>

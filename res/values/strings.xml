@@ -93,6 +93,7 @@
 	<string name="addressinfo">地址信息</string>
 	<string name="phone">电话</string>
 	<string name="sent">发送</string>
+	<string name="wholevideo">完整视频</string>
     
     
     <color name="register_background_color">#f7f7f7</color>
