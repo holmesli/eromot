@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
-
 /**
  * Lightweight HTTP client that facilitates GET, POST, PUT, and DELETE requests
  * using {@link HttpURLConnection}. Extend this class to support specialized
@@ -25,7 +24,20 @@ public abstract class AbstractHttpClient {
 
     public static final String URLENCODED = "application/x-www-form-urlencoded;charset=UTF-8";
     public static final String MULTIPART = "multipart/form-data";
+    protected int getNextTimeout(int numTries) {
+		// For n=0,1,2,3 returns 1000,2000,3000,5000
+		return 1000 * fib[numTries + 2];
+	}
 
+	static int[] fib = new int[20];
+	static {
+		// Compute Fibonacci series for backoff
+		for (int i = 0; i < 20; i++) {
+			fib[i] = i < 2 ? i : fib[i - 2] + fib[i - 1];
+		}
+	}
+
+	private int maxRetries = 3;
     protected String baseUrl = "";
 
     protected RequestLogger requestLogger = new ConsoleRequestLogger();
@@ -466,6 +478,62 @@ public abstract class AbstractHttpClient {
         this.connectionTimeout = connectionTimeout;
     }
 
+
+	/**
+	 * Tries several times until successful or maxRetries exhausted. Must throw
+	 * exception in order for the async process to forward it to the callback's
+	 * onError method.
+	 * 
+	 * @param httpRequest
+	 * @return Response object, may be null
+	 * @throws HttpRequestException
+	 */
+	public HttpResponse tryMany(HttpRequest httpRequest)
+			throws HttpRequestException {
+		int numTries = 0;
+		long startTime = System.currentTimeMillis();
+		HttpResponse res = null;
+		while (numTries < maxRetries) {
+			try {
+				setConnectionTimeout(getNextTimeout(numTries));
+				if (requestLogger.isLoggingEnabled()) {
+					requestLogger.log((numTries + 1) + "of" + maxRetries
+							+ ", trying " + httpRequest.getPath());
+				}
+				startTime = System.currentTimeMillis();
+				res = doHttpMethod(httpRequest.getPath(),
+						httpRequest.getHttpMethod(),
+						httpRequest.getContentType(), httpRequest.getContent());
+				if (res != null) {
+					return res;
+				}
+			} catch (HttpRequestException e) {
+				if (isTimeoutException(e, startTime)
+						&& numTries < (maxRetries - 1)) {
+					// Fall through loop, retry
+					// On last attempt, throw the exception regardless
+				} else {
+					boolean isRecoverable = requestHandler.onError(e);
+					if (isRecoverable && numTries < (maxRetries - 1)) {
+						try {
+							// Wait a while and fall through loop to try again
+							Thread.sleep(connectionTimeout);
+						} catch (InterruptedException ie) {
+							// App stopping, perhaps? No point in further
+							// retries
+							throw e;
+						}
+					} else {
+						// Not recoverable or last attempt, time to bail
+						throw e;
+					}
+				}
+			}
+			numTries++;
+		}
+		return null;
+	}
+	
     /**
      * Sets the read timeout in ms, which begins after connection has been made.
      * For large amounts of data expected, bump this up to make sure you allow
