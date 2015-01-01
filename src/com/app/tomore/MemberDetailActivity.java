@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,6 +68,7 @@ public class MemberDetailActivity extends Activity {
 	private Bitmap bitmap = null;
 	public static final int REQUEST_CAMERA = 1;
     public static final int SELECT_FILE = 2;
+    Uri imageUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +293,15 @@ public class MemberDetailActivity extends Activity {
 				selectImage();
 			}
 		});
+		
+		btnBackEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				
+				selectImage();
+			}
+		});
+
 
 	}
 
@@ -524,7 +535,23 @@ public class MemberDetailActivity extends Activity {
 					File f = new File(android.os.Environment
 							.getExternalStorageDirectory(), "temp.jpg");
 					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+					intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
 					startActivityForResult(intent, REQUEST_CAMERA);
+					
+//					  //define the file-name to save photo taken by Camera activity
+//	                String fileName = "temp.jpg";
+//	                //create parameters for Intent with filename
+//	                ContentValues values = new ContentValues();
+//	                values.put(MediaStore.Images.Media.TITLE, fileName);
+//	                values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+//	                //imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
+//	                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//	                //create new Intent
+//	                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//	                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//	                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+//	                startActivityForResult(intent, REQUEST_CAMERA);
+	               
 				} else if (items[item].equals("Choose from Library")) {
 					Intent intent = new Intent(
 							Intent.ACTION_PICK,

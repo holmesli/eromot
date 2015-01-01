@@ -12,21 +12,40 @@
         android:orientation="vertical" >
         
             <include layout="@layout/bar_title_meg" android:focusable="true"/>
-    		
-            <ListView   
-	     	android:dividerHeight="1dip" 
-	     	android:id="@+id/mag_listviews" 
-	     	android:divider="#e0e0e0" 
-	     	android:layout_width="fill_parent" 
-	     	android:layout_height="wrap_content" 
-	     	android:cacheColorHint="#00000000" 
-	     	android:listSelector="@drawable/mag_list_selector" 
-	     	>
-<!--     <com.app.tomore.utils.AutoListView -->
+    		<com.app.tomore.utils.PullToRefreshListView
+        android:id="@+id/mag_listviews"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         android:layout_marginTop="-1.33dp"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        ptr:kalaAnimationStyle="flip"
+        ptr:kalaTopProgress="@drawable/kalagame_hunter_refresh_loading"
+        ptr:kalaDrawable="@drawable/kalagame_icon_arrows"
+        android:fadingEdge="none"
+        />
+	<TextView 
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="没有数据"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/noneData"/>
+    <include layout="@layout/no_net_layout"/>
+<!--             <ListView    -->
+<!-- 	     	android:dividerHeight="1dip"  -->
+<!-- 	     	android:id="@+id/mag_listviews"  -->
+<!-- 	     	android:divider="#e0e0e0"  -->
+<!-- 	     	android:layout_width="fill_parent"  -->
+<!-- 	     	android:layout_height="wrap_content"  -->
+<!-- 	     	android:cacheColorHint="#00000000"  -->
+<!-- 	     	android:listSelector="@drawable/mag_list_selector"  -->
+<!-- 	     	> -->
+<!--     <com.app.tomore.utils.AutoListView --> 
 <!--         android:id="@+id/lstv" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="wrap_content" /> -->
-	</ListView>
+<!--          android:layout_width="match_parent" -->
+<!--          android:layout_height="wrap_content" /> --> 
+<!-- 	</ListView> -->
 
     </LinearLayout>
 

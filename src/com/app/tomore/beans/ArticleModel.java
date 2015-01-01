@@ -118,6 +118,20 @@ public class ArticleModel extends BaseBean implements Serializable, Comparable<A
 	public void setTextUrl(String textUrl) {
 		TextUrl = textUrl;
 	}
+	public String getPre() {
+		return Pre;
+	}
+
+	public void setPre(String pre) {
+		Pre =pre;
+	}
+	public String getNext() {
+		return Next;
+	}
+
+	public void setNext(String next) {
+		Next = next;
+	}
 
 	private String ArticleTitle;
 	private String  ArticleContent;
@@ -132,6 +146,8 @@ public class ArticleModel extends BaseBean implements Serializable, Comparable<A
 	private String ArticleVideo;
 	private String  VideoUrl;
 	private String  TextUrl;
+	private String Pre;
+	private String Next;
 	@Override
 	public int compareTo(ArticleModel another) {
 		// TODO Auto-generated method stub

@@ -24,12 +24,12 @@ public class MagRequest {
 	 * //get all magazines by id
 	 */
 	//http://54.213.167.5/APIV2/getArticleByArticleIssue.php?articleIssue=1
-	public String getMagById(String magId)
+	public String getMagById(int magId)
 			throws IOException, TimeoutException {
 		baseRequest = new BasicHttpClient(url);
         baseRequest.setConnectionTimeout(2000);
         ParameterMap params = baseRequest.newParams()
-                .add("articleIssue", magId);
+                .add("articleIssue",Integer.toString(magId));
         HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleByArticleIssue.php", params);
         return httpResponse.getBodyAsString();
 	}
