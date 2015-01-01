@@ -10,8 +10,11 @@ public class BLRestaurantModel implements Serializable {
 	private String AdID;
 	private String Title;
 	private String Content;
+	private String MemberID;
 	private String ServiceRegion;
 	private String Address;
+	private String Longtitude;
+	private String Latitude;
 	private String DeliverPrice;
 	private String Image;
 	private String Rating;
@@ -37,6 +40,12 @@ public class BLRestaurantModel implements Serializable {
 	public void setContent(String content) {
 		Content = content;
 	}
+	public String GetMemberID() {
+		return MemberID;
+	}
+	public void setMemberID(String memberID) {
+		MemberID = memberID;
+	}
 	public String getServiceRegion() {
 		return ServiceRegion;
 	}
@@ -49,6 +58,18 @@ public class BLRestaurantModel implements Serializable {
 	public void setAddress(String address) {
 		Address = address;
 	}
+	public String GetLongtitude() {
+		return Longtitude;
+	}
+	public void setLongtitude(String longtitude) {
+		Longtitude = longtitude;
+	}
+	public String GetLatitude() {
+		return Latitude;
+	}
+	public void setLatitude(String latitude) {
+		Latitude = latitude;
+	}	
 	public String getDeliverPrice() {
 		return DeliverPrice;
 	}

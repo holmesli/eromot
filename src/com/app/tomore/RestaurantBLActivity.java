@@ -3,25 +3,20 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.adapters.RestaurantAdapter;
+import com.app.tomore.GeneralBLActivity.ViewHolder;
 import com.app.tomore.beans.BLRestaurantModel;
-import com.app.tomore.beans.CardModel;
-import com.app.tomore.beans.ImageAndText;
-import com.app.tomore.beans.ImageAndTexts;
 import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
 import com.google.gson.JsonSyntaxException;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,17 +29,23 @@ import android.widget.*;
 public class RestaurantBLActivity  extends Activity{
 	private DialogActivity dialog;
 	private ArrayList<BLRestaurantModel> restlist;
+	private DisplayImageOptions otp;
 	BLRestaurantModel Restaurant= new BLRestaurantModel();
 	ListView listveiew;
+	private Activity mContext;
+	RestaurantAdapter newsListAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.blrestaurantlist);
+		setContentView(R.layout.bianli_restaurant);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		
+		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
+				.build();
 		new GetData(RestaurantBLActivity.this,1).execute("");
+		mContext = this;
 		//ListView listView = (ListView) findViewById(R.id.bianlirestaurant_listview);
 		
 		/*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,7 +72,8 @@ public class RestaurantBLActivity  extends Activity{
 	private void BindDataToListView() {
 	
 		ListView listView = (ListView) findViewById(R.id.bianlirestaurant_listview);
-		listView.setAdapter(new RestaurantAdapter(this, restlist, listView));
+		newsListAdapter = new RestaurantAdapter();
+		listView.setAdapter(newsListAdapter);
 	}
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
@@ -99,8 +101,8 @@ public class RestaurantBLActivity  extends Activity{
 			YellowPageRequest request = new YellowPageRequest(RestaurantBLActivity.this);
 			try {
 				String page ="1";
-				String limit="5";
-				String region="4";
+				String limit="1000";
+				String region="1";
 				Log.d("doInBackground", "start request");
 				result = request.getRestaurantId(page,limit,region);
 				Log.d("doInBackground", "returned");
@@ -121,6 +123,9 @@ public class RestaurantBLActivity  extends Activity{
 				// show empty alert
 			} else {
 				restlist = new ArrayList<BLRestaurantModel>();
+				HashMap<String, ArrayList<BLRestaurantModel>> RestMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
+				RestMap = new YellowPageParse().parseRestaurantResponse(result);
+				restlist = RestMap.get("downtown");
 				try {
 				
 					//restlist = new YellowPageParse().parseRestaurantResponse(result);
@@ -139,54 +144,68 @@ public class RestaurantBLActivity  extends Activity{
 			
 			}
 		}
-	}
-	}
-
 		
-	  /* private class RestaurantBLAdapter extends ArrayAdapter<BLRestaurantModel>{
-		   
-		   private ListView listview;
-		   
-		   public RestaurantBLAdapter(Activity activity, List<BLRestaurantModel> blrest,
-				   ListView listview1) {
-			   super(activity, 0, blrest);
-			   this.listview = listview1;
-			   ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
-			   
-		   }
-		  /* public View getView(int position, View convertView, ViewGroup parent){
-			   Activity activity =(Activity) getContext();
-			   View rowView = convertView;
-			   if(rowView == null){
-				   
-				   LayoutInflater inflater = activity.getLayoutInflater();
-				   rowView = inflater.inflate(R.layout.blrestaurantlist, null);
-				   
-			   }else{
-				   
-			   }
-			   BLRestaurantModel blrest = getItem(position);
-			   final String imageUrl = blrest.getImage();
-			   ImageView imageView = (ImageView) rowView.findViewById(R.layout.blrestaurantlist);
-			   imageView.setTag(imageUrl);
-				ImageLoader.getInstance().loadImage(imageUrl,
-						new SimpleImageLoadingListener() {
-							@Override
-							public void onLoadingComplete(String imageUri,
-									View view, Bitmap loadedImage) {
-								ImageView imageViewByTag = (ImageView) listview
-										.findViewWithTag(imageUrl);
-								if (imageViewByTag != null) {
-									imageViewByTag.setImageBitmap(loadedImage);
-								}
-							}
-						});
-				// Set the text on the TextView
+	}
+	
+	class ViewHolder {
+		private TextView Title;
+	    private ImageView Image;
+	}
+	
+	public class RestaurantAdapter extends BaseAdapter {
 
-				return rowView;
-			   
-			   
-		   }*/
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return restlist.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return restlist.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			BLRestaurantModel RestaurantItem = (BLRestaurantModel) getItem(position);
+			ViewHolder viewHolder = null;
+			if (convertView == null) {
+				viewHolder = new ViewHolder();
+				if(RestaurantItem.getHotLevel().equals("7")){
+					convertView = LayoutInflater.from(mContext).inflate(
+							R.layout.hotlv9_restaurant_listview, null);
+							//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
+							//viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
+				}
+				else{
+					convertView = LayoutInflater.from(mContext).inflate(
+							R.layout.blrestaurantlist, null);
+							//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
+							//viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
+				}
+				convertView.setTag(viewHolder);
+
+			} else {
+				viewHolder = (ViewHolder) convertView.getTag();
+			}
+			viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
+			viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
+			viewHolder.Title.setText(RestaurantItem.getTitle());
+			ImageLoader.getInstance().displayImage(RestaurantItem.getImage(),
+			viewHolder.Image,otp);
+			return convertView;
+		}
+
+	}
+}
+
 		
 
 
