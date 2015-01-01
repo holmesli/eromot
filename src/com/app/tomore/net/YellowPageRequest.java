@@ -62,4 +62,16 @@ public class YellowPageRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getRestInfo.php", params);
         return httpResponse.getBodyAsString();
 	}
+	//http://54.213.167.5/postFeedback.php?content=content&name=name&phone=6478990689&email=email
+	public String postFeedbackToAdmin(String content, String name, String phone, String email)
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+        		.add("content",content)
+        		.add("name",name)
+        		.add("phone",phone)
+        		.add("email",email);
+        HttpResponse httpResponse = baseRequest.post("/postFeedback.php", params);
+        return httpResponse.getBodyAsString();
 }
