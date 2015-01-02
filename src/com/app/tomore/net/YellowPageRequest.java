@@ -74,4 +74,5 @@ public class YellowPageRequest {
         		.add("email",email);
         HttpResponse httpResponse = baseRequest.post("/postFeedback.php", params);
         return httpResponse.getBodyAsString();
+	}
 }
