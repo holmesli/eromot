@@ -10,6 +10,8 @@ import com.app.tomore.GeneralBLActivity.ViewHolder;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
+import com.app.tomore.utils.AppUtil;
+import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class RestaurantBLActivity  extends Activity{
 	private DialogActivity dialog;
@@ -46,27 +49,6 @@ public class RestaurantBLActivity  extends Activity{
 				.build();
 		new GetData(RestaurantBLActivity.this,1).execute("");
 		mContext = this;
-		//ListView listView = (ListView) findViewById(R.id.bianlirestaurant_listview);
-		
-		/*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (blrest == null) {
-					return;
-				}
-				BLRestaurantModel RestaurantItem = blrest.get(position);
-				Object obj = (Object) blrest.get(position);
-				if (obj instanceof String) {
-					return;
-				}
-				Intent intent = new Intent(RestaurantBLActivity.this,
-						RestaurantBLActivity.class);
-				intent.putExtra("blrest", (Serializable) RestaurantItem);
-				startActivity(intent);
-			}
-		});
-		*/
 
 	}
 	private void BindDataToListView() {
@@ -75,6 +57,35 @@ public class RestaurantBLActivity  extends Activity{
 		newsListAdapter = new RestaurantAdapter();
 		listView.setAdapter(newsListAdapter);
 	}
+	
+	
+	private OnItemClickListener itemClickListener = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			if (!AppUtil.networkAvailable(mContext)) {
+				ToastUtils.showToast(mContext, "����������");
+				return;
+			}
+			if (restlist == null) {
+				return;
+			}
+			Object obj = (Object) restlist.get(position - 1);
+			if (obj instanceof String) {
+				return;
+			}
+			Open_Activity(position);
+		}
+	};
+	
+	private void Open_Activity(int position) {
+		Intent intent;
+		intent = new Intent(RestaurantBLActivity.this,
+				GeneralBLDetailActivity.class);
+		intent.putExtra("BLdata", (Serializable)restlist.get(position));
+		startActivityForResult(intent, 100);
+	}
+	
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;

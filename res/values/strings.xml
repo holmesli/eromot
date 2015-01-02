@@ -94,6 +94,13 @@
 	<string name="phone">电话</string>
 	<string name="sent">发送</string>
 	<string name="wholevideo">完整视频</string>
+	
+    <string name="join">加盟</string>
+    <string name="contactTo">联系人：</string>
+    <string name="contactThrough">联系方式：</string>
+    <string name="leaveMessage">留言：</string>
+    <string name="leagueWelcomeMessage">赶快填写商家信息加入便利联盟吧！</string>
+    <string name="successMessage">发送成功</string>
     
     
     <color name="register_background_color">#f7f7f7</color>

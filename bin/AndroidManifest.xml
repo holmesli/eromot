@@ -70,9 +70,8 @@
         <activity android:name=".GeneralBLDetailActivity"  > </activity>
         <activity android:name=".MemberAddActivity"  > </activity>
         <activity android:name=".MemberDetailActivity"  > </activity>
-        <activity android:name=".MagVideoActivity"  > </activity>
-        <activity android:name=".RestaurantBLActivity" > </activity>
-
+        <activity android:name=".RestaurantBLActivity"  > </activity>
+        <activity android:name=".LeagueActivity"  > </activity>
     </application>
 
 </manifest>

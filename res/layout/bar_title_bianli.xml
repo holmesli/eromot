@@ -22,6 +22,18 @@
         android:paddingRight="96.0dip"
         android:singleLine="true"
         android:text="@string/bar_title_bianli" />
+    
+        
+             <TextView
+        android:id="@+id/join_league"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/join"
+        android:gravity="end"
+		android:textAlignment="gravity"
+		android:paddingTop="12.0dip"
+		android:paddingRight="4.0dip"
+		android:textSize="13sp"/>
 
 
 
