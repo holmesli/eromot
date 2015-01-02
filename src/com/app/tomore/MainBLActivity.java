@@ -70,6 +70,11 @@ public class MainBLActivity extends Activity {
 	        intent.putExtra("BLID",BLID);
 	        startActivityForResult(intent, 100);
         }
+        else if(BLType == 0){
+	        intent = new Intent(MainBLActivity.this,
+	        		RestaurantBLActivity.class);
+	        startActivityForResult(intent, 100);
+        }
 	}
 
 	private class GetData extends AsyncTask<String, String, String> {
