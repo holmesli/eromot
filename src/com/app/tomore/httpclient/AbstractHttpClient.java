@@ -140,6 +140,10 @@ public abstract class AbstractHttpClient {
     public HttpResponse post(String path, String contentType, byte[] data) {
         return execute(new HttpPost(path, null, contentType, data));
     }
+    
+    public HttpResponse post(String path, ParameterMap params, String contentType, byte[] data) {
+    	return execute(new HttpPost(path, params, contentType, data));
+    }
 
     /**
      * Execute a PUT request with the supplied content and return the response.
