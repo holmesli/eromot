@@ -2,23 +2,23 @@ package com.app.tomore;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.ToMoreParse;
 import com.app.tomore.net.YellowPageRequest;
+import com.google.gson.JsonSyntaxException;
 
 public class LeagueActivity extends Activity{
 
@@ -30,6 +30,7 @@ public class LeagueActivity extends Activity{
 	private View layout;
 	String result = null;
 	private LayoutInflater inflater; 
+	private DialogActivity dialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,26 +45,72 @@ public class LeagueActivity extends Activity{
 		submit.setOnClickListener(new OnClickListener() {
 	        @Override
 	        public void onClick(View viewIn) {
-	        	YellowPageRequest request = new YellowPageRequest(LeagueActivity.this);
-	    		try {
-					result = request.postFeedbackToAdmin(messageText.getText().toString(), nameText.getText().toString(), contactText.getText().toString(), contactText.getText().toString());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TimeoutException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    		ToMoreParse getrequest= new ToMoreParse();
-	    		CommonModel returnResult = getrequest.CommonPares(result);
-	    		finalResult = returnResult.getResult();
-	    		if(finalResult.equals("succ")){
-	    			PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.league_pop_window, null, false),100,100, true);
-	    			pw.showAtLocation(layout, Gravity.TOP, 0, 0);
-	    		}
+	    		new GetData(LeagueActivity.this, 1).execute("");
 	        }
 	    });
 	}
 
+
+	private class GetData extends AsyncTask<String, String, String> {
+		// private Context mContext;
+		private int mType;
+
+		private GetData(Context context, int type) {
+			// this.mContext = context;
+			this.mType = type;
+			dialog = new DialogActivity(context, type);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			if (mType == 1) {
+				if (null != dialog && !dialog.isShowing()) {
+					dialog.show();
+				}
+			}
+			super.onPreExecute();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			String result = null;
+			YellowPageRequest request = new YellowPageRequest(LeagueActivity.this);
+			try {
+				Log.d("doInBackground", "start request");
+				result = request.postFeedbackToAdmin(messageText.getText().toString(), nameText.getText().toString(), contactText.getText().toString(), contactText.getText().toString());
+				Log.d("doInBackground", "returned");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (null != dialog) {
+				dialog.dismiss();
+			}
+			Log.d("onPostExecute", "postExec state");
+			if (result == null || result.equals("")) {
+				// show empty alert
+			} else {
+				CommonModel returnResult = new CommonModel();
+				try {
+					ToMoreParse getrequest= new ToMoreParse();
+		    		 returnResult = getrequest.CommonPares(result);
+		    		} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+				finalResult = returnResult.getResult();
+	    		if(finalResult.equals("succ")){
+	    			PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.league_pop_window, null, false),100,100, true);
+	    			pw.showAtLocation(layout, Gravity.TOP, 0, 0);
+	    		}
+			}
+		}
+	}
 	
 }
