@@ -210,6 +210,7 @@ public class MainMagActivity extends Activity {
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
+				magId++;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "没有网络");
@@ -222,7 +223,7 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
-				magId++;
+				magId--;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "没有网络");
