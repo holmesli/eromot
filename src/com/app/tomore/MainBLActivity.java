@@ -21,9 +21,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.app.tomore.adapters.ImageAndTextListAdapter;
 import com.app.tomore.beans.CategoryModel;
@@ -32,6 +34,7 @@ import com.app.tomore.beans.ImageAndText;
 public class MainBLActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<CategoryModel> cateList;
+	private TextView league;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,17 @@ public class MainBLActivity extends Activity {
 		setContentView(R.layout.main_bianli_activity);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainBLActivity.this, 1).execute("");
+		league = (TextView)findViewById(R.id.join_league);
+		league.setOnClickListener(new OnClickListener() {
+	        @Override
+	        public void onClick(View viewIn) {
+	        	Intent League_intent;
+	        	League_intent = new Intent(MainBLActivity.this,
+		        		LeagueActivity.class);
+		        startActivityForResult(League_intent, 100);
+	        }
+	    });
+		
 	}
 	
 	private void BindDataToGridView()

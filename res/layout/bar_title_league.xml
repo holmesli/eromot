@@ -6,13 +6,13 @@
     android:padding="0.0px" >
 
     <ImageView
-        android:id="@+id/megTitleBG"
+        android:id="@+id/LeagueTitleBG"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/background_gradient" />
 
     <TextView
-        android:id="@+id/btMeg"
+        android:id="@+id/btLeague"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_centerInParent="true"
@@ -21,19 +21,21 @@
         android:paddingLeft="96.0dip"
         android:paddingRight="96.0dip"
         android:singleLine="true"
-        android:text="@string/bar_title_bianli" />
+        android:text="@string/join" />
     
         
              <TextView
-        android:id="@+id/join_league"
+        android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:text="@string/join"
+        android:text="@string/submit"
         android:gravity="end"
 		android:textAlignment="gravity"
 		android:paddingTop="12.0dip"
 		android:paddingRight="4.0dip"
-		android:textSize="13sp"/>
+		android:textSize="13sp"
+		android:onClick="onClick"
+		android:clickable="true"/>
 
 
 

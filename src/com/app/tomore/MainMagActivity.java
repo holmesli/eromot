@@ -208,7 +208,7 @@ public class MainMagActivity extends Activity {
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-			if(AppUtil.networkAvailable(mContext)){
+			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
 				magId++;
 				new GetData(MainMagActivity.this, 1).execute("");
@@ -224,7 +224,7 @@ public class MainMagActivity extends Activity {
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
 				magId--;
-				new GetData(MainMagActivity.this, 2).execute("");
+				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
 			}

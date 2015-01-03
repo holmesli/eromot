@@ -34,6 +34,7 @@ public class RestaurantBLActivity  extends Activity{
 	ListView listveiew;
 	private Activity mContext;
 	RestaurantAdapter newsListAdapter;
+	private BLRestaurantModel RestaurantItem;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,27 +47,7 @@ public class RestaurantBLActivity  extends Activity{
 				.build();
 		new GetData(RestaurantBLActivity.this,1).execute("");
 		mContext = this;
-		//ListView listView = (ListView) findViewById(R.id.bianlirestaurant_listview);
-		
-		/*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (blrest == null) {
-					return;
-				}
-				BLRestaurantModel RestaurantItem = blrest.get(position);
-				Object obj = (Object) blrest.get(position);
-				if (obj instanceof String) {
-					return;
-				}
-				Intent intent = new Intent(RestaurantBLActivity.this,
-						RestaurantBLActivity.class);
-				intent.putExtra("blrest", (Serializable) RestaurantItem);
-				startActivity(intent);
-			}
-		});
-		*/
+	
 
 	}
 	private void BindDataToListView() {
@@ -102,7 +83,7 @@ public class RestaurantBLActivity  extends Activity{
 			try {
 				String page ="1";
 				String limit="1000";
-				String region="1";
+				String region="-1";
 				Log.d("doInBackground", "start request");
 				result = request.getRestaurantId(page,limit,region);
 				Log.d("doInBackground", "returned");
@@ -125,7 +106,7 @@ public class RestaurantBLActivity  extends Activity{
 				restlist = new ArrayList<BLRestaurantModel>();
 				HashMap<String, ArrayList<BLRestaurantModel>> RestMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
 				RestMap = new YellowPageParse().parseRestaurantResponse(result);
-				restlist = RestMap.get("downtown");
+				restlist = RestMap.get("scarborough");
 				try {
 				
 					//restlist = new YellowPageParse().parseRestaurantResponse(result);
@@ -174,11 +155,10 @@ public class RestaurantBLActivity  extends Activity{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			BLRestaurantModel RestaurantItem = (BLRestaurantModel) getItem(position);
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
-				if(RestaurantItem.getHotLevel().equals("7")){
+			 RestaurantItem = (BLRestaurantModel) getItem(position);
+			ViewHolder viewHolder = new ViewHolder();
+			final String hotlevel= RestaurantItem.getHotLevel();
+				if(hotlevel.equals("9")){
 					convertView = LayoutInflater.from(mContext).inflate(
 							R.layout.hotlv9_restaurant_listview, null);
 							//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
@@ -190,22 +170,21 @@ public class RestaurantBLActivity  extends Activity{
 							//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
 							//viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
 				}
-				convertView.setTag(viewHolder);
+				viewHolder.Image= (ImageView) convertView.findViewById(R.id.RestImage);
+				ImageLoader.getInstance().displayImage(RestaurantItem.getImage(),
+						viewHolder.Image,otp);
+				viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
+				viewHolder.Title.setText(RestaurantItem.getTitle());
 
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
-			viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
-			viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
-			viewHolder.Title.setText(RestaurantItem.getTitle());
-			ImageLoader.getInstance().displayImage(RestaurantItem.getImage(),
-			viewHolder.Image,otp);
+			
+			
 			return convertView;
 		}
 
 	}
 }
 
+		
 		
 
 

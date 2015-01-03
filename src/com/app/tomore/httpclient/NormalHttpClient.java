@@ -73,6 +73,12 @@ public class NormalHttpClient extends AbstractHttpClient {
 		HttpPost req = new HttpPost(path, null, contentType, data);
 		return execute(req);
 	}
+	
+	@Override
+	public HttpResponse post(String path, ParameterMap params, String contentType, byte[] data) {
+		HttpPost req = new HttpPost(path, params, contentType, data);
+		return execute(req);
+    }
 
 	@Override
 	public HttpResponse put(String path, String contentType, byte[] data) {
