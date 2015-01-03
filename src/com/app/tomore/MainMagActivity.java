@@ -209,7 +209,7 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 			if(AppUtil.networkAvailable(mContext) ){
-				onRefresh = false;
+				onRefresh = true;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");

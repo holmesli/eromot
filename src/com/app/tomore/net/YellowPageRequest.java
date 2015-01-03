@@ -76,4 +76,4 @@ public class YellowPageRequest {
         return httpResponse.getBodyAsString();
 	}
 }
-}
+
