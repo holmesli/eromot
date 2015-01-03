@@ -10,8 +10,6 @@ import com.app.tomore.GeneralBLActivity.ViewHolder;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
-import com.app.tomore.utils.AppUtil;
-import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class RestaurantBLActivity  extends Activity{
 	private DialogActivity dialog;
@@ -37,6 +34,7 @@ public class RestaurantBLActivity  extends Activity{
 	ListView listveiew;
 	private Activity mContext;
 	RestaurantAdapter newsListAdapter;
+	private BLRestaurantModel RestaurantItem;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +47,7 @@ public class RestaurantBLActivity  extends Activity{
 				.build();
 		new GetData(RestaurantBLActivity.this,1).execute("");
 		mContext = this;
+	
 
 	}
 	private void BindDataToListView() {
@@ -57,35 +56,6 @@ public class RestaurantBLActivity  extends Activity{
 		newsListAdapter = new RestaurantAdapter();
 		listView.setAdapter(newsListAdapter);
 	}
-	
-	
-	private OnItemClickListener itemClickListener = new OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			if (!AppUtil.networkAvailable(mContext)) {
-				ToastUtils.showToast(mContext, "����������");
-				return;
-			}
-			if (restlist == null) {
-				return;
-			}
-			Object obj = (Object) restlist.get(position - 1);
-			if (obj instanceof String) {
-				return;
-			}
-			Open_Activity(position);
-		}
-	};
-	
-	private void Open_Activity(int position) {
-		Intent intent;
-		intent = new Intent(RestaurantBLActivity.this,
-				GeneralBLDetailActivity.class);
-		intent.putExtra("BLdata", (Serializable)restlist.get(position));
-		startActivityForResult(intent, 100);
-	}
-	
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;
@@ -113,7 +83,7 @@ public class RestaurantBLActivity  extends Activity{
 			try {
 				String page ="1";
 				String limit="1000";
-				String region="1";
+				String region="-1";
 				Log.d("doInBackground", "start request");
 				result = request.getRestaurantId(page,limit,region);
 				Log.d("doInBackground", "returned");
@@ -136,7 +106,7 @@ public class RestaurantBLActivity  extends Activity{
 				restlist = new ArrayList<BLRestaurantModel>();
 				HashMap<String, ArrayList<BLRestaurantModel>> RestMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
 				RestMap = new YellowPageParse().parseRestaurantResponse(result);
-				restlist = RestMap.get("downtown");
+				restlist = RestMap.get("scarborough");
 				try {
 				
 					//restlist = new YellowPageParse().parseRestaurantResponse(result);
@@ -185,11 +155,10 @@ public class RestaurantBLActivity  extends Activity{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			BLRestaurantModel RestaurantItem = (BLRestaurantModel) getItem(position);
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
-				if(RestaurantItem.getHotLevel().equals("7")){
+			 RestaurantItem = (BLRestaurantModel) getItem(position);
+			ViewHolder viewHolder = new ViewHolder();
+			final String hotlevel= RestaurantItem.getHotLevel();
+				if(hotlevel.equals("9")){
 					convertView = LayoutInflater.from(mContext).inflate(
 							R.layout.hotlv9_restaurant_listview, null);
 							//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
@@ -201,22 +170,21 @@ public class RestaurantBLActivity  extends Activity{
 							//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
 							//viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
 				}
-				convertView.setTag(viewHolder);
+				viewHolder.Image= (ImageView) convertView.findViewById(R.id.RestImage);
+				ImageLoader.getInstance().displayImage(RestaurantItem.getImage(),
+						viewHolder.Image,otp);
+				viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
+				viewHolder.Title.setText(RestaurantItem.getTitle());
 
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
-			viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
-			viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
-			viewHolder.Title.setText(RestaurantItem.getTitle());
-			ImageLoader.getInstance().displayImage(RestaurantItem.getImage(),
-			viewHolder.Image,otp);
+			
+			
 			return convertView;
 		}
 
 	}
 }
 
+		
 		
 
 
