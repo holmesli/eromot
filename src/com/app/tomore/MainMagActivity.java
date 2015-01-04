@@ -51,7 +51,7 @@ public class MainMagActivity extends Activity {
 	private View no_net_lay;
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
-	private int magId;
+	private String magId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -210,7 +210,6 @@ public class MainMagActivity extends Activity {
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
-				magId++;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "没有网络");
@@ -223,7 +222,6 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
-				magId--;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "没有网络");

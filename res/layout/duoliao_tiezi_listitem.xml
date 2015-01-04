@@ -23,9 +23,7 @@
        		android:id="@+id/tweet_listitem_username"  
     		android:layout_width="wrap_content" 
            	android:layout_height="wrap_content" 
-       	    android:includeFontPadding="false"
-           	android:textSize="@dimen/text_size_14"
-            android:textColor="@color/listitem_blue"/>
+       	    android:includeFontPadding="false"/>
 
 
 		
@@ -45,7 +43,6 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="8dip"
 	        android:scaleType="fitCenter"
-	        android:src="@drawable/image_loading"
 	        android:visibility="gone"/>
 			
 		<LinearLayout 
@@ -57,30 +54,23 @@
 	        	android:id="@+id/tweet_listitem_client" 
 	            android:layout_width="wrap_content" 
 	         	android:layout_height="wrap_content"
-	         	android:layout_marginRight="10dip"
-	         	android:textSize="@dimen/text_size_10"
-	         	android:textColor="@color/listitem_gray"/>
+	         	android:layout_marginRight="10dip"/>
 	        
 	       	<TextView
 	       	    android:id="@+id/tweet_listitem_date" 
 	    		android:layout_width="wrap_content" 
-	           	android:layout_height="wrap_content" 
-	           	android:textSize="@dimen/text_size_10"
-	            android:textColor="@color/listitem_gray"/>
+	           	android:layout_height="wrap_content" />
 	         	
 		    <ImageView 
 		      	android:layout_width="wrap_content" 
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="10dip"
-		        android:layout_gravity="center_vertical"
-		        android:src="@drawable/widget_comment_count_icon"/>
+		        android:layout_gravity="center_vertical"/>
 		        
 	       	<TextView android:id="@+id/tweet_listitem_commentCount"  
 	    		android:layout_width="wrap_content" 
 	           	android:layout_height="wrap_content" 
-	           	android:layout_marginLeft="3dip"
-	           	android:textSize="@dimen/text_size_10"
-	            android:textColor="@color/listitem_gray"/>
+	           	android:layout_marginLeft="3dip"/>
         </LinearLayout>
 
 	</LinearLayout>
