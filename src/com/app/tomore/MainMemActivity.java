@@ -35,8 +35,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+
 public class MainMemActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<CardModel> cardList;
@@ -47,6 +49,7 @@ public class MainMemActivity extends Activity {
 	private View no_net_lay;
 	MemberAdapter newsListAdapter;
 	private boolean onRefresh = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,15 +61,28 @@ public class MainMemActivity extends Activity {
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
 
-			mListView = (PullToRefreshListView) findViewById(R.id.list);
-			mListView.setOnRefreshListener(onRefreshListener);
-			mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
-			mListView.setOnItemClickListener(itemClickListener);
-			noneData = (TextView)findViewById(R.id.noneData);
-			no_net_lay = findViewById(R.id.no_net_lay);
-			Button reloadData = (Button)findViewById(R.id.reloadData);
-			reloadData.setOnClickListener(reloadClickListener);
-	
+		mListView = (PullToRefreshListView) findViewById(R.id.list);
+		mListView.setOnRefreshListener(onRefreshListener);
+		mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
+		mListView.setOnItemClickListener(itemClickListener);
+		noneData = (TextView) findViewById(R.id.noneData);
+		no_net_lay = findViewById(R.id.no_net_lay);
+		Button reloadData = (Button) findViewById(R.id.reloadData);
+		reloadData.setOnClickListener(reloadClickListener);
+
+		final Button btnAdd = (Button) findViewById(R.id.bar_title_bt_member);
+		
+		btnAdd.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(MainMemActivity.this,
+						MemberAddActivity.class);
+				intent.putExtra("memberID", "34");
+				startActivity(intent);
+			}
+		});
+
+
 	}
 
 	private void BindDataToListView() {
@@ -79,23 +95,23 @@ public class MainMemActivity extends Activity {
 		} else {
 			newsListAdapter.notifyDataSetChanged();
 		}
-		if(cardList!=null && cardList.size()>0){
+		if (cardList != null && cardList.size() > 0) {
 			showDataUi();
-		}else{
+		} else {
 			showNoDataUi();
 		}
 	}
-	
-	void showDataUi(){
+
+	void showDataUi() {
 		mListView.setVisibility(View.VISIBLE);
 		noneData.setVisibility(View.GONE);
 		no_net_lay.setVisibility(View.GONE);
 	}
 
-	void showNoDataUi(){
+	void showNoDataUi() {
 		mListView.setVisibility(View.GONE);
 		noneData.setVisibility(View.VISIBLE);
-		no_net_lay.setVisibility(View.GONE); 
+		no_net_lay.setVisibility(View.GONE);
 	}
 
 	protected void showNoNetUi() {
@@ -103,8 +119,10 @@ public class MainMemActivity extends Activity {
 		noneData.setVisibility(View.GONE);
 		mListView.setVisibility(View.GONE);
 	}
+
 	private class GetData extends AsyncTask<String, String, String> {
 		private int mType;
+
 		private GetData(Context context, int type) {
 			this.mType = type;
 			dialog = new DialogActivity(context, type);
@@ -150,12 +168,9 @@ public class MainMemActivity extends Activity {
 			if (result == null || result.equals("")) {
 				ToastUtils.showToast(mContext, "列表为空");
 			} else {
-				if(cardList!=null && cardList.size()>0)
-				{
+				if (cardList != null && cardList.size() > 0) {
 					cardList.clear();
-				}
-				else
-				{
+				} else {
 					cardList = new ArrayList<CardModel>();
 				}
 				try {
@@ -170,16 +185,16 @@ public class MainMemActivity extends Activity {
 
 	private OnItemClickListener itemClickListener = new OnItemClickListener() {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view,
-				int position, long id) { 
-			if(!AppUtil.networkAvailable(mContext)){
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			if (!AppUtil.networkAvailable(mContext)) {
 				ToastUtils.showToast(mContext, "请连接网络");
 				return;
 			}
 			if (cardList == null) {
 				return;
 			}
-			Object obj = (Object) cardList.get(position-1);
+			Object obj = (Object) cardList.get(position - 1);
 			if (obj instanceof String) {
 				return;
 			}
@@ -189,7 +204,6 @@ public class MainMemActivity extends Activity {
 			startActivity(intent);
 		}
 	};
-	
 
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -200,10 +214,10 @@ public class MainMemActivity extends Activity {
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-			if(AppUtil.networkAvailable(mContext)){
+			if (AppUtil.networkAvailable(mContext)) {
 				onRefresh = true;
 				new GetData(MainMemActivity.this, 1).execute("");
-			}else{
+			} else {
 				ToastUtils.showToast(mContext, "没有网络");
 				mListView.onRefreshComplete();
 			}
@@ -213,9 +227,9 @@ public class MainMemActivity extends Activity {
 	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
 		@Override
 		public void onLastItemVisible() {
-			if(AppUtil.networkAvailable(mContext)){
-				//new GetData(MainMemActivity.this, 1).execute("");
-			}else{
+			if (AppUtil.networkAvailable(mContext)) {
+				// new GetData(MainMemActivity.this, 1).execute("");
+			} else {
 				ToastUtils.showToast(mContext, "没有网络");
 			}
 		}
@@ -229,14 +243,14 @@ public class MainMemActivity extends Activity {
 			new GetData(MainMemActivity.this, 1).execute("");
 		}
 	};
-	
+
 	class ViewHolder {
 		TextView textViewTitle;
 		TextView textViewDes;
 		TextView textViewTomoreCard;
 		ImageView imageView;
 	}
-	
+
 	private class MemberAdapter extends BaseAdapter {
 
 		@Override
@@ -249,14 +263,18 @@ public class MainMemActivity extends Activity {
 				viewHolder = new ViewHolder();
 				convertView = LayoutInflater.from(mContext).inflate(
 						R.layout.member_listview_item, null);
-				viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.title);
-				viewHolder.textViewDes = (TextView) convertView.findViewById(R.id.des);
-				viewHolder.textViewTomoreCard = (TextView) convertView.findViewById(R.id.tomoreCard);
-				viewHolder.imageView = (ImageView) convertView.findViewById(R.id.img);
+				viewHolder.textViewTitle = (TextView) convertView
+						.findViewById(R.id.title);
+				viewHolder.textViewDes = (TextView) convertView
+						.findViewById(R.id.des);
+				viewHolder.textViewTomoreCard = (TextView) convertView
+						.findViewById(R.id.tomoreCard);
+				viewHolder.imageView = (ImageView) convertView
+						.findViewById(R.id.img);
 				convertView.setTag(viewHolder);
 			}
-			ImageLoader.getInstance().displayImage(cardItem.getFrontViewImage(),
-			viewHolder.imageView, otp);
+			ImageLoader.getInstance().displayImage(
+					cardItem.getFrontViewImage(), viewHolder.imageView, otp);
 			viewHolder.textViewTitle.setText(cardItem.getCardTitle());
 			viewHolder.textViewDes.setText(cardItem.getCardDes());
 
@@ -280,7 +298,7 @@ public class MainMemActivity extends Activity {
 		@Override
 		public Object getItem(int arg0) {
 			// TODO Auto-generated method stub
-		 return cardList.get(arg0);
+			return cardList.get(arg0);
 		}
 
 		@Override
