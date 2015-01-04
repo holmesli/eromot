@@ -11,6 +11,14 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 		<include layout="@layout/bar_title_bianli" android:focusable="true"/>
+		
+		
+		<Spinner android:id="@+id/spinner"
+		    android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:spinnerMode="dropdown">
+		    
+		</Spinner>
 
 		<ListView
 		    
