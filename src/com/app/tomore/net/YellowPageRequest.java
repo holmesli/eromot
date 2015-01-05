@@ -62,20 +62,6 @@ public class YellowPageRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getRestInfo.php", params);
         return httpResponse.getBodyAsString();
 	}
-	//http://54.213.167.5/APIV2/getItemsByRestID.php?restid=48&page=1&limit=10
-	public String getRestaurantDetail(String restid)
-			throws IOException, TimeoutException {
-		String page="1";
-	    String limit="1000";
-		baseRequest = new BasicHttpClient(url);
-        baseRequest.setConnectionTimeout(2000);
-        ParameterMap params = baseRequest.newParams()
-        		.add("restid",restid)
-        		.add("page",page)
-        		.add("limit",limit);
-        HttpResponse httpResponse = baseRequest.post("/APIV2/getItemsByRestID.php", params);
-        return httpResponse.getBodyAsString();
-	}
 	//http://54.213.167.5/postFeedback.php?content=content&name=name&phone=6478990689&email=email
 	public String postFeedbackToAdmin(String content, String name, String phone, String email)
 			throws IOException, TimeoutException {

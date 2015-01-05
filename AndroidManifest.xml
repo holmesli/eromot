@@ -72,8 +72,6 @@
         <activity android:name=".MemberDetailActivity"  > </activity>
         <activity android:name=".RestaurantBLActivity"  > </activity>
         <activity android:name=".LeagueActivity"  > </activity>
-        <activity android:name=".RestaurantDetailActivity"></activity>
-        
     </application>
 
 </manifest>
