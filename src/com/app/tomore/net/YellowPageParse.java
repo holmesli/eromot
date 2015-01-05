@@ -7,6 +7,7 @@ import java.util.Map;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.GeneralBLModel;
+import com.app.tomore.beans.BLMenuModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -46,7 +47,7 @@ public class YellowPageParse {
 	}
 	//http://54.213.167.5/APIV2/getRestInfo.php?region=-1&page=1&limit=1000
 	//key = region name, value = region rest list
-	public HashMap<String, ArrayList<BLRestaurantModel>> parseRestaurantResponse(String jsonRestaurant) 
+	public HashMap<String, ArrayList<BLRestaurantModel>> parseRestaurantResponse(String jsonRestaurant,String location) 
 			throws JsonSyntaxException 
 	{
 		HashMap<String, ArrayList<BLRestaurantModel>> retMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
@@ -56,18 +57,34 @@ public class YellowPageParse {
 	    JsonArray jarray = jobject.getAsJsonArray("data");
 		for (JsonElement obj : jarray) {
 			JsonObject  jobject2 = obj.getAsJsonObject();
-			JsonArray jarray2 = jobject2.getAsJsonArray("scarborough");
+			JsonArray jarray2 = jobject2.getAsJsonArray(location);
 			if(jarray2 != null)
 			{
 				ArrayList<BLRestaurantModel> restaurantlist = new ArrayList<BLRestaurantModel>();
 				for (JsonElement obj2 : jarray2)
 				{
-				BLRestaurantModel cse = gson.fromJson(obj2, BLRestaurantModel.class);
-				restaurantlist.add(cse);
+					BLRestaurantModel cse = gson.fromJson(obj2, BLRestaurantModel.class);
+					restaurantlist.add(cse);
 				}
-				retMap.put("scarborough",restaurantlist);
+				retMap.put(location,restaurantlist);
 			}
 		}
 		return retMap;
+	}
+
+	public  ArrayList<BLMenuModel> parseRestaurantDetailResponse(String jsonRestaurantDetail) 
+			throws JsonSyntaxException 
+	{
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(jsonRestaurantDetail);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<BLMenuModel> Menulist = new ArrayList<BLMenuModel>();
+		for (JsonElement obj : jarray) {
+		BLMenuModel cse= gson.fromJson(obj, BLMenuModel.class);
+		    Menulist.add(cse);
+		}
+
+		return Menulist;
 	}
 }
