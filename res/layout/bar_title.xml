@@ -11,18 +11,6 @@
         android:layout_height="fill_parent"
         android:background="@drawable/background_gradient" />
 
-   <!-- <TextView
-        android:id="@+id/ivTitleName"
-        style="@style/A1_Font"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:paddingLeft="96.0dip"
-        android:paddingRight="96.0dip"
-        android:singleLine="true"
-        android:text="@string/app_name" />-->
 
     <ImageButton
         android:id="@+id/ivTitleBtnLeft"
@@ -51,7 +39,7 @@
         android:layout_width="63dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="66dp"
+        android:layout_marginLeft="90dp"
         android:layout_toRightOf="@+id/ivTitleBtnLeft"
         android:paddingBottom="2dp"
         android:paddingTop="4dp"
@@ -65,13 +53,14 @@
         android:layout_width="63dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="66dp"
-        android:layout_toLeftOf="@+id/ivTitleBtnRigh"
+        android:layout_marginLeft="0dp"
+        android:layout_toRightOf="@+id/bar_title_bt_duoliao"
         android:paddingBottom="2dp"
         android:paddingTop="4dp"
         android:tag="1"
         android:text="@string/bar_title_bt_duoyao"
         android:textColor="@android:color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+         />
 
 </RelativeLayout>

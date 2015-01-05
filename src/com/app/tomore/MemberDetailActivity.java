@@ -7,10 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.beans.CardModel;
-import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.CardsRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
@@ -24,7 +22,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +29,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,9 +64,12 @@ public class MemberDetailActivity extends Activity {
 	private TextView titleLable;
 	private TextView desLable;
 	private Bitmap bitmap = null;
-	public static final int REQUEST_CAMERA = 1;
-    public static final int SELECT_FILE = 2;
+	public static final int REQUEST_CAMERA_FOR_FRONT = 1;
+    public static final int SELECT_FILE_FOR_FRONT = 2;
+	public static final int REQUEST_CAMERA_FOR_BACK = 3;
+    public static final int SELECT_FILE_FOR_BACK = 4;
     Uri imageUri;
+    long totalSize = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -183,37 +184,9 @@ public class MemberDetailActivity extends Activity {
 				if (cardItem == null) {
 					return;
 				}
-
-				String cardID, cardTitle, cardBarcode, cardDes;
-
-				cardID = cardItem.getCardID();
-				cardTitle = editTitle.getText().toString();
-				cardDes = editDes.getText().toString();
-				cardBarcode = editBarcode.getText().toString();
-
-				// need image uploader
-
-				String result = null;
-				CardsRequest request = new CardsRequest(
-						MemberDetailActivity.this);
-
-				try {
-					Log.d("doInBackground", "start request");
-					result = request.updateCardInfo(cardID, cardTitle,
-							cardBarcode, cardDes);
-					Log.d("doInBackground", "returned");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TimeoutException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				CommonModel returnResult = new ToMoreParse()
-						.CommonPares(result);
-				// result alert
-
+				Log.d("doInBackground", "start request");
+				new UploadFileToServer().execute();				
+				Log.d("doInBackground", "returned");
 			}
 		});
 
@@ -290,7 +263,7 @@ public class MemberDetailActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				
-				selectImage();
+				selectImageForFront();
 			}
 		});
 		
@@ -298,7 +271,7 @@ public class MemberDetailActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				
-				selectImage();
+				selectImageForBack();
 			}
 		});
 
@@ -389,12 +362,10 @@ public class MemberDetailActivity extends Activity {
 						ImageView imageViewByTag = (ImageView) getWindow()
 								.getDecorView().findViewWithTag(imageUri);
 						if (imageViewByTag != null) {
-							// imageViewByTag.setImageBitmap(loadedImage);
-
 							int bwidth = loadedImage.getWidth();
 							int bheight = loadedImage.getHeight();
 							int swidth = imageViewByTag.getWidth();
-							int sheight = imageViewByTag.getHeight();
+							//int sheight = imageViewByTag.getHeight();
 							int new_width = swidth;
 							int new_height = (int) Math.floor((double) bheight
 									* ((double) new_width / (double) bwidth));
@@ -415,12 +386,10 @@ public class MemberDetailActivity extends Activity {
 						ImageView imageViewByTag = (ImageView) getWindow()
 								.getDecorView().findViewWithTag(imageUri);
 						if (imageViewByTag != null) {
-							// imageViewByTag.setImageBitmap(loadedImage);
-
 							int bwidth = loadedImage.getWidth();
 							int bheight = loadedImage.getHeight();
 							int swidth = imageViewByTag.getWidth();
-							int sheight = imageViewByTag.getHeight();
+							//int sheight = imageViewByTag.getHeight();
 							int new_width = swidth;
 							int new_height = (int) Math.floor((double) bheight
 									* ((double) new_width / (double) bwidth));
@@ -521,7 +490,7 @@ public class MemberDetailActivity extends Activity {
 		return null;
 	}
 	
-	private void selectImage() {
+	private void selectImageForFront() {
 		final CharSequence[] items = { "Take Photo", "Choose from Library",
 				"Cancel" };
 
@@ -536,7 +505,7 @@ public class MemberDetailActivity extends Activity {
 							.getExternalStorageDirectory(), "temp.jpg");
 					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 					intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-					startActivityForResult(intent, REQUEST_CAMERA);
+					startActivityForResult(intent, REQUEST_CAMERA_FOR_FRONT);
 					
 //					  //define the file-name to save photo taken by Camera activity
 //	                String fileName = "temp.jpg";
@@ -559,7 +528,54 @@ public class MemberDetailActivity extends Activity {
 					intent.setType("image/*");
 					startActivityForResult(
 							Intent.createChooser(intent, "Select File"),
-							SELECT_FILE);
+							SELECT_FILE_FOR_FRONT);
+				} else if (items[item].equals("Cancel")) {
+					dialog.dismiss();
+				}
+			}
+		});
+		builder.show();
+	}
+	
+	private void selectImageForBack() {
+		final CharSequence[] items = { "Take Photo", "Choose from Library",
+				"Cancel" };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(MemberDetailActivity.this);
+		builder.setTitle("Add Photo!");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int item) {
+				if (items[item].equals("Take Photo")) {
+					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					File f = new File(android.os.Environment
+							.getExternalStorageDirectory(), "temp.jpg");
+					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+					intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+					startActivityForResult(intent, REQUEST_CAMERA_FOR_BACK);
+					
+//					  //define the file-name to save photo taken by Camera activity
+//	                String fileName = "temp.jpg";
+//	                //create parameters for Intent with filename
+//	                ContentValues values = new ContentValues();
+//	                values.put(MediaStore.Images.Media.TITLE, fileName);
+//	                values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+//	                //imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
+//	                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//	                //create new Intent
+//	                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//	                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//	                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+//	                startActivityForResult(intent, REQUEST_CAMERA);
+	               
+				} else if (items[item].equals("Choose from Library")) {
+					Intent intent = new Intent(
+							Intent.ACTION_PICK,
+							android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					intent.setType("image/*");
+					startActivityForResult(
+							Intent.createChooser(intent, "Select File"),
+							SELECT_FILE_FOR_BACK);
 				} else if (items[item].equals("Cancel")) {
 					dialog.dismiss();
 				}
@@ -572,7 +588,7 @@ public class MemberDetailActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			if (requestCode == REQUEST_CAMERA) {
+			if (requestCode == REQUEST_CAMERA_FOR_FRONT) {
 				File f = new File(Environment.getExternalStorageDirectory()
 						.toString());
 				for (File temp : f.listFiles()) {
@@ -614,7 +630,7 @@ public class MemberDetailActivity extends Activity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else if (requestCode == SELECT_FILE) {
+			} else if (requestCode == SELECT_FILE_FOR_FRONT) {
 				Uri selectedImageUri = data.getData();
 
 				String tempPath = getPath(selectedImageUri, MemberDetailActivity.this);
@@ -623,9 +639,64 @@ public class MemberDetailActivity extends Activity {
 				bm = BitmapFactory.decodeFile(tempPath, btmapOptions);
 				frontImageView.setImageBitmap(bm);
 			}
+			else if(requestCode == REQUEST_CAMERA_FOR_BACK) {
+				File f = new File(Environment.getExternalStorageDirectory()
+						.toString());
+				for (File temp : f.listFiles()) {
+					if (temp.getName().equals("temp.jpg")) {
+						f = temp;
+						break;
+					}
+				}
+				try {
+					Bitmap bm;
+					BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
+					btmapOptions.inSampleSize = 8;
+					bm = BitmapFactory.decodeFile(f.getAbsolutePath(),
+							btmapOptions);
+
+					// bm = Bitmap.createScaledBitmap(bm, 70, 70, true);
+					
+		            
+					backImageView.setImageBitmap(bm);
+
+					String path = android.os.Environment
+							.getExternalStorageDirectory()
+							+ File.separator
+							+ "Phoenix" + File.separator + "default";
+					f.delete();
+					OutputStream fOut = null;
+					File file = new File(path, String.valueOf(System
+							.currentTimeMillis()) + ".jpg");
+					try {
+						fOut = new FileOutputStream(file);
+						bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+						fOut.flush();
+						fOut.close();
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else if (requestCode == SELECT_FILE_FOR_BACK) {
+				Uri selectedImageUri = data.getData();
+
+				String tempPath = getPath(selectedImageUri, MemberDetailActivity.this);
+				Bitmap bm;
+				BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
+				bm = BitmapFactory.decodeFile(tempPath, btmapOptions);
+				backImageView.setImageBitmap(bm);
+			}
+			
+			
 		}
 	}
-	
+	@SuppressWarnings("deprecation")
 	public String getPath(Uri uri, Activity activity) {
 		String[] projection = { MediaColumns.DATA };
 		Cursor cursor = activity
@@ -634,5 +705,82 @@ public class MemberDetailActivity extends Activity {
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
 	}
+	
+	 /**
+     * Uploading the file to server
+     * */
+    private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+ 
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+        	
+        }
+ 
+        @Override
+        protected String doInBackground(Void... params) {
+        	String result;
+        	String cardID, cardTitle, cardBarcode, cardDes;
 
+			cardID = cardItem.getCardID();
+			cardTitle = editTitle.getText().toString();
+			cardDes = editDes.getText().toString();
+			cardBarcode = editBarcode.getText().toString();
+			
+			BitmapDrawable drawable = (BitmapDrawable) frontImageView.getDrawable();	
+			Bitmap frontImage = drawable.getBitmap();
+			
+			BitmapDrawable drawable2 = (BitmapDrawable) backImageView.getDrawable();
+			Bitmap backImage = drawable2.getBitmap();
+			
+			CardsRequest request = new CardsRequest(
+					MemberDetailActivity.this);
+			
+			result = request.updateCardInfo(frontImage, backImage, cardID, cardTitle, cardDes, cardBarcode);
+			ToMoreParse toMoreParse = new ToMoreParse();
+			result = toMoreParse.CommonPares(result).getResult();
+			
+            return result;
+        }
+ 
+        @Override
+        protected void onPostExecute(String result) {
+        	String message=null;
+        	if(result.equals("succ"))
+        	{
+        		message = "更新成功";
+        	}
+        	else if(result.equals("upload image fail"))
+        	{
+        		message = "上传图片失败";
+        	}
+        	else
+        	{
+        		message = result;
+        	}
+            showAlert(message);
+            super.onPostExecute(result);
+        }
+ 
+    }
+    
+    /**
+     * Method to show alert dialog
+     * */
+    private void showAlert(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // do nothing
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+   
 }

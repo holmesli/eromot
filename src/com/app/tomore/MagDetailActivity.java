@@ -68,6 +68,8 @@ public class MagDetailActivity extends Activity {
 	private WebView detailWeb;
 	private TextView detailTitle;
 	private FrameLayout frame;
+	
+	private ImageView backImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,16 +85,20 @@ public class MagDetailActivity extends Activity {
 		myVideoView = (VideoView) findViewById(R.id.videoView);
 		frame = (FrameLayout) findViewById(R.id.videoFrame);
 		
+
+		
 		RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
 				.findViewById(R.id.bar_title_mag_detail);
 		
 		findViewById(R.id.bar_title_bt_share).setOnClickListener(new OnClickListener() {
+			
+			String title = articleItem.getArticleTitle();
 
 			public void onClick(View v) {
 				AndroidShare as = new AndroidShare(
-						MagDetailActivity.this,
-						"我正在使用多伦多最潮的ToMore应用，快来看看吧 www.tomoreapp.com",
-						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+						MagDetailActivity.this,title,"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+//						"我正在使用多伦多最潮的ToMore应用，快来看看吧 www.tomoreapp.com",
+//						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
 				as.show();
 			}
 		});
