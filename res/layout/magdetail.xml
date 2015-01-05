@@ -11,7 +11,7 @@
         layout="@layout/mag_detail_titlebar"
         android:focusable="true" />
 <ScrollView 
-    android:layout_width="360dp"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
     <LinearLayout
@@ -38,7 +38,8 @@
             <com.app.tomore.utils.TouchImageView
                 android:id="@+id/news_image"
                 android:layout_width="fill_parent"
-                android:layout_height="350dp"
+                android:layout_height="270dp"
+                android:scaleType="fitXY"
                />
             </FrameLayout>
 
