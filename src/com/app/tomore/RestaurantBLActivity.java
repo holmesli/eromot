@@ -10,6 +10,8 @@ import com.app.tomore.GeneralBLActivity.ViewHolder;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
+import com.app.tomore.utils.AppUtil;
+import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,13 +27,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class RestaurantBLActivity  extends Activity{
 	private DialogActivity dialog;
 	private ArrayList<BLRestaurantModel> restlist;
 	private DisplayImageOptions otp;
 	BLRestaurantModel Restaurant= new BLRestaurantModel();
-	ListView listveiew;
+	ListView listview;
 	private Activity mContext;
 	RestaurantAdapter newsListAdapter;
 	private BLRestaurantModel RestaurantItem;
@@ -47,14 +50,43 @@ public class RestaurantBLActivity  extends Activity{
 				.build();
 		new GetData(RestaurantBLActivity.this,1).execute("");
 		mContext = this;
+		
+		 
+	
+
 	
 
 	}
+	private OnItemClickListener itemClickListener = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view,
+				int position, long id){
+			if(!AppUtil.networkAvailable(mContext)){
+				ToastUtils.showToast(mContext, "«Î¡¨Ω”Õ¯¬Á");
+                  return;
+			}
+			if (restlist ==null){
+				return;
+				
+			}
+			Object obj = (Object) restlist.get(position);
+			if (obj instanceof String){
+				return;
+			}
+			Intent intent = new Intent(RestaurantBLActivity.this,
+					RestaurantDetailActivity.class);
+			intent.putExtra("restlist", (Serializable) obj);
+			startActivity(intent);
+
+		}
+	};
+	
 	private void BindDataToListView() {
 	
 		ListView listView = (ListView) findViewById(R.id.bianlirestaurant_listview);
 		newsListAdapter = new RestaurantAdapter();
 		listView.setAdapter(newsListAdapter);
+		listView.setOnItemClickListener(itemClickListener );
 	}
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
