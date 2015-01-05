@@ -46,7 +46,7 @@ public class YellowPageParse {
 	}
 	//http://54.213.167.5/APIV2/getRestInfo.php?region=-1&page=1&limit=1000
 	//key = region name, value = region rest list
-	public HashMap<String, ArrayList<BLRestaurantModel>> parseRestaurantResponse(String jsonRestaurant,String location) 
+	public HashMap<String, ArrayList<BLRestaurantModel>> parseRestaurantResponse(String jsonRestaurant) 
 			throws JsonSyntaxException 
 	{
 		HashMap<String, ArrayList<BLRestaurantModel>> retMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
@@ -56,16 +56,16 @@ public class YellowPageParse {
 	    JsonArray jarray = jobject.getAsJsonArray("data");
 		for (JsonElement obj : jarray) {
 			JsonObject  jobject2 = obj.getAsJsonObject();
-			JsonArray jarray2 = jobject2.getAsJsonArray(location);
+			JsonArray jarray2 = jobject2.getAsJsonArray("scarborough");
 			if(jarray2 != null)
 			{
 				ArrayList<BLRestaurantModel> restaurantlist = new ArrayList<BLRestaurantModel>();
 				for (JsonElement obj2 : jarray2)
 				{
-					BLRestaurantModel cse = gson.fromJson(obj2, BLRestaurantModel.class);
-					restaurantlist.add(cse);
+				BLRestaurantModel cse = gson.fromJson(obj2, BLRestaurantModel.class);
+				restaurantlist.add(cse);
 				}
-				retMap.put(location,restaurantlist);
+				retMap.put("scarborough",restaurantlist);
 			}
 		}
 		return retMap;
