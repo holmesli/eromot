@@ -41,16 +41,17 @@
     <Button
         android:id="@+id/bar_title_bt_share"
         android:layout_width="30dp"
-        android:layout_height="25dp"
-        android:layout_alignBaseline="@+id/btMember"
-        android:layout_alignBottom="@+id/btMember"
-        android:layout_toRightOf="@+id/btMember"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/sharebtn2"
         android:paddingBottom="2dp"
-        android:paddingRight="50dp"
         android:paddingTop="4dp"
+        android:paddingRight="10dp"
         android:tag="2"
         android:textColor="@android:color/white"
         android:textSize="13sp" />
+
+    
 
 </RelativeLayout>

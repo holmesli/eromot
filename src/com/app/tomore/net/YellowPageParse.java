@@ -7,6 +7,7 @@ import java.util.Map;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.GeneralBLModel;
+import com.app.tomore.beans.BLMenuModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -69,5 +70,21 @@ public class YellowPageParse {
 			}
 		}
 		return retMap;
+	}
+
+	public  ArrayList<BLMenuModel> parseRestaurantDetailResponse(String jsonRestaurantDetail) 
+			throws JsonSyntaxException 
+	{
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(jsonRestaurantDetail);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<BLMenuModel> Menulist = new ArrayList<BLMenuModel>();
+		for (JsonElement obj : jarray) {
+		BLMenuModel cse= gson.fromJson(obj, BLMenuModel.class);
+		    Menulist.add(cse);
+		}
+
+		return Menulist;
 	}
 }

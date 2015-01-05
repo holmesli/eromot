@@ -9,6 +9,8 @@ import java.util.concurrent.TimeoutException;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
+import com.app.tomore.utils.AppUtil;
+import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -24,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class RestaurantBLActivity  extends Activity{
@@ -57,6 +60,9 @@ public class RestaurantBLActivity  extends Activity{
 		regionlist = new String[]{"downtown","eastYork","northYork","scarborough","markham","mississauga","vaughan","richmondHill","others"};
 		SpinnerList = new String[]{"ALL","DOWNTOWN","East York","North York","SCARBOROUGH","MARKHAM","MISSISSAUGA","VAUGHAN","RCHIMONDHILL","OTHERS"};
 		spinner = (Spinner)this.findViewById(R.id.spinner);
+		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
+				.build();
 		ArrayAdapter<String> adpater = new ArrayAdapter<String>(RestaurantBLActivity.this,R.layout.rest_spinner_item_layout, R.id.rest_list_item_text,SpinnerList);
 		spinner.setAdapter(adpater);
 		spinner.setOnItemSelectedListener(onitemSelectedListener);
@@ -84,12 +90,39 @@ public class RestaurantBLActivity  extends Activity{
 	    	  Toast.makeText(RestaurantBLActivity.this, "NothingSelected", Toast.LENGTH_SHORT).show();
 	      }
 	    };
-	
+	private OnItemClickListener itemClickListener = new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id){
+				if(!AppUtil.networkAvailable(mContext)){
+					ToastUtils.showToast(mContext, "??????????");
+	                  return;
+				}
+				if (restlist ==null){
+					return;
+					
+				}
+				Object obj = (Object) restlist.get(position);
+				if (obj instanceof String){
+					return;
+				}
+				Intent intent = new Intent(RestaurantBLActivity.this,
+						RestaurantDetailActivity.class);
+				intent.putExtra("restlist", (Serializable) obj);
+				startActivity(intent);
+
+			}
+		};
+	    
+	    
+	    
+	    
 	private void BindDataToListView() {
 	
 		//ListView listView = (ListView) findViewById(R.id.bianlirestaurant_listview);
 		newsListAdapter = new RestaurantAdapter();
 		listView.setAdapter(newsListAdapter);
+		listView.setOnItemClickListener(itemClickListener );
 	}
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
@@ -231,8 +264,6 @@ public class RestaurantBLActivity  extends Activity{
 }
 
 		
-		
-
 
 	
 	

@@ -89,6 +89,11 @@ public class MainBLActivity extends Activity {
 	        		RestaurantBLActivity.class);
 	        startActivityForResult(intent, 100);
         }
+        else if (BLType == 3){
+        	intent = new Intent(MainBLActivity.this,
+	        		BLwebview.class);
+	        startActivityForResult(intent, 100);
+        }
 	}
 
 	private class GetData extends AsyncTask<String, String, String> {
