@@ -3,14 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"  >
 <FrameLayout
-                android:layout_width="650dp"
-                android:layout_height="270dp"
+                android:layout_width="800dp"
+                android:layout_height="268dp"
                 android:layout_gravity="center">
 
 <ImageView  
     android:id="@+id/img"  
     android:layout_width="fill_parent"  
     android:layout_height="fill_parent"  
+  ></ImageView>
+
+<ImageView  
+    android:id="@+id/imgback"  
+    android:layout_width="800dp"  
+    android:layout_height="25dp"  
+    android:background="@drawable/background_gradient"
+    android:alpha="0.3"
+    android:layout_gravity="center|bottom" 
   ></ImageView>
 
   <TextView

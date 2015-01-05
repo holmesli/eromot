@@ -131,14 +131,5 @@
         <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
     
-    <style name="user_face_image">
-		<item name="android:layout_width">40.0dip</item>
-		<item name="android:layout_height">40.0dip</item>
-		<item name="android:scaleType">fitCenter</item>
-		<item name="android:padding">1.0dip</item>
-		<item name="android:clickable">true</item>
-		<item name="android:src">@drawable/default_userprofilem</item>
-    </style> 
-	    
 
 </resources>

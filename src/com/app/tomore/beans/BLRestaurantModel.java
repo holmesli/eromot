@@ -7,6 +7,7 @@ public class BLRestaurantModel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7354042242207169365L;
+	private int showRegion = -1;
 	private String AdID;
 	private String Title;
 	private String Content;
@@ -111,5 +112,11 @@ public class BLRestaurantModel implements Serializable {
 	}
 	public void setHotLevel(String hotLevel) {
 		HotLevel = hotLevel;
+	}
+	public int getShowRegion(){
+		return showRegion;
+	}
+	public void setShowRegion(int showregion){
+		showRegion = showregion;
 	}
 }
