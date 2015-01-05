@@ -92,13 +92,13 @@ public class MagDetailActivity extends Activity {
 		
 		findViewById(R.id.bar_title_bt_share).setOnClickListener(new OnClickListener() {
 			
-			String title = articleItem.getArticleTitle();
+			//String title = articleItem.getArticleTitle();
 
 			public void onClick(View v) {
 				AndroidShare as = new AndroidShare(
-						MagDetailActivity.this,title,"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
-//						"我正在使用多伦多最潮的ToMore应用，快来看看吧 www.tomoreapp.com",
-//						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+						MagDetailActivity.this,
+						"我正在使用多伦多最潮的ToMore应用，快来看看吧 www.tomoreapp.com",
+						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
 				as.show();
 			}
 		});

@@ -38,7 +38,7 @@
             <com.app.tomore.utils.TouchImageView
                 android:id="@+id/news_image"
                 android:layout_width="fill_parent"
-                android:layout_height="270dp"
+                android:layout_height="350dp"
                />
             </FrameLayout>
 
@@ -83,6 +83,7 @@
                 
 	
          </FrameLayout>
+
 <!--          	   <TextView  -->
 <!-- 				android:id="@+id/testweb2"  -->
 <!--     			android:layout_width="fill_parent"  -->
@@ -90,7 +91,9 @@
 <!--     			android:autoLink="web"  -->
 <!--     			/> -->
     </LinearLayout>
+    
 
 </ScrollView>
+
 </LinearLayout>
 
