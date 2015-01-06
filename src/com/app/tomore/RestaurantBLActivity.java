@@ -173,10 +173,10 @@ public class RestaurantBLActivity  extends Activity{
 			} else {
 				restlist = new ArrayList<BLRestaurantModel>();
 				HashMap<String, ArrayList<BLRestaurantModel>> RestMap = new HashMap<String, ArrayList<BLRestaurantModel>>();
+				RestMap.putAll(new YellowPageParse().parseRestaurantResponse(result));
 				for (int i = 0;i < regionlist.length;i++){
 					BLRestaurantModel region_Model = new BLRestaurantModel();
 					region_Model.setShowRegion(i + 1);
-					RestMap.putAll(new YellowPageParse().parseRestaurantResponse(result,regionlist[i]));
 					restlist.add(region_Model);
 					restlist.addAll(RestMap.get(regionlist[i]));
 				}

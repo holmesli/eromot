@@ -89,9 +89,17 @@ public class MainBLActivity extends Activity {
 	        		RestaurantBLActivity.class);
 	        startActivityForResult(intent, 100);
         }
-        else if (BLType == 3){
+        else if (BLType == 2)
+        {
+        	intent = new Intent(MainBLActivity.this,
+	        		OrderActivity.class);
+        	intent.putExtra("BLID",BLID);
+	        startActivityForResult(intent, 100);
+        }
+        else if	(BLType == 3){
         	intent = new Intent(MainBLActivity.this,
 	        		BLwebview.class);
+        	intent.putExtra("BLID",BLID);
 	        startActivityForResult(intent, 100);
         }
 	}

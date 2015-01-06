@@ -101,6 +101,7 @@
     <string name="leaveMessage">留言：</string>
     <string name="leagueWelcomeMessage">赶快填写商家信息加入便利联盟吧！</string>
     <string name="successMessage">发送成功</string>
+    <string name="Order">定制</string>
     
     
     <color name="register_background_color">#f7f7f7</color>

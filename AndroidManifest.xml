@@ -73,6 +73,10 @@
         <activity android:name=".RestaurantBLActivity"  > </activity>
         <activity android:name=".LeagueActivity"  > </activity>
         <activity android:name=".RestaurantDetailActivity"></activity>
+        <activity android:name=".BLwebview"></activity>
+        <activity android:name=".OrderActivity"></activity>
+        <activity android:name = ".OrderWebViewActivity"></activity>
+            
         
     </application>
 
