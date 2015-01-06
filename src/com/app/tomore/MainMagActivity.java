@@ -51,7 +51,7 @@ public class MainMagActivity extends Activity {
 	private View no_net_lay;
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
-	private int magId;
+	private String magId = "0";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -210,7 +210,6 @@ public class MainMagActivity extends Activity {
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
-				magId++;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "没有网络");
@@ -223,7 +222,7 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
-				magId--;
+				onRefresh = true;
 				new GetData(MainMagActivity.this, 1).execute("");
 			}else{
 				ToastUtils.showToast(mContext, "没有网络");
@@ -257,7 +256,8 @@ public class MainMagActivity extends Activity {
 			final String imagePosition = articleItem.getImagePosition();
 			if (imagePosition.equals("2")) {
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.mag_listview, null);
-			} else {
+			} 
+			else if(imagePosition.equals("1")) {
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.mag_largeicon_listview_item, null);
 			}        
 			viewHolder.imageView = (ImageView) convertView
