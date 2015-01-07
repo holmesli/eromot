@@ -109,16 +109,15 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 		this.mDensity = dm.density;
 		this.mListData = new ArrayList<ShareItem>();
 		
+		this.mListData.add(new ShareItem("微信", R.drawable.logo_wechat,
+				"com.tencent.mm.ui.tools.ShareImgUI", "com.tencent.mm"));
+		this.mListData.add(new ShareItem("朋友圈", R.drawable.logo_wechatmoments,
+				"com.tencent.mm.ui.tools.ShareToTimeLineUI", "com.tencent.mm"));
 		this.mListData.add(new ShareItem("qq", R.drawable.logo_qq,
 				"com.tencent.mobileqq.activity.JumpActivity","com.tencent.mobileqq"));
-//		this.mListData.add(new ShareItem("qq鎺т欢", R.drawable.logo_qzone,
-//				"com.qzone.ui.operation.QZonePublishMoodActivity","com.qzone"));
-		this.mListData.add(new ShareItem("鏂版氮寰崥", R.drawable.logo_sinaweibo,
+		this.mListData.add(new ShareItem("新浪微博", R.drawable.logo_sinaweibo,
 				"com.sina.weibo.EditActivity", "com.sina.weibo"));
-//		this.mListData.add(new ShareItem("鑵捐寰崥", R.drawable.logo_tencentweibo,
-//				"com.tencent.WBlog.intentproxy.TencentWeiboIntent","com.tencent.WBlog"));
-//		this.mListData.add(new ShareItem("閸忔湹绮�, R.drawable.logo_other,
-//				"",""));
+
 
 		this.mLayout = new LinearLayout(context);
 		this.mLayout.setOrientation(1);
@@ -214,7 +213,7 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 	private void shareMsg(Context context, String msgTitle, String msgText,
 			String imgPath, ShareItem share) {
 		if (!share.packageName.isEmpty() && !isAvilible(getContext(), share.packageName)) {
-			Toast.makeText(getContext(), "鍒嗕韩鍒邦棖" + share.title, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(),  share.title, Toast.LENGTH_SHORT).show();
 			return;
 		}
 

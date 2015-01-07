@@ -11,7 +11,7 @@
         layout="@layout/mag_detail_titlebar"
         android:focusable="true" />
 <ScrollView 
-    android:layout_width="360dp"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
     <LinearLayout
@@ -39,6 +39,7 @@
                 android:id="@+id/news_image"
                 android:layout_width="fill_parent"
                 android:layout_height="270dp"
+                android:scaleType="fitXY"
                />
             </FrameLayout>
 
@@ -83,6 +84,7 @@
                 
 	
          </FrameLayout>
+
 <!--          	   <TextView  -->
 <!-- 				android:id="@+id/testweb2"  -->
 <!--     			android:layout_width="fill_parent"  -->
@@ -90,7 +92,9 @@
 <!--     			android:autoLink="web"  -->
 <!--     			/> -->
     </LinearLayout>
+    
 
 </ScrollView>
+
 </LinearLayout>
 

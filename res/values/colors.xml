@@ -7,5 +7,7 @@
     <color name="umeng_comm_lv_header_color3">#99cc00</color>
     <color name="umeng_comm_lv_header_color4">#ffbb33</color>
 	<color name="white">#ffffff</color> 
+	<color name="light">#929292</color>
+	<color name="title_bar_bg">#180d00</color>
     
 </resources>

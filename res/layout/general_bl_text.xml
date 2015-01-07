@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:id="@+id/GeneralBLcontainer"
+    >
+
+<LinearLayout
    android:layout_height="wrap_content" 
    android:gravity="start|center"
    android:layout_width="wrap_content" 
@@ -12,17 +20,39 @@
           android:layout_height="wrap_content"
           android:gravity="center"
           android:textColor="#000000" 
-          android:textSize="22sp"/>
+          android:textSize="22sp"
+          android:paddingBottom="5dp"
+   		  android:paddingTop="5dp"
+   		  android:paddingLeft="5dp" />
 
         <TextView android:id="@+id/Contact" 
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
           android:textColor="#000000" 
-          android:textSize="17sp"/>
+          android:textSize="17sp"
+          android:paddingBottom="5dp"
+   		  android:paddingLeft="5dp" />
 
         <TextView android:id="@+id/language" 
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
           android:textColor="#000000"
-          android:textSize="17sp" /> 
+          android:textSize="17sp" 
+          android:paddingBottom="5dp"
+   		  android:paddingLeft="5dp" /> 
+		</LinearLayout>
+
+            <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />   
+
+    <ImageView
+        android:id="@+id/OrderMessage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/message_icon" 
+        android:paddingRight = "20dp">
+    </ImageView>
 </LinearLayout>
