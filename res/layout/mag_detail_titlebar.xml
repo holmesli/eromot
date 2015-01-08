@@ -51,6 +51,7 @@
         android:paddingTop="4dp"
         android:tag="2"
         android:textColor="@android:color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:onClick="functionKey" />
 
 </RelativeLayout>

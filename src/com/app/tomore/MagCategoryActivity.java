@@ -8,8 +8,9 @@ import java.util.concurrent.TimeoutException;
 
 import org.json.JSONException;
 
-import com.app.tomore.beans.ArticleModel;
+import com.app.tomore.beans.ArticleCatogoryModel;
 import com.app.tomore.beans.BLRestaurantModel;
+import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.net.MagParse;
 import com.app.tomore.net.MagRequest;
 import com.app.tomore.net.YellowPageParse;
@@ -44,14 +45,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-public class MainMagActivity extends Activity {
+public class MagCategoryActivity extends Activity {
 	private DialogActivity dialog;
-	private ArrayList<ArticleModel> articleList;
-	private ArticleModel articleItem;
-	//private ArticleCategoryModel articleCategory;
+	private ArrayList<ArticleCatogoryModel> articleList;
+	private ArticleCatogoryModel articleCatogory;
 	private DisplayImageOptions otp;
 	private PullToRefreshListView mListView;
 	private Activity mContext;
@@ -61,48 +60,28 @@ public class MainMagActivity extends Activity {
 	private boolean onRefresh = false;
 	private boolean headerRefresh = false;
 	private boolean footerRefresh = false;
-	private String magId = "0";
-	private String categoryID;
-	private String pre;
-	private String next;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_mag_activity);
+		setContentView(R.layout.magcategory_listview);
 		mContext = this;
-		
-		Intent i = getIntent();
-		categoryID = i.getStringExtra("categoryId");
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		new GetData(MainMagActivity.this, 1).execute("");
+		new GetData(MagCategoryActivity.this, 1).execute("");
+		//ListView listView = (ListView) findViewById(R.id.mag_listviews);
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
 		ImageLoader.getInstance().init(
 				ImageLoaderConfiguration.createDefault(this));
 
-			mListView = (PullToRefreshListView) findViewById(R.id.mag_listviews);
-			mListView.setOnRefreshListener(onRefreshListener);
-			mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
+			mListView = (PullToRefreshListView) findViewById(R.id.magcategory_listviews);
+			//mListView.setOnRefreshListener(onRefreshListener);
+			//mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 			mListView.setOnItemClickListener(itemClickListener);
 			noneData = (TextView)findViewById(R.id.noneData);
 			no_net_lay = findViewById(R.id.no_net_lay);
 			Button reloadData = (Button)findViewById(R.id.reloadData);
 			reloadData.setOnClickListener(reloadClickListener);
-			
-			
-			RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
-					.findViewById(R.id.bar_title_allmag);
-			final Button btnBack = (Button) rl
-					.findViewById(R.id.bar_title_bt_backtocategory);
-
-			btnBack.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					finish();
-				}
-			});
-			
 	
 	}
 
@@ -160,11 +139,11 @@ public class MainMagActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			MagRequest request = new MagRequest(MainMagActivity.this);
+			MagRequest request = new MagRequest(MagCategoryActivity.this);
 			try {
 				
 				Log.d("doInBackground", "start request");			
-					result = request.getMagById(magId,categoryID);
+					result = request.getAllArticleCategories();
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -190,14 +169,10 @@ public class MainMagActivity extends Activity {
 				}
 				else
 				{
-					articleList = new ArrayList<ArticleModel>();
+					articleList = new ArrayList<ArticleCatogoryModel>();
 				}
 				try {
-
-					 ArrayList<HashMap<String, ArrayList<ArticleModel>>> arrayList = new ArrayList<HashMap<String,ArrayList<ArticleModel>>>();
-						articleItem = new ArticleModel();
-						articleList = new ArrayList<ArticleModel>();
-						articleList = new MagParse().parseArticleResponse(result);
+						articleList = new MagParse().parseCtegoryResponse(result);
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -217,14 +192,14 @@ public class MainMagActivity extends Activity {
 			if (articleList == null) {
 				return;
 			}
-			Object obj = (Object) articleList.get(position-1);
-			if (obj instanceof String) {
-				return;
-			}
-
-			Intent intent = new Intent(MainMagActivity.this,
-					MagDetailActivity.class);
-			intent.putExtra("articleList", (Serializable) obj);
+			//Object obj = (Object) articleList.get(position-1);
+//			if (obj instanceof String) {
+//				return;
+//			}
+			Intent intent = new Intent(MagCategoryActivity.this,
+					MainMagActivity.class);
+			ArticleCatogoryModel item = articleList.get(position-1);
+			intent.putExtra("categoryId", item.getCategoryID());
 			startActivity(intent);
 
 		}
@@ -237,46 +212,12 @@ public class MainMagActivity extends Activity {
 		}
 	};
 
-	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
-		@Override
-		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-			if(AppUtil.networkAvailable(mContext) ){
-				onRefresh = true;
-				headerRefresh = true;
-				magId=next;
-				new GetData(MainMagActivity.this, 1).execute("");
-
-			}else{
-				ToastUtils.showToast(mContext, "没有网络");
-				mListView.onRefreshComplete();
-			}
-		}
-	};
-
-	private OnLastItemVisibleListener  onLastItemVisibleListener = new OnLastItemVisibleListener() {
-		@Override
-		public void onLastItemVisible() {
-			if(AppUtil.networkAvailable(mContext)){
-				//headerRefresh = false;
-				//onRefresh=false;
-				footerRefresh = true;
-				magId=pre;
-				new GetData(MainMagActivity.this, 1).execute("");
-
-			}else{
-				ToastUtils.showToast(mContext, "没有网络");
-			}
-		}
-
-		
-	};
-
 	OnClickListener reloadClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			//onRefresh = true;
 			footerRefresh = true;
-			new GetData(MainMagActivity.this, 1).execute("");
+			new GetData(MagCategoryActivity.this, 1).execute("");
 		}
 	};
 	
@@ -292,24 +233,19 @@ public class MainMagActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder viewHolder = new ViewHolder();
-			articleItem = (ArticleModel) getItem(position);
-			final String imageUrl = articleItem.getArticleSmallImage();
-			final String imagePosition = articleItem.getImagePosition();
-			if (imagePosition.equals("2")) {
-				convertView = LayoutInflater.from(mContext).inflate(R.layout.mag_listview, null);
-			} 
-			else if(imagePosition.equals("1")) {
-				convertView = LayoutInflater.from(mContext).inflate(R.layout.mag_largeicon_listview_item, null);
-			}        
+			articleCatogory = (ArticleCatogoryModel) getItem(position);
+			final String imageUrl = articleCatogory.getCategoryImage();
+			//final String imagePosition = articleItem.getImagePosition();
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.magcategory_item, null);    
 			viewHolder.imageView = (ImageView) convertView
-					.findViewById(R.id.img);
+					.findViewById(R.id.categoryImg);
 			
 			ImageLoader.getInstance().displayImage(imageUrl,
 					viewHolder.imageView, otp);
 
 			viewHolder.textViewTitle = (TextView) convertView
-					.findViewById(R.id.info);
-			viewHolder.textViewTitle.setText(articleItem.getArticleTitle());
+					.findViewById(R.id.categoryInfo);
+			viewHolder.textViewTitle.setText(articleCatogory.getCategoryName());
 
 			return convertView;
 		}
@@ -334,5 +270,3 @@ public class MainMagActivity extends Activity {
 
 	}
 }
-
-

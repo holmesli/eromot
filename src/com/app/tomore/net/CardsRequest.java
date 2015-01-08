@@ -19,13 +19,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.app.tomore.httpclient.BasicHttpClient;
-//import com.app.tomore.httpclient.HttpPost;
 import com.app.tomore.httpclient.HttpResponse;
 import com.app.tomore.httpclient.NormalHttpClient;
 import com.app.tomore.httpclient.ParameterMap;
 import com.app.tomore.utils.AndroidMultiPartEntity;
 import com.app.tomore.utils.AndroidMultiPartEntity.ProgressListener;
-import com.google.android.gms.common.api.f;
 
 public class CardsRequest {
 

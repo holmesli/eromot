@@ -346,4 +346,11 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 
 	}
 
+	@Override
+	public void setOnLastRefreshListener(
+			com.app.tomore.utils.PullToRefreshBase.OnLastRefreshListener<ListView> listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

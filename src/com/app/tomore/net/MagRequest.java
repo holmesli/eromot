@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.httpclient.BasicHttpClient;
@@ -33,25 +37,26 @@ public class MagRequest {
 	 * //get all magazines by id
 	 */
 	//http://54.213.167.5/APIV2/getArticleByArticleIssue.php?articleIssue=1
-	public String getMagById(String articleIssue)
+	public String getMagById(String articleIssue, String categoryId)
 			throws IOException, TimeoutException {
 		baseRequest = new BasicHttpClient(url);
         baseRequest.setConnectionTimeout(2000);
         ParameterMap params = baseRequest.newParams()
-                .add("articleIssue",articleIssue);
-        HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleByArticleIssue.php", params);
+                .add("articleIssue",articleIssue)
+        		.add("articleCategory",categoryId);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleByArticleCategoryAndIssue.php", params);
         return httpResponse.getBodyAsString();
 	}
 	
-	public String getCommentByMemberId(String articleID, String memberID, String commentContent)
+	public String PostCommentByMemberId(String articleID, String memberID, String commentContent)
 			throws IOException, TimeoutException {
 		baseRequest = new BasicHttpClient(url);
         baseRequest.setConnectionTimeout(2000);
         ParameterMap params = baseRequest.newParams()
-                .add("articleID",articleID)
+        		.add("articleID",articleID)
         		.add("memberID",memberID)
         		.add("commentContent",commentContent);
-        HttpResponse httpResponse = baseRequest.post("/APIV2/postCommentToArticle.php", params);
+        HttpResponse httpResponse = baseRequest.post("/postCommentToArticle.php", params);
         return httpResponse.getBodyAsString();
 	}
 	
@@ -63,8 +68,17 @@ public class MagRequest {
                 .add("articleID",articleID)
         		.add("page",page)
         		.add("limit",limit);
-        HttpResponse httpResponse = baseRequest.post("/APIV2/getCommentsByArticleID.php", params);
+        HttpResponse httpResponse = baseRequest.post("/getCommentsByArticleID.php", params);
         return httpResponse.getBodyAsString();
 	}
 	
+	public String getAllArticleCategories()
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getArticleCategories.php", null);
+        return httpResponse.getBodyAsString();
+	}
+	
+
 }

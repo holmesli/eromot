@@ -2,8 +2,6 @@ package com.app.tomore.net;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.GeneralBLModel;

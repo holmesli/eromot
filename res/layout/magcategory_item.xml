@@ -7,7 +7,7 @@
          android:layout_height="270dp">
 
 	<ImageView  
-    	android:id="@+id/img"  
+    	android:id="@+id/categoryImg"  
    		android:layout_width="fill_parent"  
    	    android:layout_height="fill_parent"
     android:layout_gravity="fill"
@@ -20,7 +20,7 @@
          android:layout_width="fill_parent"
          android:layout_height="fill_parent">
 	<ImageView  
-   		 android:id="@+id/imgback"  
+   		 android:id="@+id/categoryImgback"  
    		 android:layout_width="fill_parent"  
    		 android:layout_height="25dp"  
    		 android:background="@drawable/background_gradient"
@@ -33,7 +33,7 @@
          android:layout_width="fill_parent"
          android:layout_height="fill_parent">
   	<TextView
-      android:id="@+id/info"
+      android:id="@+id/categoryInfo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center_horizontal|bottom" 

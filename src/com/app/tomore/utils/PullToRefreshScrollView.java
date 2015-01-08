@@ -95,4 +95,11 @@ public class PullToRefreshScrollView extends PullToRefreshBase<ScrollView> {
 			return scrollRange;
 		}
 	}
+
+	@Override
+	public void setOnLastRefreshListener(
+			com.app.tomore.utils.PullToRefreshBase.OnLastRefreshListener<ScrollView> listener) {
+		// TODO Auto-generated method stub
+		
+	}
 }

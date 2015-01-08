@@ -11,11 +11,9 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
         
-	<include  android:id="@+id/bar_title_allmag"
-	     	  layout="@layout/bar_title_backtomag_category"
-	     	  android:focusable="true" />
-    		<com.app.tomore.utils.PullToRefreshListView
-        android:id="@+id/mag_listviews"
+     <include layout="@layout/bar_title_meg" android:focusable="true"/>
+     <com.app.tomore.utils.PullToRefreshListView
+        android:id="@+id/magcategory_listviews"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
          android:layout_marginTop="-1.33dp"
