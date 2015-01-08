@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.beans.ArticleModel;
-import com.app.tomore.net.MagParse;
+import com.app.tomore.adapters.FansAdapter;
+import com.app.tomore.beans.FansModel;
+import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
+import com.app.tomore.utils.PullToRefreshListView;
 import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 
@@ -20,6 +22,10 @@ public class MainFansActivity extends Activity {
 
 	private DialogActivity dialog;
 	private Activity mContext;
+	private ArrayList<FansModel> fansList;
+	FansAdapter fansListAdapter;
+	private PullToRefreshListView mListView;
+	private boolean onRefresh = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +82,38 @@ public class MainFansActivity extends Activity {
 			if (result == null || result.equals("")) {
 				ToastUtils.showToast(mContext, "ÁÐ±íÎª¿Õ");
 			} else {
-//				if(articleList!=null && articleList.size()>0)
-//				{
-//					articleList.clear();
-//				}
-//				else
-//				{
-//					articleList = new ArrayList<ArticleModel>();
-//				}
-//				try {
-//					articleList = new MagParse().parseArticleResponse(result);
-//					BindDataToListView();
-//				} catch (JsonSyntaxException e) {
-//					e.printStackTrace();
-//				}
+				if(fansList!=null && fansList.size()>0)
+				{
+					fansList.clear();
+				}
+				else
+				{
+					fansList = new ArrayList<FansModel>();
+				}
+				try {
+					fansList = new UserCenterParse().parseFansResponse(result);
+					BindDataToListView();
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
 			}
 		}		
+	}
+	
+	private void BindDataToListView(){
+		if (onRefresh) {
+			onRefresh = false;
+		}
+		if (fansListAdapter == null) {
+			fansListAdapter = new FansAdapter();
+			mListView.setAdapter(fansListAdapter);
+		} else {
+			fansListAdapter.notifyDataSetChanged();
+		}
+		if (fansList != null && fansList.size() > 0) {
+			showDataUi();
+		} else {
+			showNoDataUi();
+		}
 	}
 }
