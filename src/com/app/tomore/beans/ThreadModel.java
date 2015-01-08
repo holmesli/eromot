@@ -1,7 +1,34 @@
 package com.app.tomore.beans;
 
+import java.util.ArrayList;
+import com.app.tomore.beans.ThreadCmtModel;
+import com.app.tomore.beans.ThreadImageModel;
+import com.app.tomore.beans.ThreadLikeModel;
+
 public class ThreadModel {
 
+	public ArrayList<ThreadCmtModel> getThreadCmtList() {
+		return threadCmtList;
+	}
+	public void setThreadCmtList(ArrayList<ThreadCmtModel> threadCmtList) {
+		this.threadCmtList = threadCmtList;
+	}
+	public ArrayList<ThreadImageModel> getThreadImageList() {
+		return threadImageList;
+	}
+	public void setThreadImageList(ArrayList<ThreadImageModel> threadImageList) {
+		this.threadImageList = threadImageList;
+	}
+	public ArrayList<ThreadLikeModel> getThreadLikeList() {
+		return threadLikeList;
+	}
+	public void setThreadLikeList(ArrayList<ThreadLikeModel> threadLikeList) {
+		this.threadLikeList = threadLikeList;
+	}
+	private ArrayList<ThreadCmtModel> threadCmtList;
+	private ArrayList<ThreadImageModel> threadImageList;
+	private ArrayList<ThreadLikeModel> threadLikeList;
+	
 	public String getThreadID() {
 		return ThreadID;
 	}
