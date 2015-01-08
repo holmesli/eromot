@@ -29,6 +29,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     
     <uses-permission android:name="com.app.tomore.permission.MAPS_RECEIVE" />
     
@@ -73,10 +74,10 @@
         <activity android:name=".RestaurantBLActivity"  > </activity>
         <activity android:name=".LeagueActivity"  > </activity>
         <activity android:name=".RestaurantDetailActivity"></activity>
-        <activity android:name=".MagCommentActivity"></activity>
-        <activity android:name=".MagCategoryActivity"></activity>
-        <activity android:name=".PostCommentActivity"></activity>
-        <activity android:name=".ShareAndCommentActivity"></activity>
+        <activity android:name=".BLwebview"></activity>
+        <activity android:name=".OrderActivity"></activity>
+        <activity android:name = ".WebViewActivity"></activity>
+            
         
     </application>
 

@@ -1,23 +1,30 @@
 
 package com.app.tomore;
 
+import com.app.tomore.MainMemActivity.ViewHolder;
+import com.app.tomore.beans.CardModel;
 import com.app.tomore.fragment.BackToMainActivity;
 import com.app.tomore.httpclient.AndroidHttpClient;
 import com.app.tomore.httpclient.AsyncCallback;
 import com.app.tomore.httpclient.HttpResponse;
 import com.app.tomore.httpclient.ParameterMap;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,36 +36,13 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	private Context context;
 	private ImageButton menubtn;
 	private SlidingMenu menu;
+	private Activity mContext;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_duoliao_activity);
-		
-//		AndroidHttpClient httpClient = new AndroidHttpClient("http://54.213.167.5/APIV2/");
-//        httpClient.setMaxRetries(5);
-		
-//        ParameterMap params = httpClient.newParams()
-//                .add("articleIssue", "0");
-//                //.add("email", "test@example.com")
-//                //.add("action", "Log In");
-//        httpClient.post("getArticleByArticleIssue.php", params, new AsyncCallback() {
-//            public void onSuccess(HttpResponse httpResponse) {
-//                System.out.println(httpResponse.getBodyAsString());
-//                
-//                
-//            }
-//            @Override
-//            public void onError(Exception e) {
-//                e.printStackTrace();
-//            }
-//			@Override
-//			public void onComplete(HttpResponse httpResponse) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//        });
-		
-		
+		mContext = this;
+		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		
 		context=this;
 		menu = new SlidingMenu(this);
@@ -112,9 +96,66 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	}
 	
 	public void onMyFansClick(View view){		
-		Intent intent = new Intent(this, MainFansActivity.class);
-		startActivity(intent);   		
+		//Intent intent = new Intent(this, MainFansActivity.class);
+		//startActivity(intent);   		
 	}
+	
+//	private class duoliaoAdapter extends BaseAdapter {
+//
+//		@Override
+//		public View getView(int position, View convertView, ViewGroup parent) {
+//			CardModel cardItem = (CardModel) getItem(position);
+//			ViewHolder viewHolder = null;
+//			if (convertView != null) {
+//				viewHolder = (ViewHolder) convertView.getTag();
+//			} else {
+//				viewHolder = new ViewHolder();
+//				convertView = LayoutInflater.from(mContext).inflate(
+//						R.layout.member_listview_item, null);
+//				viewHolder.textViewTitle = (TextView) convertView
+//						.findViewById(R.id.title);
+//				viewHolder.textViewDes = (TextView) convertView
+//						.findViewById(R.id.des);
+//				viewHolder.textViewTomoreCard = (TextView) convertView
+//						.findViewById(R.id.tomoreCard);
+//				viewHolder.imageView = (ImageView) convertView
+//						.findViewById(R.id.img);
+//				convertView.setTag(viewHolder);
+//			}
+//			ImageLoader.getInstance().displayImage(
+//					cardItem.getFrontViewImage(), viewHolder.imageView, otp);
+//			viewHolder.textViewTitle.setText(cardItem.getCardTitle());
+//			viewHolder.textViewDes.setText(cardItem.getCardDes());
+//
+//			String cardType = cardItem.getCardType();
+//
+//			if (!cardType.equals("0")) {
+//				viewHolder.textViewTomoreCard.setVisibility(View.INVISIBLE);
+//			} else if (cardType.equals("0")) {
+//				viewHolder.textViewTomoreCard.setVisibility(View.VISIBLE);
+//			}
+//
+//			return convertView;
+//		}
+//
+//		@Override
+//		public int getCount() {
+//			// TODO Auto-generated method stub
+//			return cardList.size();
+//		}
+//
+//		@Override
+//		public Object getItem(int arg0) {
+//			// TODO Auto-generated method stub
+//			return cardList.get(arg0);
+//		}
+//
+//		@Override
+//		public long getItemId(int position) {
+//			// TODO Auto-generated method stub
+//			return 0;
+//		}
+//	}
 }
 
 

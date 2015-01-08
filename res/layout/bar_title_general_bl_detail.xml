@@ -4,15 +4,15 @@
     android:layout_height="44dip"
     android:gravity="center_vertical"
     android:padding="0.0px" >
-     <ImageView
-        android:id="@+id/megCommentBt1"
+
+    <ImageView
+        android:id="@+id/LeagueTitleBG"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/background_gradient" />
 
-
     <TextView
-        android:id="@+id/commentTv"
+        android:id="@+id/btLeague"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_centerInParent="true"
@@ -21,19 +21,8 @@
         android:paddingLeft="96.0dip"
         android:paddingRight="96.0dip"
         android:singleLine="true"
-        android:text="@string/maglist"
-        android:textColor="@android:color/white" />
+        android:text="@string/bar_title_generalBL_detail" />
 
-    <Button
-        android:id="@+id/bar_title_bt_backtocategory"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignBaseline="@+id/commentTv"
-        android:layout_alignBottom="@+id/commentTv"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/button_back_bg"
-        android:paddingBottom="2dp"
-        android:paddingTop="4dp"
-        android:tag="1" />
+
 
 </RelativeLayout>

@@ -21,7 +21,7 @@
           android:layout_height="wrap_content"
           android:gravity="center"
           android:textColor="#000000" 
-          android:textSize="22sp"
+          android:textSize="21sp"
           android:paddingBottom="5dp"
    		  android:paddingTop="5dp"
    		  android:paddingLeft="5dp" />
@@ -38,7 +38,7 @@
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
           android:textColor="#000000"
-          android:textSize="17sp" 
+          android:textSize="13sp" 
           android:paddingBottom="5dp"
    		  android:paddingLeft="5dp" /> 
 		</LinearLayout>
@@ -51,8 +51,8 @@
 
     <ImageView
         android:id="@+id/OrderMessage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/message_icon" 
         android:paddingRight = "20dp">
     </ImageView>

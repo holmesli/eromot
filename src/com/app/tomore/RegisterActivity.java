@@ -3,7 +3,8 @@ package com.app.tomore;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.net.RegisterRequest;
+import com.app.tomore.net.UserCenterParse;
+import com.app.tomore.net.UserCenterRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -136,7 +137,7 @@ public class RegisterActivity extends Activity {
 		protected String doInBackground(String... params) {
 //			String email, String userName, String password, String school, String major, String gender
 			String result = null;
-			RegisterRequest request = new RegisterRequest(
+			UserCenterRequest request = new UserCenterRequest(
 					RegisterActivity.this);
 			try {
 				result = request.getLoginResponse(registerEmail, registerUserName, registerPassword, registerSchool, registerMajor, registerGender);
@@ -159,17 +160,15 @@ public class RegisterActivity extends Activity {
 		    	Toast.makeText(getApplicationContext(), "ע��ʧ��",
 						Toast.LENGTH_SHORT).show();
 			}else {
-				Gson gson = new Gson();
-				JsonElement jelement = new JsonParser().parse(result);
-			    JsonObject  jobject = jelement.getAsJsonObject();
-			    String loninResult = jobject.get("result").toString();
-			    if(loninResult.equals("\"succ\"")){	
+				UserCenterParse ucParse = new UserCenterParse();
+				String registerResult = ucParse.parseRegisterResponse(result);
+			    if(registerResult.equals("\"succ\"")){	
 			    	Intent intent = new Intent(RegisterActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   
-			    }else if(loninResult.equals("\"2\"")){
+			    }else if(registerResult.equals("\"2\"")){
 			    	Toast.makeText(getApplicationContext(), "�û����Ѵ���",
 							Toast.LENGTH_SHORT).show();
-			    }else if(loninResult.equals("\"3\"")){
+			    }else if(registerResult.equals("\"3\"")){
 			    	Toast.makeText(getApplicationContext(), "�����Ѵ���",
 							Toast.LENGTH_SHORT).show();
 			    }else{

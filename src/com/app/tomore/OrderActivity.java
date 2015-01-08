@@ -60,8 +60,8 @@ public class OrderActivity extends Activity{
 	private void Open_Activity(int position) {
 		Intent intent;
 		intent = new Intent(OrderActivity.this,
-				OrderWebViewActivity.class);
-		intent.putExtra("BLdata", (Serializable)dataList.get(position));
+				WebViewActivity.class);
+		intent.putExtra("URL", dataList.get(position).getUrl());
 		startActivityForResult(intent, 100);
 	}
 
