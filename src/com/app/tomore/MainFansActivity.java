@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.beans.ArticleModel;
-import com.app.tomore.net.FansRequest;
 import com.app.tomore.net.MagParse;
+import com.app.tomore.net.UserCenterRequest;
 import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 
@@ -51,7 +51,7 @@ public class MainFansActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			FansRequest request = new FansRequest(MainFansActivity.this);
+			UserCenterRequest request = new UserCenterRequest(MainFansActivity.this);
 			//memberID, viewerID, limit, page
 			try {
 				result = request.getFansRequest("25", "34", "10", "1");

@@ -3,7 +3,7 @@ package com.app.tomore;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.net.LoginRequest;
+import com.app.tomore.net.UserCenterRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -70,7 +70,7 @@ public class LoginActivity extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			LoginRequest request = new LoginRequest(
+			UserCenterRequest request = new UserCenterRequest(
 					LoginActivity.this);
 			try {
 				result = request.getLoginResponse(loginEmail, loginPassword);

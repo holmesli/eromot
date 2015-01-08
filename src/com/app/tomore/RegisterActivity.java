@@ -3,7 +3,7 @@ package com.app.tomore;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.net.RegisterRequest;
+import com.app.tomore.net.UserCenterRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -136,7 +136,7 @@ public class RegisterActivity extends Activity {
 		protected String doInBackground(String... params) {
 //			String email, String userName, String password, String school, String major, String gender
 			String result = null;
-			RegisterRequest request = new RegisterRequest(
+			UserCenterRequest request = new UserCenterRequest(
 					RegisterActivity.this);
 			try {
 				result = request.getLoginResponse(registerEmail, registerUserName, registerPassword, registerSchool, registerMajor, registerGender);
