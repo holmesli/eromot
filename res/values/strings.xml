@@ -101,6 +101,12 @@
     <string name="leaveMessage">留言：</string>
     <string name="leagueWelcomeMessage">赶快填写商家信息加入便利联盟吧！</string>
     <string name="successMessage">发送成功</string>
+    <string name="commentList">评论列表</string>
+    <string name="postComment">Post</string>
+    <string name="commentPost">发表</string>
+    <string name="maglist">杂志列表</string>
+    <string name="share">分享</string>
+    <string name="comment">评论</string>
     
     
     <color name="register_background_color">#f7f7f7</color>

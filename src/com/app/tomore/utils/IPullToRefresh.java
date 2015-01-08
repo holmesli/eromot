@@ -16,6 +16,7 @@
 package com.app.tomore.utils;
 
 import com.app.tomore.utils.PullToRefreshBase.Mode;
+import com.app.tomore.utils.PullToRefreshBase.OnLastRefreshListener;
 import com.app.tomore.utils.PullToRefreshBase.OnPullEventListener;
 import com.app.tomore.utils.PullToRefreshBase.OnRefreshListener;
 import com.app.tomore.utils.PullToRefreshBase.OnRefreshListener2;
@@ -197,6 +198,8 @@ public interface IPullToRefresh<T extends View> {
 	 * @param listener
 	 *            - Listener to be used when the Widget is set to Refresh
 	 */
+	public void setOnLastRefreshListener(OnLastRefreshListener<T> listener);
+	
 	public void setOnRefreshListener(OnRefreshListener2<T> listener);
 
 	/**
@@ -305,5 +308,6 @@ public interface IPullToRefresh<T extends View> {
 	 * @param showView
 	 */
 	public void setShowViewWhileRefreshing(boolean showView);
+
 
 }

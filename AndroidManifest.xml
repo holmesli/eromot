@@ -73,6 +73,10 @@
         <activity android:name=".RestaurantBLActivity"  > </activity>
         <activity android:name=".LeagueActivity"  > </activity>
         <activity android:name=".RestaurantDetailActivity"></activity>
+        <activity android:name=".MagCommentActivity"></activity>
+        <activity android:name=".MagCategoryActivity"></activity>
+        <activity android:name=".PostCommentActivity"></activity>
+        <activity android:name=".ShareAndCommentActivity"></activity>
         
     </application>
 

@@ -55,7 +55,7 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
         spec=tabHost.newTabSpec("多聊").setIndicator("多聊").setContent(intent);
         tabHost.addTab(spec);
         
-        intent=new Intent().setClass(this,MainMagActivity.class);
+        intent=new Intent().setClass(this,MagCategoryActivity.class);
         spec=tabHost.newTabSpec("杂志").setIndicator("杂志").setContent(intent);
         tabHost.addTab(spec);
         

@@ -1,16 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-     <ListView   
-	     	android:dividerHeight="1dip" 
-	     	android:id="@+id/mag_comment_listview" 
-	     	android:divider="#e0e0e0" 
-	     	android:layout_width="fill_parent" 
-	     	android:layout_height="wrap_content" 
-	     	android:cacheColorHint="#00000000"  ></ListView>
 
+<include  android:id="@+id/bar_title_commentlistbar"
+     	  layout="@layout/bar_title_mag_comment_list"
+     	  android:focusable="true"/>
+	<com.app.tomore.utils.PullToRefreshListView
+        android:id="@+id/mag_comment_listviews"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         android:layout_marginTop="-1.33dp"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        ptr:kalaAnimationStyle="flip"
+        ptr:kalaTopProgress="@drawable/kalagame_hunter_refresh_loading"
+        ptr:kalaDrawable="@drawable/kalagame_icon_arrows"
+        android:fadingEdge="none"
+        />
+	<TextView 
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="没有数据"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/noData"/>
+	<include layout="@layout/no_net_layout"/>
 
 
 </LinearLayout>

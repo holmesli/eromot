@@ -505,6 +505,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         mOnRefreshListener = listener;
         mOnRefreshListener2 = null;
     }
+    
+//    @Override
+//    public final void setOnLastRefreshListener(OnLastRefreshListener<T> listener) {
+//    	mOnRefreshListener = listener;
+//        mOnRefreshListener2 = null;
+//    }
 
     @Override
     public final void setOnRefreshListener(OnRefreshListener2<T> listener) {
@@ -1308,6 +1314,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * from Bottom
          */
         public void onRefresh(final PullToRefreshBase<V> refreshView);
+
+    }
+    
+    public static interface OnLastRefreshListener<V extends View> {
+    	
+    	public void onListRefresh(final PullToRefreshBase<V> refreshView);
 
     }
 
