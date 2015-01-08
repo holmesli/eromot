@@ -76,6 +76,7 @@
         <activity android:name=".BLwebview"></activity>
         <activity android:name=".OrderActivity"></activity>
         <activity android:name = ".OrderWebViewActivity"></activity>
+        <activity android:name = ".MainFansActivity"></activity>
             
         
     </application>

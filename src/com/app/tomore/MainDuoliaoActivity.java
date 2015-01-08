@@ -110,6 +110,11 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);   
 	}
+	
+	public void onMyFansClick(View view){		
+		Intent intent = new Intent(this, MainFansActivity.class);
+		startActivity(intent);   		
+	}
 }
 
 
