@@ -34,10 +34,10 @@ public class MagParse {
 		return articlelist;
 	}
 	
-	public ArrayList<ArticleCommentModel> parseArticleComment(String jsonArticleComment) throws JsonSyntaxException 
+	public ArrayList<ArticleCommentModel> parseArticleComment(String result) throws JsonSyntaxException 
 	{
 		Gson gson = new Gson();
-		JsonElement jelement = new JsonParser().parse(jsonArticleComment);
+		JsonElement jelement = new JsonParser().parse(result);
 	    JsonObject  jobject = jelement.getAsJsonObject();
 	    JsonArray jarray = jobject.getAsJsonArray("data");
 		ArrayList<ArticleCommentModel> articleCommentlist = new ArrayList<ArticleCommentModel>();

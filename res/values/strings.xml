@@ -107,6 +107,7 @@
     <string name="maglist">杂志列表</string>
     <string name="share">分享</string>
     <string name="comment">评论</string>
+    <string name="Order">Order</string>
     
     
     <color name="register_background_color">#f7f7f7</color>

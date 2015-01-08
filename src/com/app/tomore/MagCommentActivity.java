@@ -56,9 +56,10 @@ public class MagCommentActivity extends Activity {
 	private View no_net_lay;
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
+	private boolean headerRefresh = false; 
 	private String articleId;
 	private String memberId="34";
-	private String page="1";
+	private int page;
 	private String limit="10";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class MagCommentActivity extends Activity {
 		setContentView(R.layout.mag_comment_listview);
 		mContext = this;
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		new GetData(MagCommentActivity.this, 1).execute("");
+		
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
@@ -120,7 +121,7 @@ public class MagCommentActivity extends Activity {
 					finish();
 				}
 			});
-            
+			new GetData(MagCommentActivity.this, 1).execute("");
 	
 	}
 
@@ -227,26 +228,27 @@ public class MagCommentActivity extends Activity {
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-			if(AppUtil.networkAvailable(mContext) ){
+			if (AppUtil.networkAvailable(mContext)) {
+				headerRefresh = true;
 				onRefresh = true;
-					new GetData(MagCommentActivity.this, 1).execute("");
-
-			}else{
+				page=1;
+				new GetData(MagCommentActivity.this, 1).execute("");
+			} else {
 				ToastUtils.showToast(mContext, "没有网络");
 				mListView.onRefreshComplete();
 			}
 		}
+
 	};
 
 	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
 		@Override
 		public void onLastItemVisible() {
-			if(AppUtil.networkAvailable(mContext)){
-				onRefresh = true;
-					new GetData(MagCommentActivity.this, 1).execute("");
-
-				
-			}else{
+			if (AppUtil.networkAvailable(mContext)) {
+				headerRefresh = false;
+				page++;
+				new GetData(MagCommentActivity.this, 1).execute("");
+			} else {
 				ToastUtils.showToast(mContext, "没有网络");
 			}
 		}
@@ -256,7 +258,6 @@ public class MagCommentActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			onRefresh = true;
-
 			new GetData(MagCommentActivity.this, 1).execute("");
 		}
 	};

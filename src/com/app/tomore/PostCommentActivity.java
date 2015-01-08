@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.MagRequest;
@@ -126,9 +127,7 @@ public class PostCommentActivity extends Activity{
 				}
 				finalResult = returnResult.getResult(); 
 	    		if(finalResult.equals("succ")){
-	    			AlertDialog.Builder builder  = new Builder(PostCommentActivity.this);
-	    			 builder.setMessage("发送成功" ) ;			
-	    			 builder.show(); 
+	    			Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show(); 
 
 	    		}
 			}

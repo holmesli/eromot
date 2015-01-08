@@ -60,13 +60,13 @@ public class MagRequest {
         return httpResponse.getBodyAsString();
 	}
 	
-	public String getCommentByArticleId(String articleID, String page, String limit)
+	public String getCommentByArticleId(String articleID, int page, String limit)
 			throws IOException, TimeoutException {
 		baseRequest = new BasicHttpClient(url);
         baseRequest.setConnectionTimeout(2000);
         ParameterMap params = baseRequest.newParams()
                 .add("articleID",articleID)
-        		.add("page",page)
+        		.add("page",Integer.toString(page))
         		.add("limit",limit);
         HttpResponse httpResponse = baseRequest.post("/getCommentsByArticleID.php", params);
         return httpResponse.getBodyAsString();
