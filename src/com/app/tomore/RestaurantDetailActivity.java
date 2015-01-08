@@ -6,26 +6,16 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.beans.BLMenuModel;
-import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.beans.ImageAndText;
 import com.app.tomore.adapters.ImageAndTextListAdapter;
 import com.app.tomore.net.*;
-import com.app.tomore.utils.AndroidShare;
 import com.app.tomore.utils.TouchImageView;
-import com.app.tomore.utils.AndroidShare;
-import com.app.tomore.utils.TouchImageView;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,31 +23,6 @@ import android.widget.TextView;
 import com.google.gson.JsonSyntaxException;
 
 import android.widget.*;
-import android.widget.AdapterView.OnItemClickListener;
-import android.app.ProgressDialog;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 
@@ -73,8 +38,7 @@ public class RestaurantDetailActivity extends Activity{
 	private DisplayImageOptions otp;
 	private Activity mContext;
 
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -163,18 +127,6 @@ public class RestaurantDetailActivity extends Activity{
 		GridView gridView = (GridView) findViewById(R.id.menugridView);
 		gridView.setAdapter(new ImageAndTextListAdapter(this, imageAndTextList,
 				gridView));
-		/*gridView.setOnItemClickListener(new OnItemClickListener(){
-			public void onItemClick(AdapterView<?> parent, View view, 
-		            int position, long id){
-				BLMenuModel item = menulist.get(position);
-				
-				
-				
-			}
-		});*/
-	
-		
-	 
 		
 	}
 }

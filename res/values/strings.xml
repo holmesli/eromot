@@ -102,7 +102,9 @@
     <string name="leagueWelcomeMessage">赶快填写商家信息加入便利联盟吧！</string>
     <string name="successMessage">发送成功</string>
     <string name="Order">定制</string>
-    
+    <string name="Call">呼叫</string>
+    <string name="Cancel">取消</string>
+    <string name="bar_title_generalBL_detail">信息详情</string>
     
     <color name="register_background_color">#f7f7f7</color>
     <color name="register_button_color">#5191ff</color>

@@ -98,8 +98,8 @@ public class MainBLActivity extends Activity {
         }
         else if	(BLType == 3){
         	intent = new Intent(MainBLActivity.this,
-	        		BLwebview.class);
-        	intent.putExtra("BLID",BLID);
+	        		WebViewActivity.class);
+        	intent.putExtra("URL","http://m.dianping.com/shop/18766729");
 	        startActivityForResult(intent, 100);
         }
 	}

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="30sp" 
+            android:textSize="22sp" 
             android:paddingLeft = "40dp"
             android:paddingTop = "10dp"/>
 
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="22sp"
+            android:textSize="16sp"
             android:paddingLeft = "40dp"
             android:paddingTop = "10dp" />
     </LinearLayout>
@@ -38,8 +38,8 @@
 
     <ImageView
         android:id="@+id/OrderMessage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/message_icon" 
         android:paddingRight = "20dp">
     </ImageView>

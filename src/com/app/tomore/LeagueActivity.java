@@ -2,9 +2,11 @@ package com.app.tomore;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.ToMoreParse;
 import com.app.tomore.net.YellowPageRequest;
@@ -106,8 +109,11 @@ public class LeagueActivity extends Activity{
 				}
 				finalResult = returnResult.getResult();
 	    		if(finalResult.equals("succ")){
-	    			PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.league_pop_window, null, false),100,100, true);
-	    			pw.showAtLocation(layout, Gravity.TOP, 0, 0);
+	    			PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.league_pop_window, null, false),400,170, true);
+	    			pw.showAtLocation(layout, Gravity.TOP, 0, 200);
+	    			pw.setFocusable(true);  
+	    			pw.setBackgroundDrawable(new BitmapDrawable());
+	    			pw.setOutsideTouchable(true);
 	    		}
 			}
 		}

@@ -3,12 +3,19 @@ package com.app.tomore;
 import com.app.tomore.beans.GeneralBLModel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +30,8 @@ public class GeneralBLDetailActivity extends Activity {
 	private DialogActivity dialog;
 	private GeneralBLModel BLModel;
 	private GoogleMap map;
+	private View layout;
+	private LayoutInflater inflater; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +41,42 @@ public class GeneralBLDetailActivity extends Activity {
 		Intent intent = getIntent();
 		BLModel = (GeneralBLModel) intent.getSerializableExtra("BLdata");
 		BindData();
+		ImageView Call = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.CallImage);
+		Call.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	showPopup();
+		    }
+		});
+	}
+	
+	private void showPopup(){
+		inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		layout = findViewById(R.id.general_detail_top_container);
+		View viewlayout = inflater.inflate(R.layout.phone_call_pop_window, null, false);
+		final PopupWindow pw = new PopupWindow(viewlayout,440,340, true);
+		pw.showAtLocation(layout, Gravity.CENTER, 0, 60);
+		Button close = (Button) viewlayout.findViewById(R.id.CancelButton);
+		Button number = (Button) viewlayout.findViewById(R.id.ShowNumber);
+		Button MakeCall = (Button) viewlayout.findViewById(R.id.CallButton);
+		number.setText(BLModel.getPhone1());
+		close.setOnClickListener(new View.OnClickListener() {
+			 
+		     @Override
+		     public void onClick(View v) {
+		    	 pw.dismiss();
+		     }
+		   });
+		MakeCall.setOnClickListener(new View.OnClickListener() {
+			 @Override
+		     public void onClick(View v) {
+				Intent call = new Intent(Intent.ACTION_DIAL);
+				call.setData(Uri.parse("tel:"+BLModel.getPhone1()));
+				startActivity(call);
+			 }
+		   });
+		
 	}
 	
 	
