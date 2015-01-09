@@ -171,4 +171,6 @@
 	<string name="mag_detail_back">杂志</string>
     <string name="mag_content">正文</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="bar_title_generalBL_detail">bar_title_generalBL_detail</string>
+    <string name="Call">Call</string>
 </resources>
