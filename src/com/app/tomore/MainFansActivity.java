@@ -111,9 +111,9 @@ public class MainFansActivity extends Activity {
 			fansListAdapter.notifyDataSetChanged();
 		}
 		if (fansList != null && fansList.size() > 0) {
-	//		showDataUi();
+			//showDataUi();
 		} else {
-	//		showNoDataUi();
+			//showNoDataUi();
 		}
 	}
 }

@@ -13,7 +13,7 @@ import com.app.tomore.beans.ThreadLikeModel;
 import com.app.tomore.beans.ThreadModel;
 
 public class ThreadsParse {
-	public ArrayList<ThreadModel> parseThreadModel(String jsonRestaurant) 
+	public ArrayList<ThreadModel> parseThreadModel(String jsonThreads) 
 			throws JsonSyntaxException 
 	{
 		
@@ -45,7 +45,7 @@ public class ThreadsParse {
 		
 		ArrayList<ThreadModel> retList = new ArrayList<ThreadModel>();
 		Gson gson = new Gson();
-		JsonElement jelement = new JsonParser().parse(jsonRestaurant);
+		JsonElement jelement = new JsonParser().parse(jsonThreads);
 	    JsonObject  jobject = jelement.getAsJsonObject();
 	    JsonArray jarray = jobject.getAsJsonArray("data");
 	    for (JsonElement obj : jarray)
@@ -82,11 +82,13 @@ public class ThreadsParse {
 	    	if(threadCommentArray != null)
 	    	{
 	    		ArrayList<ThreadCmtModel> listComment = new ArrayList<ThreadCmtModel>();
-	    		for (JsonElement objComment : threadLikeArray)
+	    		for (JsonElement objComment : threadCommentArray)
 	    		{
 	    			ThreadCmtModel commentModel = gson.fromJson(objComment, ThreadCmtModel.class);
 	    			listComment.add(commentModel);
 	    		}
+	    		
+	    		aThread.setThreadCmtList(listComment);
 	    	}
 
 			retList.add(aThread);
