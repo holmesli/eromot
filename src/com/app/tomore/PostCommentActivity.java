@@ -127,8 +127,12 @@ public class PostCommentActivity extends Activity{
 				}
 				finalResult = returnResult.getResult(); 
 	    		if(finalResult.equals("succ")){
-	    			Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show(); 
+	    			Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
 
+	    		}
+	    		else
+	    		{
+	    			Toast.makeText(getApplicationContext(), "请重新发布", Toast.LENGTH_SHORT).show();
 	    		}
 			}
 		}

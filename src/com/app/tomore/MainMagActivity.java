@@ -51,7 +51,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class MainMagActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articleList;
-	private ArrayList<ArticleModel> articleIsuuselist;
+	private ArrayList<HashMap<String, ArrayList<ArticleModel>>> articleHashMap;
 	private ArticleModel articleItem;
 	//private ArticleCategoryModel articleCategory;
 	private DisplayImageOptions otp;
@@ -62,7 +62,6 @@ public class MainMagActivity extends Activity {
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
 	private boolean headerRefresh = false;
-	private boolean footerRefresh = false;
 	private String magId = "0";
 	private String categoryID;
 	private String pre;
@@ -199,21 +198,31 @@ public class MainMagActivity extends Activity {
 					
 					if(headerRefresh)
 					{
+						next = new MagParse().parseNext(result);
 						articleList = new MagParse().parseArticleResponse(result);
 					}
 					else
 					{
-						HashMap<String, ArrayList<ArticleModel>> arrayList = new HashMap<String,ArrayList<ArticleModel>>();
-						 arrayList.putAll(new MagParse().parseIssuse(result, pre, next));
-						 articleList.addAll(new MagParse().parseArticleResponse(result));
-					}
-					//articleIsuuselist = new ArrayList<ArticleModel>();
-					 
-					
-				//	 articleItem = new ArticleModel();
-				//		articleList = new ArrayList<ArticleModel>();
+//						if(result!=null)
+//						{
+							pre = new MagParse().parsePre(result);
+							articleList = new MagParse().parseArticleResponse(result);
+					//	}
+						//articleList.addAll(new MagParse().parseArticleResponse(result));
+//						HashMap<String, ArrayList<ArticleModel>> arrayList = new HashMap<String,ArrayList<ArticleModel>>();
+//						arrayList.put(pre,articleList);
+//						arrayList.put(next, articleList);
+						//arrayList = new MagParse().parseIssuse(result, pre, next);
+						// articleHashMap.putAll(new MagParse().parseIssuse(result, pre, next));
 						
-				//		articleIsuuselist = articleList;
+						//articleHashMap = new MagParse().parseIssuse(result, pre, next);
+//						 articleList.add(1,articleHashMap);
+						// articleHashMap.add(new MagParse().parseIssuse(result, pre, next));
+						 
+						 
+								 //articleList.add(arrayList);
+					}
+
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -274,7 +283,7 @@ public class MainMagActivity extends Activity {
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
 
-				headerRefresh = true;
+				headerRefresh = false;
 				magId=pre;
 				new GetData(MainMagActivity.this, 1).execute("");
 
@@ -290,7 +299,6 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			//onRefresh = true;
-			footerRefresh = true;
 			new GetData(MainMagActivity.this, 1).execute("");
 		}
 	};

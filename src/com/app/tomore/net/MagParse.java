@@ -62,42 +62,58 @@ public class MagParse {
 		return lcs;
 	}
 	
-
-	public HashMap<String, ArrayList<ArticleModel>> parseIssuse(String articleIssuse, String pre, String next) 
-			throws JsonSyntaxException 
+	public String parsePre(String pre) throws JsonSyntaxException
 	{
-		HashMap<String, ArrayList<ArticleModel>> retMap = new HashMap<String, ArrayList<ArticleModel>>();
-		Gson gson = new Gson();
-		JsonElement jelement = new JsonParser().parse(articleIssuse);
-	    JsonObject  jobject = jelement.getAsJsonObject();
-	    JsonArray jarray = jobject.getAsJsonArray("data");
+		JsonElement jelement = new JsonParser().parse(pre);
 		JsonObject  jobject2 = jelement.getAsJsonObject();
-		JsonObject  jobject3 = jelement.getAsJsonObject();
 		pre =jobject2.get("pre").getAsString();
-		next =jobject3.get("next").getAsString();
-		
-			if(pre != null)
-			{
-				for (JsonElement obj : jarray) {
-				ArrayList<ArticleModel> article = new ArrayList<ArticleModel>();
-	
-					ArticleModel cse = gson.fromJson(obj, ArticleModel.class);
-					article.add(cse);
-				retMap.put(pre,article);
-				}
-			}
-			
-			if(next != null)
-			{
-				for (JsonElement obj1 : jarray) {
-				ArrayList<ArticleModel> article = new ArrayList<ArticleModel>();
-
-					ArticleModel cse = gson.fromJson(obj1, ArticleModel.class);
-					article.add(cse);
-				retMap.put(next,article);
-				
-			}
-		}
-		return retMap;
+		return pre;
 	}
+	
+	public String parseNext(String next) throws JsonSyntaxException
+	{
+		JsonElement jelement = new JsonParser().parse(next);
+		JsonObject  jobject3 = jelement.getAsJsonObject();
+		next =jobject3.get("next").getAsString();
+		return next;
+	}
+	
+
+//	public HashMap<String, ArrayList<ArticleModel>> parseIssuse(String articleIssuse, String pre, String next) 
+//			throws JsonSyntaxException 
+//	{
+//		HashMap<String, ArrayList<ArticleModel>> retMap = new HashMap<String, ArrayList<ArticleModel>>();
+//		Gson gson = new Gson();
+//		JsonElement jelement = new JsonParser().parse(articleIssuse);
+//	    JsonObject  jobject = jelement.getAsJsonObject();
+//	    JsonArray jarray = jobject.getAsJsonArray("data");
+//		JsonObject  jobject2 = jelement.getAsJsonObject();
+//		JsonObject  jobject3 = jelement.getAsJsonObject();
+//		pre =jobject2.get("pre").getAsString();
+//		next =jobject3.get("next").getAsString();
+//		
+//			if(pre != null)
+//			{
+//				for (JsonElement obj : jarray) {
+//				ArrayList<ArticleModel> article = new ArrayList<ArticleModel>();
+//	
+//					ArticleModel cse = gson.fromJson(obj, ArticleModel.class);
+//					article.add(cse);
+//				retMap.put(pre,article);
+//				}
+//			}
+//			
+//			if(next != null)
+//			{
+//				for (JsonElement obj1 : jarray) {
+//				ArrayList<ArticleModel> article = new ArrayList<ArticleModel>();
+//
+//					ArticleModel cse = gson.fromJson(obj1, ArticleModel.class);
+//					article.add(cse);
+//				retMap.put(next,article);
+//				
+//			}
+//		}
+//		return retMap;
+//	}
 }

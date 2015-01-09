@@ -79,7 +79,6 @@ public class MagCommentActivity extends Activity {
 
 			mListView = (PullToRefreshListView) findViewById(R.id.mag_comment_listviews);
 			mListView.setOnRefreshListener(onRefreshListener);
-			mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 			noneData = (TextView)findViewById(R.id.noData);
 			no_net_lay = findViewById(R.id.no_net_lay);
 			
@@ -251,19 +250,6 @@ public class MagCommentActivity extends Activity {
 			}
 		}
 
-	};
-
-	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
-		@Override
-		public void onLastItemVisible() {
-			if (AppUtil.networkAvailable(mContext)) {
-				headerRefresh = false;
-				//page++;
-				new GetData(MagCommentActivity.this, 1).execute("");
-			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
-			}
-		}
 	};
 
 	class ViewHolder {
