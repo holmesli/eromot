@@ -77,6 +77,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		bt2.setOnClickListener(this);
 		bt3.setOnClickListener(this);
 		menubtn.setOnClickListener(this);
+		mListView = (PullToRefreshListView) findViewById(R.id.list);
 		new GetData(MainDuoliaoActivity.this, 1).execute("");
 	}
 
