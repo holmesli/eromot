@@ -47,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 public class MainMagActivity extends Activity {
 	private DialogActivity dialog;
@@ -62,7 +63,7 @@ public class MainMagActivity extends Activity {
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
 	private boolean headerRefresh = false;
-	private String magId = "0";
+	private String magId="0";
 	private String categoryID;
 	private String pre;
 	private String next;
@@ -196,17 +197,21 @@ public class MainMagActivity extends Activity {
 				}
 				try {
 					
-					if(headerRefresh)
-					{
+//					if(headerRefresh==true)
+//					{
+					
 						next = new MagParse().parseNext(result);
-						articleList = new MagParse().parseArticleResponse(result);
-					}
-					else
-					{
+						//articleList = new MagParse().parseArticleResponse(result);
+					//}
+				//	else if(headerRefresh==false)
+					//{
 //						if(result!=null)
 //						{
-							pre = new MagParse().parsePre(result);
-							articleList = new MagParse().parseArticleResponse(result);
+						pre = new MagParse().parsePre(result);
+							
+							
+							
+							
 					//	}
 						//articleList.addAll(new MagParse().parseArticleResponse(result));
 //						HashMap<String, ArrayList<ArticleModel>> arrayList = new HashMap<String,ArrayList<ArticleModel>>();
@@ -221,7 +226,8 @@ public class MainMagActivity extends Activity {
 						 
 						 
 								 //articleList.add(arrayList);
-					}
+				//	}
+					articleList = new MagParse().parseArticleResponse(result);
 
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
@@ -268,7 +274,15 @@ public class MainMagActivity extends Activity {
 			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
 				headerRefresh = true;
-				magId=next;
+				if(next.equals("0"))
+				{
+					Toast.makeText(getApplicationContext(), "到头啦，歇一会~", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					magId=next;
+				}
+				
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
@@ -284,7 +298,15 @@ public class MainMagActivity extends Activity {
 			if(AppUtil.networkAvailable(mContext)){
 
 				headerRefresh = false;
-				magId=pre;
+				if(pre.equals("0"))
+				{
+					Toast.makeText(getApplicationContext(), "已经到头啦", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					magId=pre;
+				}
+				
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
