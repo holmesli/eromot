@@ -1,13 +1,26 @@
 
 package com.app.tomore;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeoutException;
+
+import com.app.tomore.GeneralBLActivity.GetData;
 import com.app.tomore.MainMemActivity.ViewHolder;
 import com.app.tomore.beans.CardModel;
+import com.app.tomore.beans.GeneralBLModel;
+import com.app.tomore.beans.ThreadModel;
 import com.app.tomore.fragment.BackToMainActivity;
 import com.app.tomore.httpclient.AndroidHttpClient;
 import com.app.tomore.httpclient.AsyncCallback;
 import com.app.tomore.httpclient.HttpResponse;
 import com.app.tomore.httpclient.ParameterMap;
+import com.app.tomore.net.ThreadsParse;
+import com.app.tomore.net.ThreadsRequest;
+import com.app.tomore.net.YellowPageParse;
+import com.app.tomore.net.YellowPageRequest;
+import com.app.tomore.utils.PullToRefreshListView;
+import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.slidingmenu.lib.SlidingMenu;
 
@@ -15,8 +28,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +52,12 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	private ImageButton menubtn;
 	private SlidingMenu menu;
 	private Activity mContext;
+	private DialogActivity dialog;
+	private boolean headerRefresh;
+	private ArrayList<ThreadModel> threadList;
+	private int pageNumber = 1;
+	private int limit = 20;
+	private PullToRefreshListView mListView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,6 +87,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		bt2.setOnClickListener(this);
 		bt3.setOnClickListener(this);
 		menubtn.setOnClickListener(this);
+		new GetData(MainDuoliaoActivity.this, 1).execute("");
 	}
 
 	@Override
@@ -95,6 +117,80 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		startActivity(intent);   
 	}
 	
+	private class GetData extends AsyncTask<String, String, String> {
+		// private Context mContext;
+		private int mType;
+
+		private GetData(Context context, int type) {
+			// this.mContext = context;
+			this.mType = type;
+			dialog = new DialogActivity(context, type);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			if (mType == 1) {
+				if (null != dialog && !dialog.isShowing()) {
+					dialog.show();
+				}
+			}
+			super.onPreExecute();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			String result = null;
+			ThreadsRequest request = new ThreadsRequest(MainDuoliaoActivity.this);
+			try {
+				Log.d("doInBackground", "start request");
+				result = request.getThreadList(pageNumber, limit, 25, 0);//for test
+				Log.d("doInBackground", "returned");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (null != dialog) {
+				dialog.dismiss();
+			}
+			mListView.onRefreshComplete();
+			Log.d("onPostExecute", "postExec state");
+			if (result == null || result.equals("")) {
+				// show empty alert
+			} else {
+				
+				if(threadList!=null && threadList.size()!=0)
+				{
+					if(headerRefresh)
+						threadList = new ArrayList<ThreadModel>();
+				}
+				else
+					threadList = new ArrayList<ThreadModel>();
+				try {
+					if(headerRefresh)
+						threadList = new ThreadsParse().parseThreadModel(result);
+					else
+					{
+						threadList.addAll(new ThreadsParse().parseThreadModel(result));
+					}
+					BindDataToListView();
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void BindDataToListView()
+	{
+		
+	}
 	public void onMyFansClick(View view){		
 		//Intent intent = new Intent(this, MainFansActivity.class);
 		//startActivity(intent);   		
