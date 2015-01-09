@@ -196,37 +196,8 @@ public class MainMagActivity extends Activity {
 					articleList = new ArrayList<ArticleModel>();
 				}
 				try {
-					
-//					if(headerRefresh==true)
-//					{
-					
 						next = new MagParse().parseNext(result);
-						//articleList = new MagParse().parseArticleResponse(result);
-					//}
-				//	else if(headerRefresh==false)
-					//{
-//						if(result!=null)
-//						{
 						pre = new MagParse().parsePre(result);
-							
-							
-							
-							
-					//	}
-						//articleList.addAll(new MagParse().parseArticleResponse(result));
-//						HashMap<String, ArrayList<ArticleModel>> arrayList = new HashMap<String,ArrayList<ArticleModel>>();
-//						arrayList.put(pre,articleList);
-//						arrayList.put(next, articleList);
-						//arrayList = new MagParse().parseIssuse(result, pre, next);
-						// articleHashMap.putAll(new MagParse().parseIssuse(result, pre, next));
-						
-						//articleHashMap = new MagParse().parseIssuse(result, pre, next);
-//						 articleList.add(1,articleHashMap);
-						// articleHashMap.add(new MagParse().parseIssuse(result, pre, next));
-						 
-						 
-								 //articleList.add(arrayList);
-				//	}
 					articleList = new MagParse().parseArticleResponse(result);
 
 					BindDataToListView();
