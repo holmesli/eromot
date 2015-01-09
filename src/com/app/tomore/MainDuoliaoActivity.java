@@ -106,6 +106,11 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	public void onLogoutClick (View view){		
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);   
+	}	
+
+	public void onMyFansClick(View view){		
+		Intent intent = new Intent(this, MainFansActivity.class);
+		startActivity(intent);   		
 	}
 	
 	private class GetData extends AsyncTask<String, String, String> {
@@ -181,10 +186,6 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	private void BindDataToListView()
 	{
 		
-	}
-	public void onMyFansClick(View view){		
-		//Intent intent = new Intent(this, MainFansActivity.class);
-		//startActivity(intent);   		
 	}
 	
 //	private class duoliaoAdapter extends BaseAdapter {

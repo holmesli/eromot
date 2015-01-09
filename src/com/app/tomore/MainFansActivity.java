@@ -4,25 +4,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.adapters.FansAdapter;
 import com.app.tomore.beans.FansModel;
 import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
 import com.app.tomore.utils.PullToRefreshListView;
 import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainFansActivity extends Activity {
 
 	private DialogActivity dialog;
 	private Activity mContext;
 	private ArrayList<FansModel> fansList;
+	private FansModel fansItem;
+	private DisplayImageOptions otp;
 	FansAdapter fansListAdapter;
 	private PullToRefreshListView mListView;
 	private boolean onRefresh = false;
@@ -32,6 +40,10 @@ public class MainFansActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_fans);
 		mContext = this;
+		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
+				.build();
+		
 		new MyFans(MainFansActivity.this, 1).execute("");
 	}
 	
@@ -115,5 +127,49 @@ public class MainFansActivity extends Activity {
 		} else {
 			//showNoDataUi();
 		}
+	}
+	
+	public class FansAdapter extends BaseAdapter{
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder viewHolder = new ViewHolder();
+			fansItem = (FansModel) getItem(position);
+			final String imageUrl = fansItem.getMemberImage();
+			viewHolder.memberImage = (ImageView) convertView.findViewById(R.id.img);
+			ImageLoader.getInstance().displayImage(imageUrl, viewHolder.memberImage, otp);
+			viewHolder.accountName = (TextView) convertView.findViewById(R.id.info);
+			viewHolder.accountName.setText(fansItem.getAccountName());
+			viewHolder.followed = (TextView) convertView.findViewById(R.id.info);
+			viewHolder.followed.setText(fansItem.getFollowed());
+			viewHolder.blocked = (TextView) convertView.findViewById(R.id.info);
+			viewHolder.blocked.setText(fansItem.getBlocked());			
+			return convertView;
+		}
+	}
+	
+	class ViewHolder {
+		ImageView memberImage;
+		TextView accountName;
+		TextView followed;
+		TextView blocked;
 	}
 }

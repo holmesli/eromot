@@ -109,9 +109,9 @@
     <string name="comment">评论</string>
     <string name="Order">Order</string>
     
-    <string name="Call">呼叫</string>
+    <!-- <string name="Call">呼叫</string> -->
     <string name="Cancel">取消</string>
-    <string name="bar_title_generalBL_detail">信息详情</string>
+    <!-- <string name="bar_title_generalBL_detail">信息详情</string> -->
     
     
     <color name="register_background_color">#f7f7f7</color>
