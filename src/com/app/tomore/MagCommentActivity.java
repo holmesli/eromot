@@ -9,8 +9,10 @@ import org.json.JSONException;
 
 import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
+import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.net.MagParse;
 import com.app.tomore.net.MagRequest;
+import com.app.tomore.net.YellowPageParse;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -60,12 +62,13 @@ public class MagCommentActivity extends Activity {
 	private String articleId;
 	private String memberId="34";
 	private int page;
-	private String limit="10";
+	private int limit ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mag_comment_listview);
-		mContext = this;
+		
+		
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
@@ -79,13 +82,14 @@ public class MagCommentActivity extends Activity {
 			mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 			noneData = (TextView)findViewById(R.id.noData);
 			no_net_lay = findViewById(R.id.no_net_lay);
-			Button reloadData = (Button)findViewById(R.id.reloadData);
-			reloadData.setOnClickListener(reloadClickListener);
 			
 			
 			Intent intent=getIntent();
 			articleId=intent.getStringExtra("articleid");
-			
+			new GetData(MagCommentActivity.this, 1).execute("");
+			mContext = this;
+			page=1;
+			limit=5;
 			
 			Button postComment = (Button)findViewById(R.id.bar_title_bt_postcomment);
 			postComment.setOnClickListener(new View.OnClickListener() {
@@ -121,11 +125,14 @@ public class MagCommentActivity extends Activity {
 					finish();
 				}
 			});
-			new GetData(MagCommentActivity.this, 1).execute("");
+			
 	
 	}
 
 	private void BindDataToListView() {
+		if (onRefresh) {
+			onRefresh = false;
+		}
 		if (articleListAdapter == null) {
 			articleListAdapter = new ArticleAdapter();
 			mListView.setAdapter(articleListAdapter);
@@ -180,7 +187,7 @@ public class MagCommentActivity extends Activity {
 			try {
 				
 				Log.d("doInBackground", "start request");
-				result = request.getCommentByArticleId(articleId, page, limit);
+				result = request.getCommentByArticleId(articleId, Integer.toString(page), Integer.toString(limit));
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -200,17 +207,22 @@ public class MagCommentActivity extends Activity {
 			if (result == null || result.equals("")) {
 				ToastUtils.showToast(mContext, "列表为空");
 			} else {
-				if(articleComment!=null && articleComment.size()>0)
+				
+				if(articleComment!=null && articleComment.size()!=0)
 				{
-					articleComment.clear();
-					//articleComment = new ArrayList<ArticleCommentModel>();
+					if(headerRefresh)
+						articleComment = new ArrayList<ArticleCommentModel>();
 				}
 				else
-				{
 					articleComment = new ArrayList<ArticleCommentModel>();
-				}
 				try {
-					articleComment = new MagParse().parseArticleComment(result);
+					if(headerRefresh)
+						articleComment = new MagParse().parseArticleComment(result);
+					else
+					{
+						articleComment.addAll(new MagParse().parseArticleComment(result));
+					}
+				
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -246,7 +258,7 @@ public class MagCommentActivity extends Activity {
 		public void onLastItemVisible() {
 			if (AppUtil.networkAvailable(mContext)) {
 				headerRefresh = false;
-				page++;
+				//page++;
 				new GetData(MagCommentActivity.this, 1).execute("");
 			} else {
 				ToastUtils.showToast(mContext, "没有网络");
@@ -254,14 +266,6 @@ public class MagCommentActivity extends Activity {
 		}
 	};
 
-	OnClickListener reloadClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			onRefresh = true;
-			new GetData(MagCommentActivity.this, 1).execute("");
-		}
-	};
-	
 	class ViewHolder {
 		TextView textViewTitle;
 		TextView textViewComment;

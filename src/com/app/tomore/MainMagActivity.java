@@ -8,6 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.json.JSONException;
 
+import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.net.MagParse;
@@ -50,6 +51,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class MainMagActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articleList;
+	private ArrayList<ArticleModel> articleIsuuselist;
 	private ArticleModel articleItem;
 	//private ArticleCategoryModel articleCategory;
 	private DisplayImageOptions otp;
@@ -174,7 +176,7 @@ public class MainMagActivity extends Activity {
 
 			return result;
 		}
-
+		@Override
 		protected void onPostExecute(String result) {
 			if (null != dialog) {
 				dialog.dismiss();
@@ -186,18 +188,32 @@ public class MainMagActivity extends Activity {
 			} else {
 				if(articleList!=null && articleList.size()>0)
 				{
-					articleList.clear();
+					if(headerRefresh)
+						articleList = new ArrayList<ArticleModel>();
 				}
 				else
 				{
 					articleList = new ArrayList<ArticleModel>();
 				}
 				try {
-
-					 ArrayList<HashMap<String, ArrayList<ArticleModel>>> arrayList = new ArrayList<HashMap<String,ArrayList<ArticleModel>>>();
-						articleItem = new ArticleModel();
-						articleList = new ArrayList<ArticleModel>();
+					
+					if(headerRefresh)
+					{
 						articleList = new MagParse().parseArticleResponse(result);
+					}
+					else
+					{
+						HashMap<String, ArrayList<ArticleModel>> arrayList = new HashMap<String,ArrayList<ArticleModel>>();
+						 arrayList.putAll(new MagParse().parseIssuse(result, pre, next));
+						 articleList.addAll(new MagParse().parseArticleResponse(result));
+					}
+					//articleIsuuselist = new ArrayList<ArticleModel>();
+					 
+					
+				//	 articleItem = new ArticleModel();
+				//		articleList = new ArrayList<ArticleModel>();
+						
+				//		articleIsuuselist = articleList;
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -257,9 +273,8 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
-				//headerRefresh = false;
-				//onRefresh=false;
-				footerRefresh = true;
+
+				headerRefresh = true;
 				magId=pre;
 				new GetData(MainMagActivity.this, 1).execute("");
 

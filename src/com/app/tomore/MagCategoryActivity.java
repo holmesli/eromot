@@ -75,13 +75,10 @@ public class MagCategoryActivity extends Activity {
 				ImageLoaderConfiguration.createDefault(this));
 
 			mListView = (ListView) findViewById(R.id.magcategory_listviews);
-			//mListView.setOnRefreshListener(onRefreshListener);
-			//mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 			mListView.setOnItemClickListener(itemClickListener);
 			noneData = (TextView)findViewById(R.id.noneData);
 			no_net_lay = findViewById(R.id.no_net_lay);
-			Button reloadData = (Button)findViewById(R.id.reloadData);
-			reloadData.setOnClickListener(reloadClickListener);
+
 	
 	}
 
@@ -202,21 +199,7 @@ public class MagCategoryActivity extends Activity {
 		}
 	};
 	
-//
-//	Handler handler = new Handler() {
-//		public void handleMessage(Message msg) {
-//			mListView.onRefreshComplete();
-//		}
-//	};
 
-	OnClickListener reloadClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			//onRefresh = true;
-			footerRefresh = true;
-			new GetData(MagCategoryActivity.this, 1).execute("");
-		}
-	};
 	
 	class ViewHolder {
 		TextView textViewTitle;

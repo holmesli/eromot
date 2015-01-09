@@ -77,6 +77,10 @@
         <activity android:name=".BLwebview"></activity>
         <activity android:name=".OrderActivity"></activity>
         <activity android:name = ".WebViewActivity"></activity>
+        <activity android:name=".MagCommentActivity"></activity>
+        <activity android:name=".MagCategoryActivity"></activity>
+        <activity android:name=".PostCommentActivity"></activity>
+        <activity android:name=".ShareAndCommentActivity"></activity>
             
         
     </application>
