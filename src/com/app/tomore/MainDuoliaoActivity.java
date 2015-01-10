@@ -12,6 +12,7 @@ import com.app.tomore.net.ThreadsParse;
 import com.app.tomore.net.ThreadsRequest;
 import com.app.tomore.utils.PullToRefreshListView;
 import com.google.gson.JsonSyntaxException;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.slidingmenu.lib.SlidingMenu;
 
@@ -30,6 +31,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,10 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	private int pageNumber = 1;
 	private int limit = 20;
 	private PullToRefreshListView mListView;
+	DuoliaoAdapter duoliaoAdapter;
+	private boolean onRefresh = false;
+	private DisplayImageOptions otp;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,6 +85,9 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		menubtn.setOnClickListener(this);
 		mListView = (PullToRefreshListView) findViewById(R.id.list);
 		new GetData(MainDuoliaoActivity.this, 1).execute("");
+		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
+				.build();
 	}
 
 	@Override
@@ -106,6 +115,11 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	public void onLogoutClick (View view){		
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);   
+	}	
+
+	public void onMyFansClick(View view){		
+		Intent intent = new Intent(this, MainFansActivity.class);
+		startActivity(intent);   		
 	}
 	
 	private class GetData extends AsyncTask<String, String, String> {
@@ -180,69 +194,110 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	
 	private void BindDataToListView()
 	{
-		
-	}
-	public void onMyFansClick(View view){		
-		//Intent intent = new Intent(this, MainFansActivity.class);
-		//startActivity(intent);   		
+		if (onRefresh) {
+			onRefresh = false;
+		}
+		if (duoliaoAdapter == null) {
+			duoliaoAdapter = new DuoliaoAdapter();
+		//	mListView.setAdapter(duoliaoAdapter);
+		} else {
+			duoliaoAdapter.notifyDataSetChanged();
+		}
 	}
 	
-//	private class duoliaoAdapter extends BaseAdapter {
-//
-//		@Override
-//		public View getView(int position, View convertView, ViewGroup parent) {
-//			CardModel cardItem = (CardModel) getItem(position);
-//			ViewHolder viewHolder = null;
-//			if (convertView != null) {
-//				viewHolder = (ViewHolder) convertView.getTag();
-//			} else {
-//				viewHolder = new ViewHolder();
-//				convertView = LayoutInflater.from(mContext).inflate(
-//						R.layout.member_listview_item, null);
-//				viewHolder.textViewTitle = (TextView) convertView
-//						.findViewById(R.id.title);
-//				viewHolder.textViewDes = (TextView) convertView
-//						.findViewById(R.id.des);
-//				viewHolder.textViewTomoreCard = (TextView) convertView
-//						.findViewById(R.id.tomoreCard);
-//				viewHolder.imageView = (ImageView) convertView
-//						.findViewById(R.id.img);
-//				convertView.setTag(viewHolder);
-//			}
+	private class DuoliaoAdapter extends BaseAdapter {
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ThreadModel threadItem = (ThreadModel) getItem(position);
+			ViewHolder viewHolder = null;
+			if (convertView != null) {
+				viewHolder = (ViewHolder) convertView.getTag();
+			} else {
+				viewHolder = new ViewHolder();
+			//	convertView = LayoutInflater.from(mContext).inflate(
+			//			R.layout.duoliao_listview_item, null);
+//				viewHolder.account_name = (TextView) convertView
+//						.findViewById(R.id.account_name);
+//				viewHolder.content = (TextView) convertView
+//						.findViewById(R.id.content);
+//				viewHolder.time = (TextView) convertView
+//						.findViewById(R.id.time);
+//				viewHolder.comment_num = (TextView) convertView
+//						.findViewById(R.id.comment_num);
+//				viewHolder.like_num = (TextView) convertView
+//						.findViewById(R.id.like_num);
+//				viewHolder.avatar = (ImageView) convertView
+//						.findViewById(R.id.avatar);
+//				viewHolder.content_img = (ImageView) convertView
+//						.findViewById(R.id.content_img);
+//				viewHolder.liker_img1 = (ImageView) convertView
+//						.findViewById(R.id.liker_img1);
+//				viewHolder.liker_img2 = (ImageView) convertView
+//						.findViewById(R.id.liker_img2);
+//				viewHolder.liker_img3 = (ImageView) convertView
+//						.findViewById(R.id.liker_img3);
+			//	viewHolder.comment_listview = (ListView) convertView
+			//			.findViewById(R.id.comment_listview);
+				convertView.setTag(viewHolder);
+			}
 //			ImageLoader.getInstance().displayImage(
-//					cardItem.getFrontViewImage(), viewHolder.imageView, otp);
-//			viewHolder.textViewTitle.setText(cardItem.getCardTitle());
-//			viewHolder.textViewDes.setText(cardItem.getCardDes());
-//
-//			String cardType = cardItem.getCardType();
+//					threadItem.getMemberImage(), viewHolder.avatar, otp);
+//			ImageLoader.getInstance().displayImage(
+//					threadItem.getThreadImageList().get(0).getImageUrl()
+//					, viewHolder.content_img, otp);
+//			ImageLoader.getInstance().displayImage(
+//					threadItem.getMemberImage(), viewHolder.content_img, otp);
+//			viewHolder.account_name.setText(threadItem.getAccountName());
+//			viewHolder.comment_num.setText(threadItem.getThreadCmtList().size());
+//			viewHolder.content.setText(threadItem.getThreadContent());
+//			viewHolder.like_num.setText(threadItem.getThreadLikeList().size());
+//			viewHolder.time.setText(threadItem.getTimeDiff());
+
+//			String cardType = threadItem.getCardType();
 //
 //			if (!cardType.equals("0")) {
 //				viewHolder.textViewTomoreCard.setVisibility(View.INVISIBLE);
 //			} else if (cardType.equals("0")) {
 //				viewHolder.textViewTomoreCard.setVisibility(View.VISIBLE);
 //			}
-//
-//			return convertView;
-//		}
-//
-//		@Override
-//		public int getCount() {
-//			// TODO Auto-generated method stub
-//			return cardList.size();
-//		}
-//
-//		@Override
-//		public Object getItem(int arg0) {
-//			// TODO Auto-generated method stub
-//			return cardList.get(arg0);
-//		}
-//
-//		@Override
-//		public long getItemId(int position) {
-//			// TODO Auto-generated method stub
-//			return 0;
-//		}
-//	}
+
+			return convertView;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return threadList.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return threadList.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+	}
+	
+	class ViewHolder {
+		TextView account_name;
+		TextView content;
+		TextView time;
+		TextView comment_num;
+		TextView like_num;
+		ImageView avatar;
+		ImageView content_img;
+		ImageView liker_img1;
+		ImageView liker_img2;
+		ImageView liker_img3;
+		ImageView line;
+		ListView comment_listview;
+	}
 }
 
 

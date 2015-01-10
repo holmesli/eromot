@@ -117,7 +117,7 @@ public class GeneralBLActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			if (!AppUtil.networkAvailable(mContext)) {
-				ToastUtils.showToast(mContext, "ÇëÁ¬½ÓÍøÂç");
+				ToastUtils.showToast(mContext, "ç½‘ç»œä¸å¯ç”¨");
 				return;
 			}
 			if (dataList == null) {
@@ -146,7 +146,7 @@ public class GeneralBLActivity extends Activity {
 				pageNumber = 1;
 				new GetData(GeneralBLActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓĞÍøÂç");
+				ToastUtils.showToast(mContext, "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				mListView.onRefreshComplete();
 			}
 		}
@@ -161,7 +161,7 @@ public class GeneralBLActivity extends Activity {
 				pageNumber ++;
 				new GetData(GeneralBLActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓĞÍøÂç");
+				ToastUtils.showToast(mContext, "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 		}
 	};
