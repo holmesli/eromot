@@ -182,7 +182,7 @@ public class MainMagActivity extends Activity {
 			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "¡–±ÌŒ™ø’");
+				ToastUtils.showToast(mContext, "ÂàóË°®‰∏∫Á©∫");
 			} else {
 				if(articleList!=null && articleList.size()>0)
 				{
@@ -211,7 +211,7 @@ public class MainMagActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) { 
 			if(!AppUtil.networkAvailable(mContext)){
-				ToastUtils.showToast(mContext, "«Î¡¨Ω”Õ¯¬Á");
+				ToastUtils.showToast(mContext, "ÂàóË°®‰∏∫Á©∫");
 				return;
 			}
 			if (articleList == null) {
@@ -245,7 +245,7 @@ public class MainMagActivity extends Activity {
 				headerRefresh = true;
 				if(next.equals("0")||next==null)
 				{
-					Toast.makeText(getApplicationContext(), "µΩÕ∑¿≤£¨–™“ªª·~", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Âà∞Â§¥‰∫ÜÔºå‰ºëÊÅØ‰∏Ä‰∏ã~", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -255,7 +255,7 @@ public class MainMagActivity extends Activity {
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
-				ToastUtils.showToast(mContext, "√ª”–Õ¯¬Á");
+				ToastUtils.showToast(mContext, "Âà∞Â§¥‰∫Ü");
 				mListView.onRefreshComplete();
 			}
 		}
@@ -269,7 +269,7 @@ public class MainMagActivity extends Activity {
 				headerRefresh = false;
 				if(pre.equals("0")||next==null)
 				{
-					Toast.makeText(getApplicationContext(), "“—æ≠µΩÕ∑¿≤", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Âà∞Â§¥‰∫ÜÔºå‰ºëÊÅØ‰∏Ä‰∏ã~", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -279,7 +279,7 @@ public class MainMagActivity extends Activity {
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
-				ToastUtils.showToast(mContext, "√ª”–Õ¯¬Á");
+				ToastUtils.showToast(mContext, "Âà∞Â§¥‰∫Ü");
 			}
 		}
 

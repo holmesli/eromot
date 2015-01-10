@@ -73,17 +73,6 @@ public class PostCommentActivity extends Activity{
 	    		i .setClass(PostCommentActivity.this, MagCommentActivity.class);
 	    		i.putExtra("articleid", articleId);
 				startActivity(i);
-	            
-//	            MagRequest request = new MagRequest(PostCommentActivity.this);
-//    			try {
-//    				request.getCommentByArticleId(articleId, page, limit);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (TimeoutException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 	        }
 	    });
 	}
@@ -144,7 +133,7 @@ public class PostCommentActivity extends Activity{
 				}
 				finalResult = returnResult.getResult(); 
 	    		if(finalResult.equals("succ")){
-	    			Toast.makeText(getApplicationContext(), "∑¢ÀÕ≥…π¶", Toast.LENGTH_SHORT).show();
+	    			Toast.makeText(getApplicationContext(), "ÂèëÈÄÅÊàêÂäü", Toast.LENGTH_SHORT).show();
 	    			
 	    			
 	    			
@@ -152,7 +141,7 @@ public class PostCommentActivity extends Activity{
 	    		}
 	    		else
 	    		{
-	    			Toast.makeText(getApplicationContext(), "«Î÷ÿ–¬∑¢≤º", Toast.LENGTH_SHORT).show();
+	    			Toast.makeText(getApplicationContext(), "ËØ∑ÈáçÊñ∞ÂèëÈÄÅ", Toast.LENGTH_SHORT).show();
 	    		}
 			}
 		}

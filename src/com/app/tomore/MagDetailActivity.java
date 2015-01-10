@@ -3,7 +3,9 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.adapters.ArticleAdapter;
@@ -24,6 +26,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +41,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
@@ -45,11 +50,13 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -74,9 +81,16 @@ public class MagDetailActivity extends Activity {
 	private Activity mContext;
 	private Button commentButton;
 	private ArrayList<ArticleCommentModel> articleComment;
-	
-	
 	private ImageView backImage;
+	
+	
+	private String[] allOptionsMenuTexts = {"评论","分享"};  
+	   private int[] allOptionsMenuOrders = {2,6};  
+	   private int[] allOptionsMenuIds = {Menu.FIRST+2,Menu.FIRST+6};  
+	   private int[] allOptionsMenuIcons = {   
+	        android.R.drawable.ic_menu_edit,  
+	        android.R.drawable.ic_menu_send,  
+	        };  
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +116,7 @@ public class MagDetailActivity extends Activity {
 //			public void onClick(View v) {
 //				AndroidShare as = new AndroidShare(
 //						MagDetailActivity.this,
-//						"������ʹ�ö��׶����ToMoreӦ�ã����������� www.tomoreapp.com",
+//						"������ʹ�ö��׶����ToMoreӦ�ã����������� www.tomoreapp.com",
 //						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
 //				as.show();
 //			}
@@ -130,9 +144,10 @@ public class MagDetailActivity extends Activity {
     {  
         public void onClick(View v)  
         {  
-            Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
-			intent.putExtra("articleid", articleItem.getArticleID());
-            startActivity(intent);  
+//            Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
+//			intent.putExtra("articleid", articleItem.getArticleID());
+//            startActivity(intent);  
+        	showDialog8();
         }  
     }  
 	
@@ -269,6 +284,59 @@ public class MagDetailActivity extends Activity {
 		myVideoView.seekTo(position);
 	}
 		
+	
+	public void showDialog8(){  
+	    final Context context = this;  
+	      
+	    //获取自定义布局  
+	    LayoutInflater layoutInflater = getLayoutInflater();  
+	    View menuView = layoutInflater.inflate(R.layout.group_list, null);  
+	      
+	    //获取GridView组件并配置适配器  
+	    GridView gridView = (GridView)menuView.findViewById(R.id.gridview);  
+	    SimpleAdapter menuSimpleAdapter = createSimpleAdapter(allOptionsMenuTexts,allOptionsMenuIcons);  
+	    gridView.setAdapter(menuSimpleAdapter);  
+	    gridView.setOnItemClickListener(new OnItemClickListener(){  
+	        @Override  
+	        public void onItemClick(AdapterView<?> parent, View view,  
+	                int position, long id) {  
+	          //  Toast.makeText(context, "菜单["+allOptionsMenuTexts[position]+"]点击了.", Toast.LENGTH_SHORT).show();
+	        	if(position==0)
+	        	{
+	        		Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
+	    			intent.putExtra("articleid", articleItem.getArticleID());
+	                startActivity(intent);  
+	        	}
+	        	else if(position==1)
+	        	{
+
+	        				AndroidShare as = new AndroidShare(
+	        						MagDetailActivity.this,
+	        						"哈哈---超方便的分享！！！来自allen",
+	        						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+	        				as.show();
+	        	}
+	        }  
+	    });  
+	      
+	    //创建对话框并显示  
+	    new AlertDialog.Builder(context).setView(menuView).show();  
+	}  
+	  
+	public SimpleAdapter createSimpleAdapter(String[] menuNames,int[] menuImages){  
+	    List<Map<String,?>> data = new ArrayList<Map<String,?>>();  
+	    String[] fromsAdapter = {"item_text","item_image"};  
+	    int[] tosAdapter = {R.id.item_text,R.id.item_image};  
+	    for(int i=0;i<menuNames.length;i++){  
+	        Map<String,Object> map = new HashMap<String,Object>();  
+	        map.put(fromsAdapter[0], menuNames[i]);  
+	        map.put(fromsAdapter[1], menuImages[i]);  
+	        data.add(map);  
+	    }  
+	      
+	    SimpleAdapter SimpleAdapter = new SimpleAdapter(this, data, R.layout.group_item_view, fromsAdapter, tosAdapter);  
+	    return SimpleAdapter;  
+	}  
 	
 	
 }
