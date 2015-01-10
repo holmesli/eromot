@@ -22,7 +22,7 @@ public class DialogActivity {
 	public void show() {
 		if (pd == null) {
 			pd = new ProgressDialog(mContext);
-			pd.setMessage("正在加载数据");
+			pd.setMessage("Loading....");
 			isShowing = true;
 		}
 		pd.show();
