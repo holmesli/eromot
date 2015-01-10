@@ -39,6 +39,8 @@ public class PostCommentActivity extends Activity{
 	private DialogActivity dialog;
 	private String memberId;
 	private String articleId;
+	private String page = "1";
+	private String limit = "10";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +69,21 @@ public class PostCommentActivity extends Activity{
 	        @Override
 	        public void onClick(View viewIn) {
 	    		new GetData(PostCommentActivity.this, 1).execute("");
+	    		Intent i = new Intent();
+	    		i .setClass(PostCommentActivity.this, MagCommentActivity.class);
+	    		i.putExtra("articleid", articleId);
+				startActivity(i);
+	            
+//	            MagRequest request = new MagRequest(PostCommentActivity.this);
+//    			try {
+//    				request.getCommentByArticleId(articleId, page, limit);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (TimeoutException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 	        }
 	    });
 	}
@@ -128,6 +145,9 @@ public class PostCommentActivity extends Activity{
 				finalResult = returnResult.getResult(); 
 	    		if(finalResult.equals("succ")){
 	    			Toast.makeText(getApplicationContext(), "·¢ËÍ³É¹¦", Toast.LENGTH_SHORT).show();
+	    			
+	    			
+	    			
 
 	    		}
 	    		else

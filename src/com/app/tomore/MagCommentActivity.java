@@ -1,10 +1,13 @@
 package com.app.tomore;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.app.tomore.beans.ArticleCommentModel;
@@ -268,6 +271,7 @@ public class MagCommentActivity extends Activity {
 			final String speakerName = articleComentModel.getAccountName();
 			final String content = articleComentModel.getCommentContent();
 			final String time = articleComentModel.getTimeDiff();
+			final String imageUrl = articleComentModel.getMemberImage();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.comment_list_item, null);      
 			viewHolder.textViewTitle = (TextView) convertView
 					.findViewById(R.id.speakerName);
@@ -280,6 +284,13 @@ public class MagCommentActivity extends Activity {
 			viewHolder.TimeDiff = (TextView) convertView
 					.findViewById(R.id.time);
 			viewHolder.TimeDiff.setText(time);
+			
+			viewHolder.imageView = (ImageView) convertView
+					.findViewById(R.id.memberImage);
+			
+			ImageLoader.getInstance().displayImage(imageUrl,
+					viewHolder.imageView, otp);
+
 
 			return convertView;
 		}

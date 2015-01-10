@@ -52,9 +52,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class MainMagActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articleList;
-	private ArrayList<HashMap<String, ArrayList<ArticleModel>>> articleHashMap;
 	private ArticleModel articleItem;
-	//private ArticleCategoryModel articleCategory;
 	private DisplayImageOptions otp;
 	private PullToRefreshListView mListView;
 	private Activity mContext;
@@ -245,7 +243,7 @@ public class MainMagActivity extends Activity {
 			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
 				headerRefresh = true;
-				if(next.equals("0"))
+				if(next.equals("0")||next==null)
 				{
 					Toast.makeText(getApplicationContext(), "到头啦，歇一会~", Toast.LENGTH_SHORT).show();
 				}
@@ -269,7 +267,7 @@ public class MainMagActivity extends Activity {
 			if(AppUtil.networkAvailable(mContext)){
 
 				headerRefresh = false;
-				if(pre.equals("0"))
+				if(pre.equals("0")||next==null)
 				{
 					Toast.makeText(getApplicationContext(), "已经到头啦", Toast.LENGTH_SHORT).show();
 				}
