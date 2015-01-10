@@ -75,13 +75,17 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		bt2=(TextView)view.findViewById(R.id.my_tiezi_bt);
 		bt3=(TextView)view.findViewById(R.id.my_guanzhu_bt);
 		bt4=(TextView)view.findViewById(R.id.my_fensi_bt);
-		bt4=(TextView)view.findViewById(R.id.my_blacklist_bt);
-		bt4=(TextView)view.findViewById(R.id.my_aboutus_bt);
-		bt4=(TextView)view.findViewById(R.id.my_logout_bt);
+		bt5=(TextView)view.findViewById(R.id.my_blacklist_bt);
+		bt6=(TextView)view.findViewById(R.id.my_aboutus_bt);
+		bt7=(TextView)view.findViewById(R.id.my_logout_bt);
 		menubtn=(ImageButton)findViewById(R.id.ivTitleBtnLeft);
 		bt1.setOnClickListener(this);
 		bt2.setOnClickListener(this);
 		bt3.setOnClickListener(this);
+		bt4.setOnClickListener(this);
+		bt5.setOnClickListener(this);
+		bt6.setOnClickListener(this);
+		bt7.setOnClickListener(this);
 		menubtn.setOnClickListener(this);
 		mListView = (PullToRefreshListView) findViewById(R.id.threadlist);
 		new GetData(MainDuoliaoActivity.this, 1).execute("");
@@ -103,7 +107,8 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		} else if (id == R.id.ivTitleBtnLeft) {
 			menu.toggle();
 		} else if (id == R.id.my_fensi_bt) {
-			Toast.makeText(context, "����1", 1).show();
+			onMyFansClick(v);
+//			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_blacklist_bt) {
 			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_aboutus_bt) {

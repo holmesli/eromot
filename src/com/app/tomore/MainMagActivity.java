@@ -182,7 +182,7 @@ public class MainMagActivity extends Activity {
 			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "ÁÐ±íÎª¿Õ");
+				ToastUtils.showToast(mContext, "ï¿½Ð±ï¿½Îªï¿½ï¿½");
 			} else {
 				if(articleList!=null && articleList.size()>0)
 				{
@@ -211,7 +211,7 @@ public class MainMagActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) { 
 			if(!AppUtil.networkAvailable(mContext)){
-				ToastUtils.showToast(mContext, "ÇëÁ¬½ÓÍøÂç");
+				ToastUtils.showToast(mContext, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				return;
 			}
 			if (articleList == null) {
@@ -245,7 +245,7 @@ public class MainMagActivity extends Activity {
 				headerRefresh = true;
 				if(next.equals("0")||next==null)
 				{
-					Toast.makeText(getApplicationContext(), "µ½Í·À²£¬ÐªÒ»»á~", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ÐªÒ»ï¿½ï¿½~", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -255,13 +255,13 @@ public class MainMagActivity extends Activity {
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
+				ToastUtils.showToast(mContext, "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				mListView.onRefreshComplete();
 			}
 		}
 	};
 
-	private OnLastItemVisibleListener  onLastItemVisibleListener = new OnLastItemVisibleListener() {
+	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
@@ -269,7 +269,7 @@ public class MainMagActivity extends Activity {
 				headerRefresh = false;
 				if(pre.equals("0")||next==null)
 				{
-					Toast.makeText(getApplicationContext(), "ÒÑ¾­µ½Í·À²", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "ï¿½Ñ¾ï¿½ï¿½ï¿½Í·ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -279,7 +279,7 @@ public class MainMagActivity extends Activity {
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
+				ToastUtils.showToast(mContext, "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 		}
 
