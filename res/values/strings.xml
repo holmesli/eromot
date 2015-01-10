@@ -61,11 +61,11 @@
     <string name="login_email">邮箱/电话</string>
     <string name="login_password">密码</string>
     <string name="login_button">登陆</string>
+
     <color name="login_background_color">#3191dd</color>
-	<color name="login_button_color">#0b52c4</color>
-	
-	
-	<string name="submit">提交</string>
+    <color name="login_button_color">#0b52c4</color>
+
+    <string name="submit">提交</string>
     <string name="register_email">邮箱，必填</string>
     <string name="register_user_name">用户名，必填</string>
     <string name="register_password_notice">注册后不可更改，3~20位字符，可包含英文、数字和“_”</string>
@@ -78,23 +78,20 @@
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="agreement">隐私协议和服务条款</string>
-    
     <string name="bar_title_member_add">添加卡片</string>
     <string name="login_title">登陆</string>
     <string name="register">注册</string>
     <string name="back">返回</string>
-    
-	<string name="mandarin">汉</string>
-	<string name="cantonese">粤</string>
-	<string name="english">英</string>
-	<string name="servicelanuage">服务语言</string>
-	<string name="contact">联系人</string>
-	<string name="detailinfo">详细信息</string>
-	<string name="addressinfo">地址信息</string>
-	<string name="phone">电话</string>
-	<string name="sent">发送</string>
-	<string name="wholevideo">完整视频</string>
-	
+    <string name="mandarin">汉</string>
+    <string name="cantonese">粤</string>
+    <string name="english">英</string>
+    <string name="servicelanuage">服务语言</string>
+    <string name="contact">联系人</string>
+    <string name="detailinfo">详细信息</string>
+    <string name="addressinfo">地址信息</string>
+    <string name="phone">电话</string>
+    <string name="sent">发送</string>
+    <string name="wholevideo">完整视频</string>
     <string name="join">加盟</string>
     <string name="contactTo">联系人：</string>
     <string name="contactThrough">联系方式：</string>
@@ -108,17 +105,15 @@
     <string name="share">分享</string>
     <string name="comment">评论</string>
     <string name="Order">Order</string>
-    
+
     <!-- <string name="Call">呼叫</string> -->
     <string name="Cancel">取消</string>
     <!-- <string name="bar_title_generalBL_detail">信息详情</string> -->
-    
-    
+
     <color name="register_background_color">#f7f7f7</color>
     <color name="register_button_color">#5191ff</color>
     <color name="black">#000000</color>
     <color name="grey">#ffffff</color>
-     
 
     <string-array name="schoolArray">
         <item>Brock University</item>
@@ -163,7 +158,7 @@
         <item>Glendon College</item>
         <item>其它</item>
     </string-array>
-    
+
     <string name="loadingNow">正在加载数据</string>
     <string name="pull_to_refresh_tap_label" translatable="false">点击刷新</string>
     <string name="pull_to_refresh_pull_label" translatable="false">下拉刷新</string>
@@ -171,10 +166,20 @@
     <string name="pull_to_refresh_refreshing_label" translatable="false">加载中&#8230;</string>
     <string name="pull_to_refresh_update_time_label" translatable="false">上次更新时间 </string>
     <string name="pull_to_refresh_load_label" translatable="false">上拉加载更多</string>
-     <string name="load_mode_label" translatable="false">加载更多</string>
-	<string name="mag_detail_back">杂志</string>
+    <string name="load_mode_label" translatable="false">加载更多</string>
+    <string name="mag_detail_back">杂志</string>
     <string name="mag_content">正文</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="bar_title_generalBL_detail">bar_title_generalBL_detail</string>
     <string name="Call">Call</string>
+    <string name="title_activity_thread_reply">ThreadReplyActivity</string>
+    <string name="title_activity_user_infomation">UserInfomationActivity</string>
+    <string name="title_activity_duoyao">DuoyaoActivity</string>
+    <string name="title_activity_search_list">SearchListActivity</string>
+    <string name="title_activity_event_list">EventListActivity</string>
+    <string name="title_activity_event_details">EventDetailsActivity</string>
+    <string name="title_activity_my_reply_list">MyReplyListActivity</string>
+    <string name="title_activity_my_thread">MyThreadActivity</string>
+    <string name="title_activity_aboutus">AboutusActivity</string>
+
 </resources>
