@@ -47,9 +47,9 @@ public class MainBLActivity extends Activity {
 	        @Override
 	        public void onClick(View viewIn) {
 	        	Intent League_intent;
-	        	//League_intent = new Intent(MainBLActivity.this,
-		        //		LeagueActivity.class);
-		        //startActivityForResult(League_intent, 100);
+	        	League_intent = new Intent(MainBLActivity.this,
+		        		LeagueActivity.class);
+		        startActivityForResult(League_intent, 100);
 	        }
 	    });
 		

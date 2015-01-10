@@ -5,10 +5,12 @@ import java.util.concurrent.TimeoutException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -109,11 +111,39 @@ public class LeagueActivity extends Activity{
 				}
 				finalResult = returnResult.getResult();
 	    		if(finalResult.equals("succ")){
-	    			PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.league_pop_window, null, false),400,170, true);
-	    			pw.showAtLocation(layout, Gravity.TOP, 0, 200);
+	    			final PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.league_pop_window, null, false),400,170, true);
 	    			pw.setFocusable(true);  
-	    			pw.setBackgroundDrawable(new BitmapDrawable());
+	    			//pw.setBackgroundDrawable(new BitmapDrawable());
 	    			pw.setOutsideTouchable(true);
+	    		     final Runnable r = new Runnable() {
+	    		            @Override
+	    		            public void run() {
+	    		                if(pw.isShowing()) {
+	    		                    pw.dismiss();
+	    		                }
+	    		            }
+	    		        };
+	    	        final Handler handler = new Handler();//使用Handler做定时关闭PopupWindow
+	    	        pw.setOnDismissListener(new PopupWindow.OnDismissListener() {
+	    	            @Override
+	    	            public void onDismiss() {
+	    	                handler.removeCallbacks(r);
+	    	            }
+	    	        });
+	    			pw.showAtLocation(layout, Gravity.TOP, 0, 200);
+	    	        handler.postDelayed(r, 2000);//2秒后自动关闭
+	    	        
+
+			        
+			        new Handler().postDelayed(new Runnable() {
+			            public void run() {
+				        	Intent Main_BL_intent;
+				        	Main_BL_intent = new Intent(LeagueActivity.this,
+				        			MainBLActivity.class);
+					        startActivityForResult(Main_BL_intent, 100);;
+			            }
+			        }, 2200);
+			        
 	    		}
 			}
 		}
