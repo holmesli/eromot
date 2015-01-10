@@ -83,7 +83,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		bt2.setOnClickListener(this);
 		bt3.setOnClickListener(this);
 		menubtn.setOnClickListener(this);
-		mListView = (PullToRefreshListView) findViewById(R.id.list);
+		mListView = (PullToRefreshListView) findViewById(R.id.threadlist);
 		new GetData(MainDuoliaoActivity.this, 1).execute("");
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
@@ -215,52 +215,44 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 				viewHolder = (ViewHolder) convertView.getTag();
 			} else {
 				viewHolder = new ViewHolder();
-			//	convertView = LayoutInflater.from(mContext).inflate(
-			//			R.layout.duoliao_listview_item, null);
-//				viewHolder.account_name = (TextView) convertView
-//						.findViewById(R.id.account_name);
-//				viewHolder.content = (TextView) convertView
-//						.findViewById(R.id.content);
-//				viewHolder.time = (TextView) convertView
-//						.findViewById(R.id.time);
-//				viewHolder.comment_num = (TextView) convertView
-//						.findViewById(R.id.comment_num);
-//				viewHolder.like_num = (TextView) convertView
-//						.findViewById(R.id.like_num);
-//				viewHolder.avatar = (ImageView) convertView
-//						.findViewById(R.id.avatar);
-//				viewHolder.content_img = (ImageView) convertView
-//						.findViewById(R.id.content_img);
-//				viewHolder.liker_img1 = (ImageView) convertView
-//						.findViewById(R.id.liker_img1);
-//				viewHolder.liker_img2 = (ImageView) convertView
-//						.findViewById(R.id.liker_img2);
-//				viewHolder.liker_img3 = (ImageView) convertView
-//						.findViewById(R.id.liker_img3);
-			//	viewHolder.comment_listview = (ListView) convertView
-			//			.findViewById(R.id.comment_listview);
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.duoliao_listview_item, null);
+				viewHolder.account_name = (TextView) convertView
+						.findViewById(R.id.account_name);
+				viewHolder.content = (TextView) convertView
+						.findViewById(R.id.content);
+				viewHolder.time = (TextView) convertView
+						.findViewById(R.id.time);
+				viewHolder.comment_num = (TextView) convertView
+						.findViewById(R.id.comment_num);
+				viewHolder.like_num = (TextView) convertView
+						.findViewById(R.id.like_num);
+				viewHolder.avatar = (ImageView) convertView
+						.findViewById(R.id.avatar);
+				viewHolder.content_img = (ImageView) convertView
+						.findViewById(R.id.content_img);
+				viewHolder.liker_img1 = (ImageView) convertView
+						.findViewById(R.id.liker_img1);
+				viewHolder.liker_img2 = (ImageView) convertView
+						.findViewById(R.id.liker_img2);
+				viewHolder.liker_img3 = (ImageView) convertView
+						.findViewById(R.id.liker_img3);
+				viewHolder.comment_listview = (ListView) convertView
+						.findViewById(R.id.comment_listview);
 				convertView.setTag(viewHolder);
 			}
-//			ImageLoader.getInstance().displayImage(
-//					threadItem.getMemberImage(), viewHolder.avatar, otp);
-//			ImageLoader.getInstance().displayImage(
-//					threadItem.getThreadImageList().get(0).getImageUrl()
-//					, viewHolder.content_img, otp);
-//			ImageLoader.getInstance().displayImage(
-//					threadItem.getMemberImage(), viewHolder.content_img, otp);
-//			viewHolder.account_name.setText(threadItem.getAccountName());
-//			viewHolder.comment_num.setText(threadItem.getThreadCmtList().size());
-//			viewHolder.content.setText(threadItem.getThreadContent());
-//			viewHolder.like_num.setText(threadItem.getThreadLikeList().size());
-//			viewHolder.time.setText(threadItem.getTimeDiff());
-
-//			String cardType = threadItem.getCardType();
-//
-//			if (!cardType.equals("0")) {
-//				viewHolder.textViewTomoreCard.setVisibility(View.INVISIBLE);
-//			} else if (cardType.equals("0")) {
-//				viewHolder.textViewTomoreCard.setVisibility(View.VISIBLE);
-//			}
+			ImageLoader.getInstance().displayImage(
+					threadItem.getMemberImage(), viewHolder.avatar, otp);
+			ImageLoader.getInstance().displayImage(
+					threadItem.getThreadImageList().get(0).getImageUrl()
+					, viewHolder.content_img, otp);
+			ImageLoader.getInstance().displayImage(
+					threadItem.getMemberImage(), viewHolder.content_img, otp);
+			viewHolder.account_name.setText(threadItem.getAccountName());
+			viewHolder.comment_num.setText(threadItem.getThreadCmtList().size());
+			viewHolder.content.setText(threadItem.getThreadContent());
+			viewHolder.like_num.setText(threadItem.getThreadLikeList().size());
+			viewHolder.time.setText(threadItem.getTimeDiff());
 
 			return convertView;
 		}
