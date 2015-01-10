@@ -8,6 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.json.JSONException;
 
+import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.net.MagParse;
@@ -46,12 +47,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 public class MainMagActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<ArticleModel> articleList;
 	private ArticleModel articleItem;
-	//private ArticleCategoryModel articleCategory;
 	private DisplayImageOptions otp;
 	private PullToRefreshListView mListView;
 	private Activity mContext;
@@ -60,8 +61,7 @@ public class MainMagActivity extends Activity {
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
 	private boolean headerRefresh = false;
-	private boolean footerRefresh = false;
-	private String magId = "0";
+	private String magId="0";
 	private String categoryID;
 	private String pre;
 	private String next;
@@ -174,7 +174,7 @@ public class MainMagActivity extends Activity {
 
 			return result;
 		}
-
+		@Override
 		protected void onPostExecute(String result) {
 			if (null != dialog) {
 				dialog.dismiss();
@@ -186,18 +186,18 @@ public class MainMagActivity extends Activity {
 			} else {
 				if(articleList!=null && articleList.size()>0)
 				{
-					articleList.clear();
+					if(headerRefresh)
+						articleList = new ArrayList<ArticleModel>();
 				}
 				else
 				{
 					articleList = new ArrayList<ArticleModel>();
 				}
 				try {
+						next = new MagParse().parseNext(result);
+						pre = new MagParse().parsePre(result);
+					articleList = new MagParse().parseArticleResponse(result);
 
-					 ArrayList<HashMap<String, ArrayList<ArticleModel>>> arrayList = new ArrayList<HashMap<String,ArrayList<ArticleModel>>>();
-						articleItem = new ArticleModel();
-						articleList = new ArrayList<ArticleModel>();
-						articleList = new MagParse().parseArticleResponse(result);
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -243,7 +243,15 @@ public class MainMagActivity extends Activity {
 			if(AppUtil.networkAvailable(mContext) ){
 				onRefresh = true;
 				headerRefresh = true;
-				magId=next;
+				if(next.equals("0")||next==null)
+				{
+					Toast.makeText(getApplicationContext(), "到头啦，歇一会~", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					magId=next;
+				}
+				
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
@@ -257,10 +265,17 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
-				//headerRefresh = false;
-				//onRefresh=false;
-				footerRefresh = true;
-				magId=pre;
+
+				headerRefresh = false;
+				if(pre.equals("0")||next==null)
+				{
+					Toast.makeText(getApplicationContext(), "已经到头啦", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					magId=pre;
+				}
+				
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
@@ -275,7 +290,6 @@ public class MainMagActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			//onRefresh = true;
-			footerRefresh = true;
 			new GetData(MainMagActivity.this, 1).execute("");
 		}
 	};

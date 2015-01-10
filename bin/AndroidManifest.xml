@@ -82,7 +82,43 @@
         <activity android:name=".MagCategoryActivity"></activity>
         <activity android:name=".PostCommentActivity"></activity>
         <activity android:name=".ShareAndCommentActivity"></activity>
+                <activity
+            android:name=".ThreadReplyActivity"
+            android:label="@string/title_activity_thread_reply" >
+        </activity>
+        <activity
+            android:name=".UserInformationActivity"
+            android:label="@string/title_activity_user_infomation" >
+        </activity>
+        <activity
+            android:name=".DuoyaoActivity"
+            android:label="@string/title_activity_duoyao" >
+        </activity>
+        <activity
+            android:name=".SearchListActivity"
+            android:label="@string/title_activity_search_list" >
+        </activity>
+        <activity
+            android:name=".EventListActivity"
+            android:label="@string/title_activity_event_list" >
+        </activity>
+        <activity
+            android:name=".EventDetailsActivity"
+            android:label="@string/title_activity_event_details" >
+        </activity>
+        <activity
+            android:name=".MyReplyListActivity"
+            android:label="@string/title_activity_my_reply_list" >
+        </activity>
+        <activity
+            android:name=".MyThreadActivity"
+            android:label="@string/title_activity_my_thread" >
+        </activity>
+        <activity
+            android:name=".AboutusActivity"
+            android:label="@string/title_activity_aboutus" >
+        </activity>
         
     </application>
 
-</manifest>
+</manifest>

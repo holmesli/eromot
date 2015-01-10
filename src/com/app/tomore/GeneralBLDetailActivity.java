@@ -55,7 +55,7 @@ public class GeneralBLDetailActivity extends Activity {
 	
 	private void showPopup(){
 
-		String Call = getString(R.string.Call);
+		String Call = getString(R.string.PhoneCall);
 		String Cancel = getString(R.string.Cancel);
 		String MakeCall = BLModel.getPhone1();
 		List<CharSequence>  cs = new ArrayList<CharSequence>();

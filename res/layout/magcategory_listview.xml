@@ -12,15 +12,11 @@
         android:orientation="vertical" >
         
      <include layout="@layout/bar_title_meg" android:focusable="true"/>
-     <com.app.tomore.utils.PullToRefreshListView
+     <ListView
         android:id="@+id/magcategory_listviews"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
          android:layout_marginTop="-1.33dp"
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        ptr:kalaAnimationStyle="flip"
-        ptr:kalaTopProgress="@drawable/kalagame_hunter_refresh_loading"
-        ptr:kalaDrawable="@drawable/kalagame_icon_arrows"
         android:fadingEdge="none"
         />
 	<TextView 

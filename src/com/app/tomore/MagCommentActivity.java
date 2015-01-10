@@ -1,16 +1,21 @@
 package com.app.tomore;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
+import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.net.MagParse;
 import com.app.tomore.net.MagRequest;
+import com.app.tomore.net.YellowPageParse;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -56,17 +61,19 @@ public class MagCommentActivity extends Activity {
 	private View no_net_lay;
 	ArticleAdapter articleListAdapter;
 	private boolean onRefresh = false;
+	private boolean headerRefresh = false; 
 	private String articleId;
 	private String memberId="34";
-	private String page="1";
-	private String limit="10";
+	private int page;
+	private int limit ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mag_comment_listview);
-		mContext = this;
+		
+		
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		new GetData(MagCommentActivity.this, 1).execute("");
+		
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
@@ -75,16 +82,16 @@ public class MagCommentActivity extends Activity {
 
 			mListView = (PullToRefreshListView) findViewById(R.id.mag_comment_listviews);
 			mListView.setOnRefreshListener(onRefreshListener);
-			mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 			noneData = (TextView)findViewById(R.id.noData);
 			no_net_lay = findViewById(R.id.no_net_lay);
-			Button reloadData = (Button)findViewById(R.id.reloadData);
-			reloadData.setOnClickListener(reloadClickListener);
 			
 			
 			Intent intent=getIntent();
 			articleId=intent.getStringExtra("articleid");
-			
+			new GetData(MagCommentActivity.this, 1).execute("");
+			mContext = this;
+			page=1;
+			limit=5;
 			
 			Button postComment = (Button)findViewById(R.id.bar_title_bt_postcomment);
 			postComment.setOnClickListener(new View.OnClickListener() {
@@ -120,11 +127,14 @@ public class MagCommentActivity extends Activity {
 					finish();
 				}
 			});
-            
+			
 	
 	}
 
 	private void BindDataToListView() {
+		if (onRefresh) {
+			onRefresh = false;
+		}
 		if (articleListAdapter == null) {
 			articleListAdapter = new ArticleAdapter();
 			mListView.setAdapter(articleListAdapter);
@@ -179,7 +189,7 @@ public class MagCommentActivity extends Activity {
 			try {
 				
 				Log.d("doInBackground", "start request");
-				result = request.getCommentByArticleId(articleId, page, limit);
+				result = request.getCommentByArticleId(articleId, Integer.toString(page), Integer.toString(limit));
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -199,17 +209,22 @@ public class MagCommentActivity extends Activity {
 			if (result == null || result.equals("")) {
 				ToastUtils.showToast(mContext, "列表为空");
 			} else {
-				if(articleComment!=null && articleComment.size()>0)
+				
+				if(articleComment!=null && articleComment.size()!=0)
 				{
-					articleComment.clear();
-					//articleComment = new ArrayList<ArticleCommentModel>();
+					if(headerRefresh)
+						articleComment = new ArrayList<ArticleCommentModel>();
 				}
 				else
-				{
 					articleComment = new ArrayList<ArticleCommentModel>();
-				}
 				try {
-					articleComment = new MagParse().parseArticleComment(result);
+					if(headerRefresh)
+						articleComment = new MagParse().parseArticleComment(result);
+					else
+					{
+						articleComment.addAll(new MagParse().parseArticleComment(result));
+					}
+				
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -227,40 +242,19 @@ public class MagCommentActivity extends Activity {
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-			if(AppUtil.networkAvailable(mContext) ){
+			if (AppUtil.networkAvailable(mContext)) {
+				headerRefresh = true;
 				onRefresh = true;
-					new GetData(MagCommentActivity.this, 1).execute("");
-
-			}else{
+				page=1;
+				new GetData(MagCommentActivity.this, 1).execute("");
+			} else {
 				ToastUtils.showToast(mContext, "没有网络");
 				mListView.onRefreshComplete();
 			}
 		}
+
 	};
 
-	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
-		@Override
-		public void onLastItemVisible() {
-			if(AppUtil.networkAvailable(mContext)){
-				onRefresh = true;
-					new GetData(MagCommentActivity.this, 1).execute("");
-
-				
-			}else{
-				ToastUtils.showToast(mContext, "没有网络");
-			}
-		}
-	};
-
-	OnClickListener reloadClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			onRefresh = true;
-
-			new GetData(MagCommentActivity.this, 1).execute("");
-		}
-	};
-	
 	class ViewHolder {
 		TextView textViewTitle;
 		TextView textViewComment;
@@ -277,6 +271,7 @@ public class MagCommentActivity extends Activity {
 			final String speakerName = articleComentModel.getAccountName();
 			final String content = articleComentModel.getCommentContent();
 			final String time = articleComentModel.getTimeDiff();
+			final String imageUrl = articleComentModel.getMemberImage();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.comment_list_item, null);      
 			viewHolder.textViewTitle = (TextView) convertView
 					.findViewById(R.id.speakerName);
@@ -289,6 +284,13 @@ public class MagCommentActivity extends Activity {
 			viewHolder.TimeDiff = (TextView) convertView
 					.findViewById(R.id.time);
 			viewHolder.TimeDiff.setText(time);
+			
+			viewHolder.imageView = (ImageView) convertView
+					.findViewById(R.id.memberImage);
+			
+			ImageLoader.getInstance().displayImage(imageUrl,
+					viewHolder.imageView, otp);
+
 
 			return convertView;
 		}

@@ -52,7 +52,7 @@ public class MagCategoryActivity extends Activity {
 	private ArrayList<ArticleCatogoryModel> articleList;
 	private ArticleCatogoryModel articleCatogory;
 	private DisplayImageOptions otp;
-	private PullToRefreshListView mListView;
+	private ListView mListView;
 	private Activity mContext;
 	private TextView noneData;
 	private View no_net_lay;
@@ -74,14 +74,11 @@ public class MagCategoryActivity extends Activity {
 		ImageLoader.getInstance().init(
 				ImageLoaderConfiguration.createDefault(this));
 
-			mListView = (PullToRefreshListView) findViewById(R.id.magcategory_listviews);
-			//mListView.setOnRefreshListener(onRefreshListener);
-			//mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
+			mListView = (ListView) findViewById(R.id.magcategory_listviews);
 			mListView.setOnItemClickListener(itemClickListener);
 			noneData = (TextView)findViewById(R.id.noneData);
 			no_net_lay = findViewById(R.id.no_net_lay);
-			Button reloadData = (Button)findViewById(R.id.reloadData);
-			reloadData.setOnClickListener(reloadClickListener);
+
 	
 	}
 
@@ -158,7 +155,7 @@ public class MagCategoryActivity extends Activity {
 			if (null != dialog) {
 				dialog.dismiss();
 			}
-			mListView.onRefreshComplete();
+			//mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
 				ToastUtils.showToast(mContext, "ÁÐ±íÎª¿Õ");
@@ -192,13 +189,10 @@ public class MagCategoryActivity extends Activity {
 			if (articleList == null) {
 				return;
 			}
-			//Object obj = (Object) articleList.get(position-1);
-//			if (obj instanceof String) {
-//				return;
-//			}
+
 			Intent intent = new Intent(MagCategoryActivity.this,
 					MainMagActivity.class);
-			ArticleCatogoryModel item = articleList.get(position-1);
+			ArticleCatogoryModel item = articleList.get(position);
 			intent.putExtra("categoryId", item.getCategoryID());
 			startActivity(intent);
 
@@ -206,20 +200,6 @@ public class MagCategoryActivity extends Activity {
 	};
 	
 
-	Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			mListView.onRefreshComplete();
-		}
-	};
-
-	OnClickListener reloadClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			//onRefresh = true;
-			footerRefresh = true;
-			new GetData(MagCategoryActivity.this, 1).execute("");
-		}
-	};
 	
 	class ViewHolder {
 		TextView textViewTitle;

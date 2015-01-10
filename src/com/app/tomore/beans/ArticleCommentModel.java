@@ -15,6 +15,7 @@ public class ArticleCommentModel extends BaseBean implements Serializable, Compa
 	private String  UpdateDate;
 	private String  AccountName;
 	private String  TimeDiff;
+	private String  MemberImage;
 	
 	
 	public String getCommentID() {
@@ -72,6 +73,15 @@ public class ArticleCommentModel extends BaseBean implements Serializable, Compa
 	public void setTimeDiff(String timeDiff) {
 		TimeDiff = timeDiff;
 	}
+	
+	public String getMemberImage() {
+		return MemberImage;
+	}
+
+	public void setMemberImage(String memberImage) {
+		MemberImage = memberImage;
+	}
+
 
 	
 	@Override

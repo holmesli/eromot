@@ -3,6 +3,7 @@ package com.app.tomore;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -94,10 +95,8 @@ public class LoginActivity extends Activity{
 		    	Toast.makeText(getApplicationContext(), "请输入有效的邮箱和密码",
 						Toast.LENGTH_SHORT).show();
 			}else {
-				Gson gson = new Gson();
-				JsonElement jelement = new JsonParser().parse(result);
-			    JsonObject  jobject = jelement.getAsJsonObject();
-			    String loninResult = jobject.get("result").toString();
+				UserCenterParse ucParse = new UserCenterParse();
+				String loninResult = ucParse.parseLoginResponse(result);
 			    if(loninResult.equals("\"succ\"")){					
 			    	Intent intent = new Intent(LoginActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   

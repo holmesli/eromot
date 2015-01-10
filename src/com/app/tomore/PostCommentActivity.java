@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.MagRequest;
@@ -38,6 +39,8 @@ public class PostCommentActivity extends Activity{
 	private DialogActivity dialog;
 	private String memberId;
 	private String articleId;
+	private String page = "1";
+	private String limit = "10";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,6 +69,21 @@ public class PostCommentActivity extends Activity{
 	        @Override
 	        public void onClick(View viewIn) {
 	    		new GetData(PostCommentActivity.this, 1).execute("");
+	    		Intent i = new Intent();
+	    		i .setClass(PostCommentActivity.this, MagCommentActivity.class);
+	    		i.putExtra("articleid", articleId);
+				startActivity(i);
+	            
+//	            MagRequest request = new MagRequest(PostCommentActivity.this);
+//    			try {
+//    				request.getCommentByArticleId(articleId, page, limit);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (TimeoutException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 	        }
 	    });
 	}
@@ -126,10 +144,15 @@ public class PostCommentActivity extends Activity{
 				}
 				finalResult = returnResult.getResult(); 
 	    		if(finalResult.equals("succ")){
-	    			AlertDialog.Builder builder  = new Builder(PostCommentActivity.this);
-	    			 builder.setMessage("发送成功" ) ;			
-	    			 builder.show(); 
+	    			Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
+	    			
+	    			
+	    			
 
+	    		}
+	    		else
+	    		{
+	    			Toast.makeText(getApplicationContext(), "请重新发布", Toast.LENGTH_SHORT).show();
 	    		}
 			}
 		}
