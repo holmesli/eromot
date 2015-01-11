@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="15dip"
+        android:paddingRight="15dip"
         android:layout_weight="1" >
 
         <TextView
