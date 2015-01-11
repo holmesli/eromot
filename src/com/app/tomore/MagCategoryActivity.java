@@ -158,7 +158,7 @@ public class MagCategoryActivity extends Activity {
 			//mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "列表为空");
+				ToastUtils.showToast(mContext, "鍒楄〃涓虹┖");
 			} else {
 				if(articleList!=null && articleList.size()>0)
 				{
@@ -183,7 +183,7 @@ public class MagCategoryActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) { 
 			if(!AppUtil.networkAvailable(mContext)){
-				ToastUtils.showToast(mContext, "请连接网络");
+				ToastUtils.showToast(mContext, "鍒楄〃涓虹┖");
 				return;
 			}
 			if (articleList == null) {

@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainFansActivity extends Activity {
@@ -32,7 +33,8 @@ public class MainFansActivity extends Activity {
 	private FansModel fansItem;
 	private DisplayImageOptions otp;
 	FansAdapter fansListAdapter;
-	private PullToRefreshListView mListView;
+	private ListView mListView;
+//	private PullToRefreshListView mListView;
 	private boolean onRefresh = false;
 	
 	@Override
@@ -40,10 +42,15 @@ public class MainFansActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_fans);
 		mContext = this;
+		mListView = (ListView) findViewById(R.id.fans_listview);
+//		mListView = (PullToRefreshListView) findViewById(R.id.list);
+//		mListView.setOnRefreshListener(onRefreshListener);
+//		mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
+//		mListView.setOnItemClickListener(itemClickListener);
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
-		
+	//	fansListAdapter = new FansAdapter();
 		new MyFans(MainFansActivity.this, 1).execute("");
 	}
 	
@@ -92,7 +99,7 @@ public class MainFansActivity extends Activity {
 //			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "ÁÐ±íÎª¿Õ");
+				ToastUtils.showToast(mContext, "ï¿½Ð±ï¿½Îªï¿½ï¿½");
 			} else {
 				if(fansList!=null && fansList.size()>0)
 				{
@@ -104,6 +111,7 @@ public class MainFansActivity extends Activity {
 				}
 				try {
 					fansList = new UserCenterParse().parseFansResponse(result);
+//					mListView.setAdapter(fansListAdapter);
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -119,6 +127,7 @@ public class MainFansActivity extends Activity {
 		if (fansListAdapter == null) {
 			fansListAdapter = new FansAdapter();
 			mListView.setAdapter(fansListAdapter);
+			fansListAdapter.notifyDataSetChanged();
 		} else {
 			fansListAdapter.notifyDataSetChanged();
 		}
@@ -151,6 +160,7 @@ public class MainFansActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			System.out.println("It is used!!!");
 			ViewHolder viewHolder = new ViewHolder();
 			fansItem = (FansModel) getItem(position);
 			final String imageUrl = fansItem.getMemberImage();
