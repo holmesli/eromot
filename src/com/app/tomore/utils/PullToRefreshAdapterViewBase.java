@@ -130,7 +130,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 					//int bottom1 = mRefreshableView.getBottom();
 					//int bottom2 = mRefreshableView.getChildAt(postion).getBottom();
 					mOnLastItemVisibleListener.onLastItemVisible();
-					//System.out.println("åˆ°åº•äº†â?â€¦â?â€¦â?â€¦â?â€¦â?â€¦â?â€¦â?â€¦â?â€¦â?â€¦â?â€?);					
+					//System.out.println("åˆ°åº•äº†");					
 				}
 				lastCount = view.getCount();
 			}

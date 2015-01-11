@@ -49,7 +49,7 @@ public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {
             ImageView imageView = viewCache.getImageView();  
             imageView.setTag(imageUrl);  
            
-            ImageLoader.getInstance().loadImage(imageUrl, new SimpleImageLoadingListener() {
+            /*ImageLoader.getInstance().loadImage(imageUrl, new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 	ImageView imageViewByTag = (ImageView) gridView.findViewWithTag(imageUrl);  
@@ -57,7 +57,11 @@ public class ImageAndTextListAdapter extends ArrayAdapter<ImageAndText> {
                         imageViewByTag.setImageBitmap(loadedImage); 
                     }  
                 }
-            }); 
+            }); */
+            
+            ImageLoader.getInstance().displayImage(imageUrl,
+            		imageView);
+            
             // Set the text on the TextView  
             TextView textView = viewCache.getTextView();  
             textView.setText(imageAndText.getText());  
