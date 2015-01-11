@@ -6,28 +6,43 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.beans.BLMenuModel;
+import com.app.tomore.beans.BLMenuSpecial;
 import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.beans.ImageAndText;
+import com.app.tomore.RestaurantBLActivity.ViewHolder;
 import com.app.tomore.adapters.ImageAndTextListAdapter;
 import com.app.tomore.net.*;
 import com.app.tomore.utils.AndroidShare;
 import com.app.tomore.utils.TouchImageView;
 import com.app.tomore.utils.AndroidShare;
 import com.app.tomore.utils.TouchImageView;
+import com.app.tomore.utils.NoScrollGridview;
 
+import android.app.Activity;
+import android.content.Context;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.GridView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonSyntaxException;
@@ -52,6 +67,19 @@ import android.app.ProgressDialog;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -59,19 +87,26 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
 
 public class RestaurantDetailActivity extends Activity{
 	
 	private DialogActivity dialog;
-	private BLMenuModel MenuItem;
+	private ArrayList<BLMenuSpecial> MenuItem;
 	private ArrayList<BLMenuModel> menulist;
 	private TouchImageView MenudetailImage;
 	private TextView MenutestView;
 	private FrameLayout frame;
 	private DisplayImageOptions otp;
 	private Activity mContext;
+	private ListView listView;
+	ViewHolder viewHolder = new ViewHolder();
+
+
+
 
 	
 	
@@ -86,8 +121,12 @@ public class RestaurantDetailActivity extends Activity{
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
 		mContext = this;
+	
+
+
 
 	}
+
 	
 	private class GetData extends AsyncTask<String, String, String>{
 		// private Context mContext;
@@ -135,6 +174,7 @@ public class RestaurantDetailActivity extends Activity{
 			} else {
 				//cardList = new ArrayList<CardModel>();
 				try {
+					MenuItem = new YellowPageParse().parseRestaurantDetailResponse1(result);
 					menulist = new YellowPageParse().parseRestaurantDetailResponse(result);
 					BindDataToGridView();
 				} catch (JsonSyntaxException e) {
@@ -150,31 +190,46 @@ public class RestaurantDetailActivity extends Activity{
 	
 	}
 	class ViewHolder {
-		TextView textViewTitle;
-		ImageView imageView;
+		TextView discountdec;
+		ImageView dsicountimapge;
 		TouchImageView MenudetailImage;
 	}
 	private void BindDataToGridView(){
 		final List<ImageAndText> imageAndTextList = new ArrayList<ImageAndText>();
-		for(BLMenuModel c: menulist)
-		{
+		
+
+	    for(BLMenuModel c: menulist)
+		{	
+	    	//imageAndTextList1.add(new ImageAndText(c.getDiscountImage(), c.getItemName()) );
 			imageAndTextList.add(new ImageAndText(c.getItemImage(), c.getItemName()));
+
 		}
-		GridView gridView = (GridView) findViewById(R.id.menugridView);
+		 NoScrollGridview  gridView = (NoScrollGridview) findViewById(R.id.menugridView);
+
 		gridView.setAdapter(new ImageAndTextListAdapter(this, imageAndTextList,
 				gridView));
-		/*gridView.setOnItemClickListener(new OnItemClickListener(){
-			public void onItemClick(AdapterView<?> parent, View view, 
-		            int position, long id){
-				BLMenuModel item = menulist.get(position);
-				
-				
-				
-			}
-		});*/
+		TextView DiscountView = (TextView) getWindow().getDecorView()
+				.findViewById(R.id.discountdec);
+	      DiscountView.setText(MenuItem.get(0).getDiscountDes());
+		ImageView dsicountimapge = (ImageView) findViewById(R.id.discounimage);
+	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getDiscountImage(),
+	    		dsicountimapge,otp);
+		TextView SpecialView = (TextView) getWindow().getDecorView()
+				.findViewById(R.id.specialdec);
+		SpecialView.setText(MenuItem.get(0).getSpecialDes());
+		ImageView Specialimapge = (ImageView) findViewById(R.id.specialimage);
+	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getSpecialImage(),
+	    		Specialimapge,otp);
+
+
+
 	
 		
 	 
 		
 	}
+
+
+	
 }
+	

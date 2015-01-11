@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.app.tomore.beans.BLMenuSpecial;
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.CategoryModel;
 import com.app.tomore.beans.GeneralBLModel;
@@ -90,5 +91,20 @@ public class YellowPageParse {
 		}
 
 		return Menulist;
+	}
+	public  ArrayList<BLMenuSpecial> parseRestaurantDetailResponse1(String jsonRestaurantDetail) 
+			throws JsonSyntaxException 
+	{
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(jsonRestaurantDetail);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("Promotion");
+		ArrayList<BLMenuSpecial> MenulistSpecial = new ArrayList<BLMenuSpecial>();
+		for (JsonElement obj : jarray) {
+			BLMenuSpecial cse= gson.fromJson(obj, BLMenuSpecial.class);
+		    MenulistSpecial.add(cse);
+		}
+
+		return MenulistSpecial;
 	}
 }
