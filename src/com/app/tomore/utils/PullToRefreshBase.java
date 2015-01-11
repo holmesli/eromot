@@ -316,7 +316,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 //            Log.d(TAG, "last touch y " + mLastMotionY + " curr yY = " + event.getY());
 //            if (getScrollY() < 0) {
 //                result = true;
-//            } else {// 已经在顶�?//                if (isReadyForPullDown()) {
+//            } else {// 已经在顶�?//                if (isReadyForPullDown()) {
 //                    if (mLastTouchY > event.getY()) {// 向上推动
 //                        result = false;
 //                    } else {
@@ -1489,16 +1489,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             if (diffTime <= 0) {
                 diffTime = 1;
             }
-            timeStamp = diffTime + "��ǰ";
+            timeStamp = diffTime + "秒前";
         } else if (diffTime >= SECONDS_PER_MINUTE && diffTime < SECONDS_PER_HOUR) {
             minutes = diffTime / SECONDS_PER_MINUTE;
-            timeStamp = minutes + "����ǰ";
+            timeStamp = minutes + "分钟前";
         } else if (diffTime >= SECONDS_PER_HOUR && diffTime < SECONDS_PER_DAY) {
             hours = diffTime / SECONDS_PER_HOUR;
-            timeStamp = hours + "Сʱǰ";
+            timeStamp = hours + "小时前";
         } else if (diffTime >= SECONDS_PER_DAY && diffTime < DAYS_PER_WEEK * SECONDS_PER_DAY) {
             day = diffTime / SECONDS_PER_HOUR;
-            timeStamp = day + "��ǰ";
+            timeStamp = day + "天前";
         } else {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date lastDate = new Date(lastTime);
@@ -1510,16 +1510,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * SimpleDateFormat formatter = new
          * SimpleDateFormat("yyyy-MM-dd HH:mm"); Date lastDate = new
          * Date(lastTime); timeStamp = formatter.format(lastDate) + " "; } else
-         * if (days > DAYS_PER_WEEK) { timeStamp = "�?���?; } else if (days > 0) {
+         * if (days > DAYS_PER_WEEK) { timeStamp = "�?���?; } else if (days > 0) {
          * SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
          * Date lastDate = new Date(lastTime); timeStamp =
          * formatter.format(lastDate) + " "; } else { hours = diffTime /
-         * SECONDS_PER_HOUR; if (hours > 0) { timeStamp = hours + "小时�?; } else
+         * SECONDS_PER_HOUR; if (hours > 0) { timeStamp = hours + "小时�?; } else
          * { minutes = diffTime / SECONDS_PER_MINUTE; if (minutes > 0) {
-         * timeStamp = minutes + "分钟�?; } else { if(diffTime <= 0){ diffTime =
+         * timeStamp = minutes + "分钟�?; } else { if(diffTime <= 0){ diffTime =
          * 1; } timeStamp = diffTime+"秒前"; } } }
          */
-        return timeStamp + "����";
+        return timeStamp + "更新";
     }
 
     private String formatTimeStamp1(long lastTime) {
@@ -1535,9 +1535,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * SECONDS_PER_MINUTE){ if(diffTime <= 0){ diffTime = 1; } timeStamp =
          * diffTime+"秒前"; }else if(diffTime >= SECONDS_PER_MINUTE && diffTime <
          * SECONDS_PER_HOUR){ minutes = diffTime / SECONDS_PER_MINUTE; timeStamp
-         * = minutes + "分钟�?; }else if(diffTime >= SECONDS_PER_HOUR && diffTime
+         * = minutes + "分钟�?; }else if(diffTime >= SECONDS_PER_HOUR && diffTime
          * < SECONDS_PER_DAY){ hours = diffTime / SECONDS_PER_HOUR; timeStamp =
-         * hours + "小时�?; }else if(diffTime >= SECONDS_PER_DAY && diffTime <
+         * hours + "小时�?; }else if(diffTime >= SECONDS_PER_DAY && diffTime <
          * DAYS_PER_WEEK*SECONDS_PER_DAY){ day = diffTime / SECONDS_PER_HOUR;
          * timeStamp = day + "天前"; }else{
          */
@@ -1551,16 +1551,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
          * SimpleDateFormat formatter = new
          * SimpleDateFormat("yyyy-MM-dd HH:mm"); Date lastDate = new
          * Date(lastTime); timeStamp = formatter.format(lastDate) + " "; } else
-         * if (days > DAYS_PER_WEEK) { timeStamp = "�?���?; } else if (days > 0) {
+         * if (days > DAYS_PER_WEEK) { timeStamp = "�?���?; } else if (days > 0) {
          * SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
          * Date lastDate = new Date(lastTime); timeStamp =
          * formatter.format(lastDate) + " "; } else { hours = diffTime /
-         * SECONDS_PER_HOUR; if (hours > 0) { timeStamp = hours + "小时�?; } else
+         * SECONDS_PER_HOUR; if (hours > 0) { timeStamp = hours + "小时�?; } else
          * { minutes = diffTime / SECONDS_PER_MINUTE; if (minutes > 0) {
-         * timeStamp = minutes + "分钟�?; } else { if(diffTime <= 0){ diffTime =
+         * timeStamp = minutes + "分钟�?; } else { if(diffTime <= 0){ diffTime =
          * 1; } timeStamp = diffTime+"秒前"; } } }
          */
-        return "�ϴ�ˢ��: " + timeStamp;
+        return "�ϴ�ˢ��: " + timeStamp;
     }
 
 }

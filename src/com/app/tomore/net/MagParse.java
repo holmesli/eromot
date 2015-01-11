@@ -68,6 +68,7 @@ public class MagParse {
 		JsonObject  jobject2 = jelement.getAsJsonObject();
 		pre =jobject2.get("pre").getAsString();
 		return pre;
+		
 	}
 	
 	public String parseNext(String next) throws JsonSyntaxException
@@ -76,6 +77,7 @@ public class MagParse {
 		JsonObject  jobject3 = jelement.getAsJsonObject();
 		next =jobject3.get("next").getAsString();
 		return next;
+		
 	}
 	
 }
