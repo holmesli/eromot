@@ -9,7 +9,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.httpclient.BasicHttpClient;
