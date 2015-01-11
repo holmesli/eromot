@@ -34,6 +34,7 @@ public class GeneralBLDetailActivity extends Activity {
 
 	private GeneralBLModel BLModel;
 	private GoogleMap map;
+	private View layout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +43,15 @@ public class GeneralBLDetailActivity extends Activity {
 		getWindow().setSoftInputMode(  WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		Intent intent = getIntent();
 		BLModel = (GeneralBLModel) intent.getSerializableExtra("BLdata");
+		layout = findViewById(R.id.general_bl_detail_layout);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_general_detail_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 		BindData();
 		ImageView Call = (ImageView) getWindow().getDecorView()
 				.findViewById(R.id.CallImage);

@@ -8,7 +8,8 @@
     android:id="@+id/GeneralBLLayout">
     <include
         layout="@layout/bar_title_bianli"
-        android:focusable="true" />
+        android:focusable="true"
+        android:id="@+id/BLTitleBar"/>
 	<com.app.tomore.utils.PullToRefreshListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

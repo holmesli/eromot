@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -53,6 +54,14 @@ public class LeagueActivity extends Activity{
 	    		new GetData(LeagueActivity.this, 1).execute("");
 	        }
 	    });
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_league_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 	}
 
 
