@@ -52,6 +52,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -144,9 +145,6 @@ public class MagDetailActivity extends Activity {
     {  
         public void onClick(View v)  
         {  
-//            Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
-//			intent.putExtra("articleid", articleItem.getArticleID());
-//            startActivity(intent);  
         	showDialog8();
         }  
     }  
@@ -287,39 +285,38 @@ public class MagDetailActivity extends Activity {
 	
 	public void showDialog8(){  
 	    final Context context = this;  
-	      
-	    //获取自定义布局  
+	       
 	    LayoutInflater layoutInflater = getLayoutInflater();  
 	    View menuView = layoutInflater.inflate(R.layout.group_list, null);  
-	      
-	    //获取GridView组件并配置适配器  
+	       
 	    GridView gridView = (GridView)menuView.findViewById(R.id.gridview);  
+	    final LinearLayout linear=(LinearLayout)findViewById(R.id.gridview_layout);
 	    SimpleAdapter menuSimpleAdapter = createSimpleAdapter(allOptionsMenuTexts,allOptionsMenuIcons);  
 	    gridView.setAdapter(menuSimpleAdapter);  
 	    gridView.setOnItemClickListener(new OnItemClickListener(){  
 	        @Override  
 	        public void onItemClick(AdapterView<?> parent, View view,  
 	                int position, long id) {  
-	          //  Toast.makeText(context, "菜单["+allOptionsMenuTexts[position]+"]点击了.", Toast.LENGTH_SHORT).show();
 	        	if(position==0)
 	        	{
+	        		
 	        		Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
 	    			intent.putExtra("articleid", articleItem.getArticleID());
-	                startActivity(intent);  
+	                startActivity(intent);   
+	                finish();
 	        	}
 	        	else if(position==1)
 	        	{
 
 	        				AndroidShare as = new AndroidShare(
 	        						MagDetailActivity.this,
-	        						"哈哈---超方便的分享！！！来自allen",
-	        						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+	        						"你正在使用多伦多最潮的APP，快来看看吧",
+	        						"www.tomoreapp.com");
 	        				as.show();
 	        	}
 	        }  
 	    });  
-	      
-	    //创建对话框并显示  
+	       
 	    new AlertDialog.Builder(context).setView(menuView).show();  
 	}  
 	  

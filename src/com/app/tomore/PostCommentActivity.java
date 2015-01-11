@@ -73,6 +73,7 @@ public class PostCommentActivity extends Activity{
 	    		i .setClass(PostCommentActivity.this, MagCommentActivity.class);
 	    		i.putExtra("articleid", articleId);
 				startActivity(i);
+				finish();
 	        }
 	    });
 	}
