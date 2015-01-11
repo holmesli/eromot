@@ -182,7 +182,7 @@ public class MainMagActivity extends Activity {
 			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "�б�Ϊ��");
+				ToastUtils.showToast(mContext, "列表为空");
 			} else {
 				if(articleList!=null && articleList.size()>0)
 				{
@@ -211,7 +211,7 @@ public class MainMagActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) { 
 			if(!AppUtil.networkAvailable(mContext)){
-				ToastUtils.showToast(mContext, "����������");
+				ToastUtils.showToast(mContext, "列表为空");
 				return;
 			}
 			if (articleList == null) {
@@ -245,7 +245,7 @@ public class MainMagActivity extends Activity {
 				headerRefresh = true;
 				if(next.equals("0")||next==null)
 				{
-					Toast.makeText(getApplicationContext(), "��ͷ����Ъһ��~", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "到头了，休息一下~", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -255,13 +255,13 @@ public class MainMagActivity extends Activity {
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
-				ToastUtils.showToast(mContext, "û������");
+				ToastUtils.showToast(mContext, "到头了");
 				mListView.onRefreshComplete();
 			}
 		}
 	};
 
-	private OnLastItemVisibleListener onLastItemVisibleListener = new OnLastItemVisibleListener() {
+	private OnLastItemVisibleListener  onLastItemVisibleListener = new OnLastItemVisibleListener() {
 		@Override
 		public void onLastItemVisible() {
 			if(AppUtil.networkAvailable(mContext)){
@@ -269,7 +269,7 @@ public class MainMagActivity extends Activity {
 				headerRefresh = false;
 				if(pre.equals("0")||next==null)
 				{
-					Toast.makeText(getApplicationContext(), "�Ѿ���ͷ��", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "到头了，休息一下~", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -279,7 +279,7 @@ public class MainMagActivity extends Activity {
 				new GetData(MainMagActivity.this, 1).execute("");
 
 			}else{
-				ToastUtils.showToast(mContext, "û������");
+				ToastUtils.showToast(mContext, "到头了");
 			}
 		}
 

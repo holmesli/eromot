@@ -207,7 +207,7 @@ public class MagCommentActivity extends Activity {
 			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "列表为空");
+				ToastUtils.showToast(mContext, "鍒楄〃涓虹┖");
 			} else {
 				
 				if(articleComment!=null && articleComment.size()!=0)
@@ -248,7 +248,7 @@ public class MagCommentActivity extends Activity {
 				page=1;
 				new GetData(MagCommentActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "没有网络");
+				ToastUtils.showToast(mContext, "娌℃湁缃戠粶");
 				mListView.onRefreshComplete();
 			}
 		}

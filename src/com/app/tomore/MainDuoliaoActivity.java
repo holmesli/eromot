@@ -1,4 +1,3 @@
-
 package com.app.tomore;
 
 import java.io.IOException;
@@ -6,6 +5,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.MainMemActivity.ViewHolder;
+import com.app.tomore.beans.ThreadCmtModel;
 import com.app.tomore.beans.ThreadModel;
 import com.app.tomore.fragment.BackToMainActivity;
 import com.app.tomore.net.ThreadsParse;
@@ -14,6 +14,7 @@ import com.app.tomore.utils.PullToRefreshListView;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.slidingmenu.lib.SlidingMenu;
 
 import android.app.Activity;
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,11 +37,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainDuoliaoActivity extends Activity implements OnClickListener{
+public class MainDuoliaoActivity extends Activity implements OnClickListener {
 	private TextView bt1;
 	private TextView bt2;
 	private TextView bt3;
-	private TextView bt4,bt5,bt6,bt7;
+	private TextView bt4, bt5, bt6, bt7;
 	private Context context;
 	private ImageButton menubtn;
 	private SlidingMenu menu;
@@ -47,21 +49,23 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 	private DialogActivity dialog;
 	private boolean headerRefresh;
 	private ArrayList<ThreadModel> threadList;
+	private ArrayList<ThreadCmtModel> commentList;
 	private int pageNumber = 1;
 	private int limit = 20;
 	private PullToRefreshListView mListView;
 	DuoliaoAdapter duoliaoAdapter;
 	private boolean onRefresh = false;
 	private DisplayImageOptions otp;
-	
+	protected ImageLoader imageLoader;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_duoliao_activity);
 		mContext = this;
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-		
-		context=this;
+
+		context = this;
 		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -69,29 +73,28 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		View view=LayoutInflater.from(this).inflate(R.layout.main_left_fragment, null);
+		View view = LayoutInflater.from(this).inflate(
+				R.layout.main_left_fragment, null);
 		menu.setMenu(view);
-		bt1=(TextView)view.findViewById(R.id.my_backtomain_bt);
-		bt2=(TextView)view.findViewById(R.id.my_tiezi_bt);
-		bt3=(TextView)view.findViewById(R.id.my_guanzhu_bt);
-		bt4=(TextView)view.findViewById(R.id.my_fensi_bt);
-		bt5=(TextView)view.findViewById(R.id.my_blacklist_bt);
-		bt6=(TextView)view.findViewById(R.id.my_aboutus_bt);
-		bt7=(TextView)view.findViewById(R.id.my_logout_bt);
-		menubtn=(ImageButton)findViewById(R.id.ivTitleBtnLeft);
+		bt1 = (TextView) view.findViewById(R.id.my_backtomain_bt);
+		bt2 = (TextView) view.findViewById(R.id.my_tiezi_bt);
+		bt3 = (TextView) view.findViewById(R.id.my_guanzhu_bt);
+		bt4 = (TextView) view.findViewById(R.id.my_fensi_bt);
+		bt4 = (TextView) view.findViewById(R.id.my_blacklist_bt);
+		bt4 = (TextView) view.findViewById(R.id.my_aboutus_bt);
+		bt4 = (TextView) view.findViewById(R.id.my_logout_bt);
+		menubtn = (ImageButton) findViewById(R.id.ivTitleBtnLeft);
 		bt1.setOnClickListener(this);
 		bt2.setOnClickListener(this);
 		bt3.setOnClickListener(this);
-		bt4.setOnClickListener(this);
-		bt5.setOnClickListener(this);
-		bt6.setOnClickListener(this);
-		bt7.setOnClickListener(this);
 		menubtn.setOnClickListener(this);
 		mListView = (PullToRefreshListView) findViewById(R.id.threadlist);
 		new GetData(MainDuoliaoActivity.this, 1).execute("");
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(this));
 	}
 
 	@Override
@@ -107,8 +110,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		} else if (id == R.id.ivTitleBtnLeft) {
 			menu.toggle();
 		} else if (id == R.id.my_fensi_bt) {
-			onMyFansClick(v);
-//			Toast.makeText(context, "����1", 1).show();
+			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_blacklist_bt) {
 			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_aboutus_bt) {
@@ -116,17 +118,17 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		}
 
 	}
-	
-	public void onLogoutClick (View view){		
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivity(intent);   
-	}	
 
-	public void onMyFansClick(View view){		
-		Intent intent = new Intent(this, MainFansActivity.class);
-		startActivity(intent);   		
+	public void onLogoutClick(View view) {
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
 	}
-	
+
+	public void onMyFansClick(View view) {
+		Intent intent = new Intent(this, MainFansActivity.class);
+		startActivity(intent);
+	}
+
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
 		private int mType;
@@ -150,10 +152,12 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		@Override
 		protected String doInBackground(String... params) {
 			String result = null;
-			ThreadsRequest request = new ThreadsRequest(MainDuoliaoActivity.this);
+			ThreadsRequest request = new ThreadsRequest(
+					MainDuoliaoActivity.this);
 			try {
 				Log.d("doInBackground", "start request");
-				result = request.getThreadList(pageNumber, limit, 25, 0);//for test
+				result = request.getThreadList(pageNumber, limit, 25, 0);// for
+																			// test
 				Log.d("doInBackground", "returned");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -174,20 +178,19 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 			if (result == null || result.equals("")) {
 				// show empty alert
 			} else {
-				
-				if(threadList!=null && threadList.size()!=0)
-				{
-					if(headerRefresh)
+
+				if (threadList != null && threadList.size() != 0) {
+					if (headerRefresh)
 						threadList = new ArrayList<ThreadModel>();
-				}
-				else
+				} else
 					threadList = new ArrayList<ThreadModel>();
 				try {
-					if(headerRefresh)
-						threadList = new ThreadsParse().parseThreadModel(result);
-					else
-					{
-						threadList.addAll(new ThreadsParse().parseThreadModel(result));
+					if (headerRefresh)
+						threadList = new ThreadsParse()
+								.parseThreadModel(result);
+					else {
+						threadList.addAll(new ThreadsParse()
+								.parseThreadModel(result));
 					}
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
@@ -196,20 +199,19 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 			}
 		}
 	}
-	
-	private void BindDataToListView()
-	{
+
+	private void BindDataToListView() {
 		if (onRefresh) {
 			onRefresh = false;
 		}
 		if (duoliaoAdapter == null) {
 			duoliaoAdapter = new DuoliaoAdapter();
-		//	mListView.setAdapter(duoliaoAdapter);
+			mListView.setAdapter(duoliaoAdapter);
 		} else {
 			duoliaoAdapter.notifyDataSetChanged();
 		}
 	}
-	
+
 	private class DuoliaoAdapter extends BaseAdapter {
 
 		@Override
@@ -244,20 +246,37 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 						.findViewById(R.id.liker_img3);
 				viewHolder.comment_listview = (ListView) convertView
 						.findViewById(R.id.comment_listview);
+
 				convertView.setTag(viewHolder);
 			}
-			ImageLoader.getInstance().displayImage(
-					threadItem.getMemberImage(), viewHolder.avatar, otp);
-			ImageLoader.getInstance().displayImage(
-					threadItem.getThreadImageList().get(0).getImageUrl()
-					, viewHolder.content_img, otp);
-			ImageLoader.getInstance().displayImage(
-					threadItem.getMemberImage(), viewHolder.content_img, otp);
+			imageLoader.displayImage(threadItem.getMemberImage(),
+					viewHolder.avatar, otp);
+
+			// change size of content image
+			LayoutParams params = (LayoutParams) viewHolder.content_img
+					.getLayoutParams();
+			// params.width =
+			// Integer.parseInt(threadItem.getThreadImageList().get(0).getImageWidth())*2;
+			params.height = (int) Math.round(Integer.parseInt(threadItem
+					.getThreadImageList().get(0).getImageHeight()) * 2.5);
+			viewHolder.content_img.setLayoutParams(params);
+			//
+
+			imageLoader.displayImage(threadItem.getThreadImageList().get(0)
+					.getImageUrl(), viewHolder.content_img, otp);
 			viewHolder.account_name.setText(threadItem.getAccountName());
-			viewHolder.comment_num.setText(threadItem.getThreadCmtList().size());
+			viewHolder.comment_num.setText(String.valueOf(threadItem
+					.getThreadCmtList().size()));
 			viewHolder.content.setText(threadItem.getThreadContent());
-			viewHolder.like_num.setText(threadItem.getThreadLikeList().size());
+			viewHolder.like_num.setText(String.valueOf(threadItem
+					.getThreadLikeList().size()));
 			viewHolder.time.setText(threadItem.getTimeDiff());
+			commentList = new ArrayList<ThreadCmtModel>();
+			commentList = threadItem.getThreadCmtList();
+
+			DuoliaoCommentAdapter duoliaoCommentAdapter = new DuoliaoCommentAdapter();
+			viewHolder.comment_listview.setAdapter(duoliaoCommentAdapter);
+
 
 			return convertView;
 		}
@@ -280,7 +299,57 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 			return 0;
 		}
 	}
-	
+
+	private class DuoliaoCommentAdapter extends BaseAdapter {
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ThreadCmtModel commentItem = (ThreadCmtModel) getItem(position);
+			ViewHolder viewHolder = null;
+			if (convertView != null) {
+				viewHolder = (ViewHolder) convertView.getTag();
+			} else {
+				viewHolder = new ViewHolder();
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.duoliao_listview_item_comment_listview_item,
+						null);
+				viewHolder.comment_accountName = (TextView) convertView
+						.findViewById(R.id.account_name);
+				viewHolder.comment_content = (TextView) convertView
+						.findViewById(R.id.content);
+				viewHolder.comment_avatar = (ImageView) convertView
+						.findViewById(R.id.avatar);
+				convertView.setTag(viewHolder);
+			}
+			imageLoader.displayImage(commentItem.getMemberImage(),
+					viewHolder.comment_avatar, otp);
+
+			viewHolder.comment_accountName
+					.setText(commentItem.getAccountName());
+			viewHolder.comment_content.setText(commentItem.getCommentContent());
+
+			return convertView;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return commentList.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return commentList.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+	}
+
 	class ViewHolder {
 		TextView account_name;
 		TextView content;
@@ -294,8 +363,8 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener{
 		ImageView liker_img3;
 		ImageView line;
 		ListView comment_listview;
+		ImageView comment_avatar;
+		TextView comment_accountName;
+		TextView comment_content;
 	}
 }
-
-
-
