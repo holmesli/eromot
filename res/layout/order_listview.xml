@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/OrderLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
             <include
         android:id="@+id/include1"
-        layout="@layout/bar_title_order"
+        layout="@layout/bar_title_bianli"
         android:focusable="true" />
 		<ListView
 		    
@@ -16,4 +17,7 @@
 		    android:divider="#e0e0e0"
 		    android:dividerHeight="1dip" >
 		</ListView>
+		
+		
+		
 </LinearLayout>

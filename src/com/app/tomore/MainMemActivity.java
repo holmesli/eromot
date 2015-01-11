@@ -47,7 +47,7 @@ public class MainMemActivity extends Activity {
 	private Activity mContext;
 	private TextView noneData;
 	private View no_net_lay;
-	MemberAdapter newsListAdapter;
+	MemberAdapter memberListAdapter;
 	private boolean onRefresh = false;
 
 	@Override
@@ -89,11 +89,11 @@ public class MainMemActivity extends Activity {
 		if (onRefresh) {
 			onRefresh = false;
 		}
-		if (newsListAdapter == null) {
-			newsListAdapter = new MemberAdapter();
-			mListView.setAdapter(newsListAdapter);
+		if (memberListAdapter == null) {
+			memberListAdapter = new MemberAdapter();
+			mListView.setAdapter(memberListAdapter);
 		} else {
-			newsListAdapter.notifyDataSetChanged();
+			memberListAdapter.notifyDataSetChanged();
 		}
 		if (cardList != null && cardList.size() > 0) {
 			showDataUi();

@@ -3,10 +3,13 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.adapters.ArticleAdapter;
+import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.CardModel;
 import com.app.tomore.beans.ImageAndText;
@@ -15,12 +18,15 @@ import com.app.tomore.net.ToMoreHttpRequest;
 import com.app.tomore.net.ToMoreParse;
 import com.google.gson.JsonSyntaxException;
 import com.app.tomore.utils.AndroidShare;
+import com.app.tomore.utils.AppUtil;
+import com.app.tomore.utils.ToastUtils;
 import com.app.tomore.utils.TouchImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +41,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
@@ -42,11 +50,14 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -68,8 +79,19 @@ public class MagDetailActivity extends Activity {
 	private WebView detailWeb;
 	private TextView detailTitle;
 	private FrameLayout frame;
-	
+	private Activity mContext;
+	private Button commentButton;
+	private ArrayList<ArticleCommentModel> articleComment;
 	private ImageView backImage;
+	
+	
+	private String[] allOptionsMenuTexts = {"ËØÑËÆ∫","ÂàÜ‰∫´"};  
+	   private int[] allOptionsMenuOrders = {2,6};  
+	   private int[] allOptionsMenuIds = {Menu.FIRST+2,Menu.FIRST+6};  
+	   private int[] allOptionsMenuIcons = {   
+	        android.R.drawable.ic_menu_edit,  
+	        android.R.drawable.ic_menu_send,  
+	        };  
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,28 +102,26 @@ public class MagDetailActivity extends Activity {
 		detailTitle = (TextView) getWindow().getDecorView().findViewById(R.id.news_title_text);
 		detailImage = (TouchImageView)getWindow().getDecorView().findViewById(R.id.news_image);
 		detailWeb = (WebView)findViewById(R.id.news_content_text);
-		//testView1 = (TextView) getWindow().getDecorView().findViewById(R.id.testweb);
-		//testView2 = (TextView) getWindow().getDecorView().findViewById(R.id.testweb2);
 		myVideoView = (VideoView) findViewById(R.id.videoView);
 		frame = (FrameLayout) findViewById(R.id.videoFrame);
-		
-
-		
 		RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
 				.findViewById(R.id.bar_title_mag_detail);
-		
-		findViewById(R.id.bar_title_bt_share).setOnClickListener(new OnClickListener() {
+		commentButton = (Button)findViewById(R.id.bar_title_bt_share);
+		commentButton.setOnClickListener(new buttonComment());
+			
+		//findViewById(R.id.bar_title_bt_share).setOnClickListener((OnClickListener) itemClickListener );
+//		{
 			
 			//String title = articleItem.getArticleTitle();
-
-			public void onClick(View v) {
-				AndroidShare as = new AndroidShare(
-						MagDetailActivity.this,
-						"Œ“’˝‘⁄ π”√∂‡¬◊∂‡◊Ó≥±µƒToMore”¶”√£¨øÏ¿¥ø¥ø¥∞… www.tomoreapp.com",
-						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
-				as.show();
-			}
-		});
+//
+//			public void onClick(View v) {
+//				AndroidShare as = new AndroidShare(
+//						MagDetailActivity.this,
+//						"ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ πÔøΩ√∂ÔøΩÔøΩ◊∂ÔøΩÔøΩÓ≥±ÔøΩÔøΩToMore”¶ÔøΩ√£ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ www.tomoreapp.com",
+//						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+//				as.show();
+//			}
+//		});
 		
 		Intent intent = getIntent();
 		articleItem = (ArticleModel) intent.getSerializableExtra("articleList");
@@ -120,6 +140,15 @@ public class MagDetailActivity extends Activity {
 		});
 
 	}
+	
+	private class buttonComment implements OnClickListener  
+    {  
+        public void onClick(View v)  
+        {  
+        	showDialog8();
+        }  
+    }  
+	
 	
 	private class GetData extends AsyncTask<String, String, String> {
 		// private Context mContext;
@@ -144,15 +173,8 @@ public class MagDetailActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			String result= null;
-			//try {
 				Log.d("doInBackground", "start request");	
 				Log.d("doInBackground", "returned");
-			//} 
-//			catch (IOException e) {
-//				e.printStackTrace();
-//			} catch (TimeoutException e) {
-//				e.printStackTrace();
-//			}
 
 			return result;
 		}
@@ -166,19 +188,12 @@ public class MagDetailActivity extends Activity {
 			if (result == null || result.equals("")) {
 				// show empty alert
 			} else {
-				//cardList = new ArrayList<CardModel>();
 				try {
-					//cardList = new CardsParse().parseCardResponse(result);
-					//BindDataToListView();
 					BindData();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
 				if (articleItem != null) {
-					//Intent intent = new Intent(MemberDetailActivity.this,
-						//	MyCameraActivity.class); // fake redirect..
-					//intent.putExtra("cardList", (Serializable) cardList);
-					//startActivity(intent);
 				} else {
 					// show empty alert
 				}
@@ -197,26 +212,20 @@ public class MagDetailActivity extends Activity {
 		detailWeb.setWebChromeClient(new WebChromeClient()); 
 		detailTitle.setText(articleItem.getArticleTitle());
 		Picasso.with(MagDetailActivity.this).load(articleItem.getArticleLargeImage()).into(detailImage);
-//		String videoUrl = articleItem.getVideoUrl();
-//		String textUrl = articleItem.getTextUrl();
-//		
-		//testView1.setText(videoUrl);
-		//testView2.setText(textUrl);
+
 		String video = articleItem.getArticleVideo();
 		if(video.equals(""))
 		{
 			myVideoView.setVisibility(View.INVISIBLE);
 			frame.setVisibility(View.GONE);
-//			testView1.setVisibility(View.INVISIBLE);
-//			testView2.setVisibility(View.INVISIBLE);
+
 			detailImage.setVisibility(View.VISIBLE);
 		}
 		else
 		{
 			frame.setVisibility(View.VISIBLE);
 			myVideoView.setVisibility(View.VISIBLE);
-//			testView1.setVisibility(View.VISIBLE);
-//			testView2.setVisibility(View.VISIBLE);
+
 			detailImage.setVisibility(View.GONE);
 			
 		}
@@ -230,18 +239,10 @@ public class MagDetailActivity extends Activity {
 		}
 
 		// Find your VideoView in your video_main.xml layout
-		//myVideoView = (VideoView) findViewById(R.id.videoView);
 
 		// Create a progressbar
 		progressDialog = new ProgressDialog(MagDetailActivity.this);
-		// Set progressbar title
-//		progressDialog.setTitle("JavaCodeGeeks Android Video View Example");
-//		// Set progressbar message
-//		progressDialog.setMessage("Loading...");
-//
-//		progressDialog.setCancelable(true);
-//		// Show progressbar
-//		progressDialog.show();
+
 
 		try {
 			myVideoView.setMediaController(mediaControls);
@@ -281,6 +282,58 @@ public class MagDetailActivity extends Activity {
 		myVideoView.seekTo(position);
 	}
 		
+	
+	public void showDialog8(){  
+	    final Context context = this;  
+	       
+	    LayoutInflater layoutInflater = getLayoutInflater();  
+	    View menuView = layoutInflater.inflate(R.layout.group_list, null);  
+	       
+	    GridView gridView = (GridView)menuView.findViewById(R.id.gridview);  
+	    final LinearLayout linear=(LinearLayout)findViewById(R.id.gridview_layout);
+	    SimpleAdapter menuSimpleAdapter = createSimpleAdapter(allOptionsMenuTexts,allOptionsMenuIcons);  
+	    gridView.setAdapter(menuSimpleAdapter);  
+	    gridView.setOnItemClickListener(new OnItemClickListener(){  
+	        @Override  
+	        public void onItemClick(AdapterView<?> parent, View view,  
+	                int position, long id) {  
+	        	if(position==0)
+	        	{
+	        		
+	        		Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
+	    			intent.putExtra("articleid", articleItem.getArticleID());
+	                startActivity(intent);   
+	                finish();
+	        	}
+	        	else if(position==1)
+	        	{
+
+	        				AndroidShare as = new AndroidShare(
+	        						MagDetailActivity.this,
+	        						"‰Ω†Ê≠£Âú®‰ΩøÁî®Â§ö‰º¶Â§öÊúÄÊΩÆÁöÑAPPÔºåÂø´Êù•ÁúãÁúãÂêß",
+	        						"www.tomoreapp.com");
+	        				as.show();
+	        	}
+	        }  
+	    });  
+	       
+	    new AlertDialog.Builder(context).setView(menuView).show();  
+	}  
+	  
+	public SimpleAdapter createSimpleAdapter(String[] menuNames,int[] menuImages){  
+	    List<Map<String,?>> data = new ArrayList<Map<String,?>>();  
+	    String[] fromsAdapter = {"item_text","item_image"};  
+	    int[] tosAdapter = {R.id.item_text,R.id.item_image};  
+	    for(int i=0;i<menuNames.length;i++){  
+	        Map<String,Object> map = new HashMap<String,Object>();  
+	        map.put(fromsAdapter[0], menuNames[i]);  
+	        map.put(fromsAdapter[1], menuImages[i]);  
+	        data.add(map);  
+	    }  
+	      
+	    SimpleAdapter SimpleAdapter = new SimpleAdapter(this, data, R.layout.group_item_view, fromsAdapter, tosAdapter);  
+	    return SimpleAdapter;  
+	}  
 	
 	
 }

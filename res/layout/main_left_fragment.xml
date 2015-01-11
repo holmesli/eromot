@@ -109,7 +109,9 @@
             android:paddingLeft="20dp"
             android:text="@string/toolbox_item_fensi"
             android:textSize="15sp"
-			android:textColor="#000000"/>
+			android:textColor="#000000"
+			/>
+			<!--android:onClick="onMyFansClick"-->
 
         <include
             android:layout_width="fill_parent"

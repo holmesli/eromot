@@ -1,14 +1,26 @@
 package com.app.tomore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.app.tomore.beans.GeneralBLModel;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,9 +32,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GeneralBLDetailActivity extends Activity {
 
-	private DialogActivity dialog;
 	private GeneralBLModel BLModel;
 	private GoogleMap map;
+	private View layout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,7 +43,89 @@ public class GeneralBLDetailActivity extends Activity {
 		getWindow().setSoftInputMode(  WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		Intent intent = getIntent();
 		BLModel = (GeneralBLModel) intent.getSerializableExtra("BLdata");
+		layout = findViewById(R.id.general_bl_detail_layout);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_general_detail_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 		BindData();
+		ImageView Call = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.CallImage);
+		Call.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	showPopup();
+		    }
+		});
+	}
+	
+	private void showPopup(){
+
+		String Call = getString(R.string.PhoneCall);
+		String Cancel = getString(R.string.Cancel);
+		String MakeCall = BLModel.getPhone1();
+		List<CharSequence>  cs = new ArrayList<CharSequence>();
+		cs.add(Call);
+		cs.add(Cancel);
+		cs.add(MakeCall);
+		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
+    	if(BLModel.getPhone2() != null){
+    		if(BLModel.getPhone2().length() > 7 || !BLModel.getPhone2().equals(""))
+    		{
+    			cs.add(BLModel.getPhone2());
+    		}
+    	}
+    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+    	final int length = options.length;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+		AlertDialog OptionDialog = builder.create();
+		builder.setTitle(getString(R.string.Phone));
+		builder.setItems(options, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface Optiondialog, int which) {
+				String phone_number = BLModel.getPhone1();
+		        if (which == 0){
+		        	if(length == 3)
+		        	{
+					Intent call = new Intent(Intent.ACTION_DIAL);
+					call.setData(Uri.parse("tel:"+phone_number));
+					startActivity(call);
+		        	}
+		        	else{
+		        		AlertDialog PhoneOptionDialog = builder2.create();
+		        		CharSequence options[] = new CharSequence[] {BLModel.getPhone1(),BLModel.getPhone2()};
+		        		builder2.setTitle(getString(R.string.Phone));
+		        		builder2.setItems(options, new DialogInterface.OnClickListener() {
+		        		    @Override
+		        		    public void onClick(DialogInterface Optiondialog, int which) {
+		        		    	if(which == 0){
+		        					Intent call = new Intent(Intent.ACTION_DIAL);
+		        					call.setData(Uri.parse("tel:"+BLModel.getPhone1()));
+		        					startActivity(call);
+		        		    	}
+		        		    	else{
+		        					Intent call = new Intent(Intent.ACTION_DIAL);
+		        					call.setData(Uri.parse("tel:"+BLModel.getPhone2()));
+		        					startActivity(call);
+		        		    	}
+		        		    }
+		        		    });
+		        		builder2.show();
+		        	}
+		        }
+		        else if(which == 1){
+		        	Optiondialog.dismiss();
+		        }
+
+		    }
+		});
+		builder.show();
+		
 	}
 	
 	
@@ -107,18 +201,6 @@ public class GeneralBLDetailActivity extends Activity {
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
                 .getMap();
 
-        
-    /*(    if (BLModel.getLatitude() != null && BLModel.getLongtitude() != null)
-        {
-	        final LatLng location = new LatLng(Double.parseDouble(BLModel.getLatitude()), Double.parseDouble(BLModel.getLongtitude()));
-	        
-	        Marker go_to_location = map.addMarker(new MarkerOptions().position(location)
-	                .title("current_location"));
-	        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
-	
-	        // Zoom in, animating the camera.
-	        map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null); 
-        }*/
         try {
 	        final LatLng location = new LatLng(Double.parseDouble(BLModel.getLatitude()), Double.parseDouble(BLModel.getLongitude()));
 	        

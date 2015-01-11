@@ -51,10 +51,23 @@ public class RestaurantBLActivity  extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bianli_restaurant);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+		RelativeLayout whole_layout = (RelativeLayout)findViewById(R.id.BLrest);
+		TextView header_Text = (TextView) whole_layout.findViewById(R.id.btMeg);
+		header_Text.setText(getString(R.string.RestaurantsList));
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
 		listView  = (ListView) findViewById(R.id.bianlirestaurant_listview);
+		//LinearLayout whole_layout = (LinearLayout)findViewById(R.id.GeneralBLLayout);
+		final Button btnBack = (Button) whole_layout.findViewById(R.id.bar_title_bl_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
+		
 		new GetData(RestaurantBLActivity.this,1).execute("");
 		mContext = this;
 		regionlist = new String[]{"downtown","eastYork","northYork","scarborough","markham","mississauga","vaughan","richmondHill","others"};
@@ -103,7 +116,12 @@ public class RestaurantBLActivity  extends Activity{
 					
 				}
 				Object obj = (Object) restlist.get(position);
+				BLRestaurantModel restModel = restlist.get(position);
 				if (obj instanceof String){
+					return;
+				}
+				if(restModel.getShowRegion() != -1)
+				{
 					return;
 				}
 				Intent intent = new Intent(RestaurantBLActivity.this,
@@ -262,8 +280,6 @@ public class RestaurantBLActivity  extends Activity{
 	}
 	
 }
-
-		
 
 	
 	

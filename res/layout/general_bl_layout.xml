@@ -4,10 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/white" >
+    android:background="@color/white" 
+    android:id="@+id/GeneralBLLayout">
     <include
-        layout="@layout/bar_title_member"
-        android:focusable="true" />
+        layout="@layout/bar_title_bianli"
+        android:focusable="true"
+        android:id="@+id/BLTitleBar"/>
 	<com.app.tomore.utils.PullToRefreshListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
@@ -24,6 +26,8 @@
         ptr:kalaDrawable="@drawable/kalagame_icon_arrows"
         android:fadingEdge="none"
         />
+	
+
 	<TextView 
 	    android:layout_width="wrap_content"
         android:layout_height="wrap_content"

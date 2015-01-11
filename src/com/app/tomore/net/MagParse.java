@@ -3,8 +3,14 @@ package com.app.tomore.net;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.app.tomore.beans.ArticleCatogoryModel;
+import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
 import com.app.tomore.beans.BLRestaurantModel;
+import com.app.tomore.beans.CategoryModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -14,10 +20,10 @@ import com.google.gson.JsonSyntaxException;
 
 public class MagParse {
 
-	public ArrayList<ArticleModel> parseArticleResponse(String jsonArticle) throws JsonSyntaxException 
+	public ArrayList<ArticleModel> parseArticleResponse(String result) throws JsonSyntaxException 
 	{
 		Gson gson = new Gson();
-		JsonElement jelement = new JsonParser().parse(jsonArticle);
+		JsonElement jelement = new JsonParser().parse(result);
 	    JsonObject  jobject = jelement.getAsJsonObject();
 	    JsonArray jarray = jobject.getAsJsonArray("data");
 		ArrayList<ArticleModel> articlelist = new ArrayList<ArticleModel>();
@@ -28,53 +34,50 @@ public class MagParse {
 		return articlelist;
 	}
 	
-//	public HashMap<String, ArrayList<ArticleModel>> parseIssusePre(String jsonPre) 
-//			throws JsonSyntaxException 
-//	{
-//		HashMap<String, ArrayList<ArticleModel>> retMap = new HashMap<String, ArrayList<ArticleModel>>();
-//		Gson gson = new Gson();
-//		JsonElement jelement = new JsonParser().parse(jsonPre);
-//	    JsonObject  jobject = jelement.getAsJsonObject();
-//	    JsonArray jarray = jobject.getAsJsonArray("data");
-//		for (JsonElement obj : jarray) {
-//			JsonObject  jobject2 = obj.getAsJsonObject();
-//			String jarray2 = jobject2.getAsString();
-//			if(jarray2 != null)
-//			{
-//				ArrayList<ArticleModel> article = new ArrayList<ArticleModel>();
-//				for (JsonElement obj2 : jarray2)
-//				{
-//					ArticleModel cse = gson.fromJson(obj2, ArticleModel.class);
-//					article.add(cse);
-//				}
-//				retMap.put("pre",article);
-//			}
-//		}
-//		return retMap;
-//	}
-//	
-//	public HashMap<String, ArrayList<ArticleModel>> parseIssuseNext(String jsonNext) 
-//			throws JsonSyntaxException 
-//	{
-//		HashMap<String, ArrayList<ArticleModel>> retMap = new HashMap<String, ArrayList<ArticleModel>>();
-//		Gson gson = new Gson();
-//		JsonElement jelement = new JsonParser().parse(jsonNext);
-//	    JsonObject  jobject = jelement.getAsJsonObject();
-//	    JsonArray jarray = jobject.getAsJsonArray("data");
-//		for (JsonElement obj : jarray) {
-//			JsonObject  jobject2 = obj.getAsJsonObject();
-//			JsonArray jarray2 = jobject2.getAsJsonArray("next");
-//			if(jarray2 != null)
-//			{
-//				ArrayList<ArticleModel> article = new ArrayList<ArticleModel>();
-//				for (JsonElement obj2 : jarray2)
-//				{
-//					ArticleModel cse = gson.fromJson(obj2, ArticleModel.class);
-//					article.add(cse);
-//				}
-//				retMap.put("next",article);
-//			}
-//		}
-//		return retMap;
-//	}
+	public ArrayList<ArticleCommentModel> parseArticleComment(String result) throws JsonSyntaxException 
+	{
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(result);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<ArticleCommentModel> articleCommentlist = new ArrayList<ArticleCommentModel>();
+		for (JsonElement obj : jarray) {
+			ArticleCommentModel cse = gson.fromJson(obj, ArticleCommentModel.class);
+			articleCommentlist.add(cse);
+		}
+		return articleCommentlist;
+	}
+	
+	public ArrayList<ArticleCatogoryModel> parseCtegoryResponse(String jsonCategory)  throws JsonSyntaxException 
+	{
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(jsonCategory);
+	    JsonObject  jobject = jelement.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<ArticleCatogoryModel> lcs = new ArrayList<ArticleCatogoryModel>();
+		for (JsonElement obj : jarray) {
+			ArticleCatogoryModel cse = gson.fromJson(obj, ArticleCatogoryModel.class);
+			lcs.add(cse);
+		}
+		return lcs;
+	}
+	
+	public String parsePre(String pre) throws JsonSyntaxException
+	{
+		JsonElement jelement = new JsonParser().parse(pre);
+		JsonObject  jobject2 = jelement.getAsJsonObject();
+		pre =jobject2.get("pre").getAsString();
+		return pre;
+		
+	}
+	
+	public String parseNext(String next) throws JsonSyntaxException
+	{
+		JsonElement jelement = new JsonParser().parse(next);
+		JsonObject  jobject3 = jelement.getAsJsonObject();
+		next =jobject3.get("next").getAsString();
+		return next;
+		
+	}
+	
 }

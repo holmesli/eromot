@@ -3,7 +3,9 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
+
 import com.app.tomore.DialogActivity;
 import com.app.tomore.R;
 import com.app.tomore.beans.GeneralBLModel;
@@ -16,21 +18,32 @@ import com.app.tomore.utils.PullToRefreshBase.OnRefreshListener;
 import com.app.tomore.utils.PullToRefreshListView;
 import com.app.tomore.utils.ToastUtils;
 import com.google.gson.JsonSyntaxException;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
@@ -48,6 +61,9 @@ public class GeneralBLActivity extends Activity {
 	private boolean headerRefresh = false; // false -> footer
 	private int pageNumber;
 	private int limit;
+	private LayoutInflater inflater; 
+	private View layout;
+	private String name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +72,7 @@ public class GeneralBLActivity extends Activity {
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		Intent i = getIntent();
 		BLID = Integer.parseInt(i.getStringExtra("BLID"));
+		name = i.getStringExtra("name");
 		new GetData(GeneralBLActivity.this, 1).execute("");
 		mContext = this;
 		limit = 20;
@@ -66,7 +83,22 @@ public class GeneralBLActivity extends Activity {
 		mListView.setOnItemClickListener(itemClickListener);
 		noneData = (TextView) findViewById(R.id.noneData);
 		no_net_lay = findViewById(R.id.no_net_lay);
+		inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		layout = findViewById(R.id.GeneralBLLayout);
+		//LinearLayout whole_layout = (LinearLayout)findViewById(R.id.GeneralBLLayout);
+		TextView header_Text = (TextView) layout.findViewById(R.id.btMeg);
+		header_Text.setText(name);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_bl_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
+
 	}
+
 
 	private void BindDataToListView() {
 		if (onRefresh) {
@@ -117,7 +149,7 @@ public class GeneralBLActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			if (!AppUtil.networkAvailable(mContext)) {
-				ToastUtils.showToast(mContext, "ÇëÁ¬½ÓÍøÂç");
+				ToastUtils.showToast(mContext, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				return;
 			}
 			if (dataList == null) {
@@ -127,7 +159,7 @@ public class GeneralBLActivity extends Activity {
 			if (obj instanceof String) {
 				return;
 			}
-			Open_Activity(position);
+			Open_Activity(position-1);
 		}
 	};
 
@@ -146,7 +178,7 @@ public class GeneralBLActivity extends Activity {
 				pageNumber = 1;
 				new GetData(GeneralBLActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
+				ToastUtils.showToast(mContext, "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				mListView.onRefreshComplete();
 			}
 		}
@@ -161,7 +193,7 @@ public class GeneralBLActivity extends Activity {
 				pageNumber ++;
 				new GetData(GeneralBLActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
+				ToastUtils.showToast(mContext, "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 		}
 	};
@@ -236,12 +268,77 @@ public class GeneralBLActivity extends Activity {
 			}
 		}
 	}
+	
+	private void showPopup(final GeneralBLModel generalbltext){
+
+		String Call = getString(R.string.sentMessage);
+		String Cancel = getString(R.string.Cancel);
+		String MakeCall = generalbltext.getPhone1();
+		List<CharSequence>  cs = new ArrayList<CharSequence>();
+		cs.add(Call);
+		cs.add(Cancel);
+		cs.add(MakeCall);
+		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
+		if(generalbltext.getPhone1() != null)
+		{
+	    	if(generalbltext.getPhone2() != null ){
+	    		if(generalbltext.getPhone2().length() > 7 || !generalbltext.getPhone2().equals(""))
+	    		{
+	    			cs.add(generalbltext.getPhone2());
+	    		}
+	    	}
+	    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+	    	final int length = options.length;
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+			AlertDialog OptionDialog = builder.create();
+			builder.setTitle(getString(R.string.sentMessage));
+			builder.setItems(options, new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface Optiondialog, int which) {
+					String phone_number = generalbltext.getPhone1();
+			        if (which == 0){
+			        	if(length == 3)
+			        	{
+			        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+			                        + phone_number)));
+			        	}
+			        	else{
+			        		AlertDialog PhoneOptionDialog = builder2.create();
+			        		CharSequence options[] = new CharSequence[] {generalbltext.getPhone1(),generalbltext.getPhone2()};
+			        		builder2.setTitle(getString(R.string.sentMessage));
+			        		builder2.setItems(options, new DialogInterface.OnClickListener() {
+			        		    @Override
+			        		    public void onClick(DialogInterface Optiondialog, int which) {
+			        		    	if(which == 0){
+			    		        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+			    		                        + generalbltext.getPhone1())));
+			        		    	}
+			        		    	else{
+			    		        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+			    		                        + generalbltext.getPhone2())));
+			        		    	}
+			        		    }
+			        		    });
+			        		builder2.show();
+			        	}
+			        }
+			        else if(which == 1){
+			        	Optiondialog.dismiss();
+			        }
+	
+			    }
+			});
+			builder.show();
+		}
+	}
 
 	class ViewHolder {
 		private TextView Title;
 	    private TextView Contact;
 	    private TextView Language;
 	}
+	
 	
 	public class GeneralBLAdpater extends BaseAdapter {
 
@@ -265,7 +362,7 @@ public class GeneralBLActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			GeneralBLModel generalbltext = (GeneralBLModel) getItem(position);
+			final GeneralBLModel generalbltext = (GeneralBLModel) getItem(position);
 			ViewHolder viewHolder = null;
 			if (convertView != null) {
 				viewHolder = (ViewHolder) convertView.getTag();
@@ -276,6 +373,14 @@ public class GeneralBLActivity extends Activity {
 				viewHolder.Title = (TextView) convertView.findViewById(R.id.Title);
 				viewHolder.Contact = (TextView) convertView.findViewById(R.id.Contact);
 				viewHolder.Language = (TextView) convertView.findViewById(R.id.language);
+				ImageView Messageicon = (ImageView) convertView.findViewById(R.id.OrderMessage);
+				Messageicon.setOnClickListener(new OnClickListener() {
+
+		            @Override
+		            public void onClick(View v) {
+						showPopup(generalbltext);
+				    }
+				});
 				convertView.setTag(viewHolder);
 			}
 

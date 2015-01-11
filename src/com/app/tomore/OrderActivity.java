@@ -3,6 +3,7 @@ package com.app.tomore;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.beans.GeneralBLModel;
@@ -10,17 +11,24 @@ import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.net.YellowPageRequest;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -48,6 +56,17 @@ public class OrderActivity extends Activity{
 		pageNumber = 1;
 		new GetData(OrderActivity.this, 1).execute("");
 		mListView.setOnItemClickListener(itemClickListener);
+		LinearLayout whole_layout = (LinearLayout)findViewById(R.id.OrderLayout);
+		TextView header_Text = (TextView) whole_layout.findViewById(R.id.btMeg);
+		header_Text.setText(getString(R.string.CustomMade));
+		final Button btnBack = (Button) whole_layout.findViewById(R.id.bar_title_bl_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 	}
 
 	
@@ -60,8 +79,8 @@ public class OrderActivity extends Activity{
 	private void Open_Activity(int position) {
 		Intent intent;
 		intent = new Intent(OrderActivity.this,
-				OrderWebViewActivity.class);
-		intent.putExtra("BLdata", (Serializable)dataList.get(position));
+				WebViewActivity.class);
+		intent.putExtra("URL", dataList.get(position).getUrl());
 		startActivityForResult(intent, 100);
 	}
 
@@ -129,6 +148,69 @@ public class OrderActivity extends Activity{
 			}
 		}
 	}
+	
+	private void showPopup(final GeneralBLModel generalbltext){
+
+		String Call = getString(R.string.sentMessage);
+		String Cancel = getString(R.string.Cancel);
+		String MakeCall = generalbltext.getPhone1();
+		List<CharSequence>  cs = new ArrayList<CharSequence>();
+		cs.add(Call);
+		cs.add(Cancel);
+		cs.add(MakeCall);
+		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
+		if(generalbltext.getPhone1() != null){
+	    	if(generalbltext.getPhone2() != null ){
+	    		if(generalbltext.getPhone2().length() > 7 || !generalbltext.getPhone2().equals(""))
+	    		{
+	    			cs.add(generalbltext.getPhone2());
+	    		}
+	    	}
+	    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+	    	final int length = options.length;
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+			AlertDialog OptionDialog = builder.create();
+			builder.setTitle(getString(R.string.sentMessage));
+			builder.setItems(options, new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface Optiondialog, int which) {
+					String phone_number = generalbltext.getPhone1();
+			        if (which == 0){
+			        	if(length == 3)
+			        	{
+			        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+			                        + phone_number)));
+			        	}
+			        	else{
+			        		AlertDialog PhoneOptionDialog = builder2.create();
+			        		CharSequence options[] = new CharSequence[] {generalbltext.getPhone1(),generalbltext.getPhone2()};
+			        		builder2.setTitle(getString(R.string.sentMessage));
+			        		builder2.setItems(options, new DialogInterface.OnClickListener() {
+			        		    @Override
+			        		    public void onClick(DialogInterface Optiondialog, int which) {
+			        		    	if(which == 0){
+			    		        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+			    		                        + generalbltext.getPhone1())));
+			        		    	}
+			        		    	else{
+			    		        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+			    		                        + generalbltext.getPhone2())));
+			        		    	}
+			        		    }
+			        		    });
+			        		builder2.show();
+			        	}
+			        }
+			        else if(which == 1){
+			        	Optiondialog.dismiss();
+			        }
+	
+			    }
+			});
+			builder.show();
+		}
+	}
 
 	class ViewHolder {
 		private TextView Title;
@@ -158,7 +240,7 @@ public class OrderActivity extends Activity{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			GeneralBLModel generalbltext = (GeneralBLModel) getItem(position);
+			final GeneralBLModel generalbltext = (GeneralBLModel) getItem(position);
 			ViewHolder viewHolder = null;
 			if (convertView != null) {
 				viewHolder = (ViewHolder) convertView.getTag();
@@ -168,6 +250,14 @@ public class OrderActivity extends Activity{
 						R.layout.order_listview_detail, null);
 				viewHolder.Title = (TextView) convertView.findViewById(R.id.OrderTitle);
 				viewHolder.Contact = (TextView) convertView.findViewById(R.id.OrderContactName);
+				ImageView MessageBox = (ImageView) convertView.findViewById(R.id.OrderMessage);
+				MessageBox.setOnClickListener(new OnClickListener() {
+
+		            @Override
+		            public void onClick(View v) {
+						showPopup(generalbltext);
+				    }
+				});
 				convertView.setTag(viewHolder);
 			}
 

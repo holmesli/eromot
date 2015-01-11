@@ -10,6 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/background_gradient" />
+    
+    
+    
 
     <TextView
         android:id="@+id/btMeg"
@@ -26,15 +29,25 @@
         
              <TextView
         android:id="@+id/join_league"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:text="@string/join"
         android:gravity="end"
 		android:textAlignment="gravity"
 		android:paddingTop="12.0dip"
 		android:paddingRight="4.0dip"
-		android:textSize="13sp"/>
+		android:textSize="13sp"
+		android:layout_alignParentRight="true"
+		android:visibility="invisible"/>
 
-
+    <Button
+        android:id="@+id/bar_title_bl_go_back"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/button_back_bg"
+        android:layout_marginLeft="5dp"
+        android:layout_centerInParent="true"
+        android:tag="1" />
 
 </RelativeLayout>

@@ -45,7 +45,6 @@
                     android:id="@+id/main_mag"
                     style="@style/main_tab_bottom"
                     android:layout_weight="1.0"
-                    android:checked="true"
                     android:drawableTop="@drawable/bar_bottom_meg"
                     />
                 

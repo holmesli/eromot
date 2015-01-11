@@ -2,9 +2,7 @@ package com.app.tomore.net;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-
 import android.content.Context;
-
 import com.app.tomore.httpclient.BasicHttpClient;
 import com.app.tomore.httpclient.HttpResponse;
 import com.app.tomore.httpclient.ParameterMap;

@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/BLrest"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
@@ -25,10 +26,8 @@
 		    android:id="@+id/bianlirestaurant_listview"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:cacheColorHint="#00000000"
 		    android:divider="#e0e0e0"
-		    android:dividerHeight="1dip"
-		    android:listSelector="@drawable/mag_list_selector" >
+		    android:dividerHeight="1dip">
 		</ListView>
 		
 		

@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+   <LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/general_bl_detail_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+>
+       <include
+           android:id="@+id/include1"
+           layout="@layout/bar_title_general_bl_detail"
+           android:focusable="true" />
+  <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">  
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
     <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dip" >
+    android:padding="15dip" 
+    android:id="@+id/general_detail_top_container">
         <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -51,7 +66,8 @@
         android:layout_width="50dp"
     	android:layout_height="50dp"
     	android:paddingRight="10dp"
-    	android:paddingTop="5dp"/>
+    	android:paddingTop="5dp"
+    	android:id="@+id/CallImage"/>
 
     </LinearLayout>
 		
@@ -137,22 +153,30 @@
 	        android:textSize="17sp"/>
 
 	</LinearLayout>
-	
-		<LinearLayout
+
+</LinearLayout>
+
+</ScrollView>
+
+    
+    
+    			<LinearLayout
 		    android:id="@+id/sent"
-		    android:layout_width="match_parent"
-		    android:layout_height="40dp"
+		    android:layout_width="fill_parent"
+		    android:layout_height="60dp"
 		    android:background="#1C86EE"
-		    android:orientation="horizontal" >
+		    android:orientation="horizontal"
+		    android:layout_alignParentBottom="true"  >
+
 
 			<EditText
 			    android:id="@+id/messagetosent"
-			    android:layout_width="242dp"
+			    android:layout_width="265dp"
 			    android:layout_height="fill_parent"
-			    android:layout_marginBottom="1dp"
-			    android:layout_marginLeft="6dp"
+			    android:layout_marginBottom="7dp"
+			    android:layout_marginLeft="10dp"
 			    android:layout_marginRight="6dp"
-			    android:layout_marginTop="6dp"
+			    android:layout_marginTop="13dp"
 			    android:ems="10" >
 
 			    <requestFocus
@@ -166,10 +190,10 @@
 				   android:layout_width="wrap_content"
 				   android:layout_height="wrap_content"
 				   android:textColor="#000000"
-				   android:text="TextView" 
+				   android:text="@string/sent" 
 				   android:textSize="23sp"
-				   android:layout_marginTop="1dp"/>
-						</LinearLayout>
-        
-    </LinearLayout>
-</ScrollView>
+				   android:layout_marginLeft="10dp"
+				   android:layout_marginTop="10dp"/>
+</LinearLayout>
+</RelativeLayout >
+</LinearLayout>

@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -35,6 +36,7 @@ public class MainBLActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<CategoryModel> cateList;
 	private TextView league;
+	private View layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainBLActivity extends Activity {
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		new GetData(MainBLActivity.this, 1).execute("");
 		league = (TextView)findViewById(R.id.join_league);
+		league.setVisibility(View.VISIBLE);
 		league.setOnClickListener(new OnClickListener() {
 	        @Override
 	        public void onClick(View viewIn) {
@@ -52,6 +55,9 @@ public class MainBLActivity extends Activity {
 		        startActivityForResult(League_intent, 100);
 	        }
 	    });
+		layout = findViewById(R.id.mainbllayout);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_bl_go_back);
+		btnBack.setVisibility(View.INVISIBLE);
 		
 	}
 	
@@ -71,17 +77,18 @@ public class MainBLActivity extends Activity {
 		    public void onItemClick(AdapterView<?> parent, View view, 
 		            int position, long id) {
 		    	CategoryModel item = cateList.get(position);
-		    	Open_Activity(item.getIconID(),Integer.parseInt(item.getType()));		    	
+		    	Open_Activity(item.getIconID(),Integer.parseInt(item.getType()),item.getName());
 		    }
 		});
 	}
-	private void Open_Activity(String BLID, int BLType){
+	private void Open_Activity(String BLID, int BLType, String name){
         Intent intent;
         if (BLType == 1)
         {
 	        intent = new Intent(MainBLActivity.this,
 	        		GeneralBLActivity.class);
 	        intent.putExtra("BLID",BLID);
+	        intent.putExtra("name", name);
 	        startActivityForResult(intent, 100);
         }
         else if(BLType == 0){
@@ -94,12 +101,13 @@ public class MainBLActivity extends Activity {
         	intent = new Intent(MainBLActivity.this,
 	        		OrderActivity.class);
         	intent.putExtra("BLID",BLID);
-	        startActivityForResult(intent, 100);
+        	startActivityForResult(intent, 100);
         }
         else if	(BLType == 3){
         	intent = new Intent(MainBLActivity.this,
-	        		BLwebview.class);
-        	intent.putExtra("BLID",BLID);
+	        		WebViewActivity.class);
+        	intent.putExtra("URL","http://m.dianping.com/shop/18766729");
+        	intent.putExtra("name", name);
 	        startActivityForResult(intent, 100);
         }
 	}
