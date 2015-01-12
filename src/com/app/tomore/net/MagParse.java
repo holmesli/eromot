@@ -67,6 +67,7 @@ public class MagParse {
 		JsonElement jelement = new JsonParser().parse(pre);
 		JsonObject  jobject2 = jelement.getAsJsonObject();
 		pre =jobject2.get("pre").getAsString();
+
 		return pre;
 		
 	}
@@ -77,6 +78,7 @@ public class MagParse {
 		JsonObject  jobject3 = jelement.getAsJsonObject();
 		next =jobject3.get("next").getAsString();
 		return next;
+
 		
 	}
 	

@@ -23,29 +23,13 @@
         android:singleLine="true"
         android:text="@string/commentList"
         android:textColor="@android:color/white" />
-    
-
-
-    <Button
-        android:id="@+id/bar_title_bt_postcomment"
-        android:layout_width="63dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/background_gradient"
-        android:paddingBottom="2dp"
-        android:paddingTop="4dp"
-        android:tag="2"
-        android:text="@string/commentPost"
-        android:textColor="@android:color/white" 
-        android:textSize="13sp" />
 
     <Button
         android:id="@+id/bar_title_bt_detail"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_alignBaseline="@+id/bar_title_bt_postcomment"
-        android:layout_alignBottom="@+id/bar_title_bt_postcomment"
-        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/commentTv"
         android:background="@drawable/button_back_bg"
         android:paddingBottom="2dp"
         android:paddingTop="4dp"
