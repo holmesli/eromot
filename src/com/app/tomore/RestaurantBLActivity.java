@@ -252,14 +252,20 @@ public class RestaurantBLActivity  extends Activity{
 					if(hotlevel.equals("9")){
 						convertView = LayoutInflater.from(mContext).inflate(
 								R.layout.hotlv9_restaurant_listview, null);
-								//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
-								//viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
+								ImageView SpecialIcon = (ImageView) convertView.findViewById(R.id.SpeicalIcon);
+								ImageView TopIcon = (ImageView) convertView.findViewById(R.id.TopIcon);
+								ImageView DiscountIcon = (ImageView) convertView.findViewById(R.id.DiscountIcon);
+								if(RestaurantItem.getSpecial().equals("1")){
+									SpecialIcon.setVisibility(View.VISIBLE);
+								}
+								if(RestaurantItem.getDiscount().equals("1")){
+									DiscountIcon.setVisibility(View.VISIBLE);
+								}
+
 					}
 					else{
 						convertView = LayoutInflater.from(mContext).inflate(
-								R.layout.blrestaurantlist, null);
-								//viewHolder.Title = (TextView) convertView.findViewById(R.id.RestText);
-								//viewHolder.Image = (ImageView) convertView.findViewById(R.id.RestImage);
+								R.layout.blrestaurantlist, null);;
 					}
 					viewHolder.Image= (ImageView) convertView.findViewById(R.id.RestImage);
 					ImageLoader.getInstance().displayImage(RestaurantItem.getImage(),
