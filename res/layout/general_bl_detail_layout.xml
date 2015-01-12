@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
    <LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/general_bl_detail_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+>
        <include
            android:id="@+id/include1"
            layout="@layout/bar_title_general_bl_detail"

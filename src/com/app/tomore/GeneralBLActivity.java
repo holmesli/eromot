@@ -39,7 +39,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.AdapterView.OnItemClickListener;
@@ -61,6 +63,7 @@ public class GeneralBLActivity extends Activity {
 	private int limit;
 	private LayoutInflater inflater; 
 	private View layout;
+	private String name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class GeneralBLActivity extends Activity {
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		Intent i = getIntent();
 		BLID = Integer.parseInt(i.getStringExtra("BLID"));
+		name = i.getStringExtra("name");
 		new GetData(GeneralBLActivity.this, 1).execute("");
 		mContext = this;
 		limit = 20;
@@ -81,8 +85,20 @@ public class GeneralBLActivity extends Activity {
 		no_net_lay = findViewById(R.id.no_net_lay);
 		inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		layout = findViewById(R.id.GeneralBLLayout);
+		//LinearLayout whole_layout = (LinearLayout)findViewById(R.id.GeneralBLLayout);
+		TextView header_Text = (TextView) layout.findViewById(R.id.btMeg);
+		header_Text.setText(name);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_bl_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 
 	}
+
 
 	private void BindDataToListView() {
 		if (onRefresh) {
@@ -143,7 +159,7 @@ public class GeneralBLActivity extends Activity {
 			if (obj instanceof String) {
 				return;
 			}
-			Open_Activity(position);
+			Open_Activity(position-1);
 		}
 	};
 

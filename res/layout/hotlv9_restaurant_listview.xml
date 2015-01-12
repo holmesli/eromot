@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"  >
+    android:layout_height="fill_parent"  >
 <FrameLayout
-                android:layout_width="650dp"
-                android:layout_height="270dp"
-                android:layout_gravity="center">
+                android:layout_width="fill_parent"
+                android:layout_height="240dp"
+>
 
 <ImageView
     android:id="@+id/RestImage"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="fill_parent" 
+    android:scaleType="centerCrop">
 </ImageView>
 
   <TextView
@@ -20,6 +21,34 @@
       android:layout_gravity="center_horizontal|bottom" 
       android:text="androidText1"
       android:textColor="#F8F8FF" />
+  
+  <ImageView
+    android:id="@+id/SpeicalIcon"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_gravity="right|top"
+    android:layout_marginRight = "90dp"
+    android:src="@drawable/specialicon"
+    android:visibility="invisible">
+</ImageView>
+  <ImageView
+    android:id="@+id/TopIcon"
+    android:layout_width="30dp"
+    android:layout_height="30dp" 
+    android:layout_gravity="right|top"
+    android:layout_marginRight = "10dp"
+    android:src="@drawable/topicon">
+</ImageView>
+  <ImageView
+    android:id="@+id/DiscountIcon"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_gravity="right|top"
+    android:src="@drawable/discounticon"
+    android:layout_marginRight = "50dp"
+    android:visibility="invisible">
+</ImageView>
+  
   </FrameLayout>
 
-</RelativeLayout>
+</LinearLayout>

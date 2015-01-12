@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="4dip"
     android:orientation="horizontal" >
 
 
 <RelativeLayout
     android:id="@+id/rest_region" 
     android:layout_width="fill_parent"  
-    android:layout_height="100dp"  
+    android:layout_height="120dp"  
     android:background="#ececec"  >
 
  <TextView

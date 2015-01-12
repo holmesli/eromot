@@ -38,9 +38,37 @@ public class BLMenuModel implements Serializable  {
 	public void setItemType(String itemType) {
 		ItemType = itemType;
 	}
+	public String getDiscountImage() {
+		return DiscountImage;
+	}
+	public void setDiscountImage(String discountImage) {
+		DiscountImage = discountImage;
+	}
+	public String getDiscountDes() {
+		return DiscountDes;
+	}
+	public void setDiscountDes(String discountDes) {
+		DiscountDes = discountDes;
+	}
+	public String getSpecialImage() {
+		return SpecialImage;
+	}
+	public void setSpecialImage(String specialImage) {
+		SpecialImage = specialImage;
+	}
+	public String getSpecialDes() {
+		return SpecialDes;
+	}
+	public void setSpecialDes(String specialDes) {
+		SpecialDes = specialDes;
+	}
 	private String ItemID;
 	private String ItemName;
 	private String ItemImage;
 	private String ItemPrice;
 	private String ItemType;
+	private String DiscountImage;
+	private String DiscountDes;
+	private String SpecialImage;
+	private String SpecialDes;
 }

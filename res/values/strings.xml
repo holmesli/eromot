@@ -108,6 +108,8 @@
     <string name="share">分享</string>
     <string name="comment">评论</string>
     <string name="Order">Order</string>
+    <string name="RestaurantsList">餐馆列表</string>
+    <string name="CustomMade">定制</string>
 
     <!-- <string name="Call">呼叫</string> -->
     <string name="PhoneCall">呼叫</string>

@@ -26,7 +26,9 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -54,6 +56,17 @@ public class OrderActivity extends Activity{
 		pageNumber = 1;
 		new GetData(OrderActivity.this, 1).execute("");
 		mListView.setOnItemClickListener(itemClickListener);
+		LinearLayout whole_layout = (LinearLayout)findViewById(R.id.OrderLayout);
+		TextView header_Text = (TextView) whole_layout.findViewById(R.id.btMeg);
+		header_Text.setText(getString(R.string.CustomMade));
+		final Button btnBack = (Button) whole_layout.findViewById(R.id.bar_title_bl_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 	}
 
 	

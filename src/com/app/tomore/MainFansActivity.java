@@ -50,7 +50,7 @@ public class MainFansActivity extends Activity {
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
-		fansListAdapter = new FansAdapter();
+	//	fansListAdapter = new FansAdapter();
 		new MyFans(MainFansActivity.this, 1).execute("");
 	}
 	
@@ -111,8 +111,8 @@ public class MainFansActivity extends Activity {
 				}
 				try {
 					fansList = new UserCenterParse().parseFansResponse(result);
-					mListView.setAdapter(fansListAdapter);
-//					BindDataToListView();
+//					mListView.setAdapter(fansListAdapter);
+					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
@@ -127,6 +127,7 @@ public class MainFansActivity extends Activity {
 		if (fansListAdapter == null) {
 			fansListAdapter = new FansAdapter();
 			mListView.setAdapter(fansListAdapter);
+			fansListAdapter.notifyDataSetChanged();
 		} else {
 			fansListAdapter.notifyDataSetChanged();
 		}
@@ -136,8 +137,6 @@ public class MainFansActivity extends Activity {
 			//showNoDataUi();
 		}
 	}
-	
-	
 	
 	public class FansAdapter extends BaseAdapter{
 

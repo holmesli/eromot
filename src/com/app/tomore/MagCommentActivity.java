@@ -279,7 +279,7 @@ public class MagCommentActivity extends Activity {
 				page=1;
 				new GetData(MagCommentActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "列表为空");
+				ToastUtils.showToast(mContext, "没有网络");
 				mListView.onRefreshComplete();
 			}
 		}
