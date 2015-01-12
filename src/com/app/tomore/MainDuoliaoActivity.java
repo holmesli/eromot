@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
-import com.app.tomore.MainMemActivity.ViewHolder;
 import com.app.tomore.beans.ThreadCmtModel;
 import com.app.tomore.beans.ThreadModel;
 import com.app.tomore.fragment.BackToMainActivity;
 import com.app.tomore.net.ThreadsParse;
 import com.app.tomore.net.ThreadsRequest;
+import com.app.tomore.utils.ExpandedListView;
 import com.app.tomore.utils.PullToRefreshListView;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,9 +21,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -244,21 +246,36 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 						.findViewById(R.id.liker_img2);
 				viewHolder.liker_img3 = (ImageView) convertView
 						.findViewById(R.id.liker_img3);
-				viewHolder.comment_listview = (ListView) convertView
+				viewHolder.comment_listview = (ExpandedListView) convertView
 						.findViewById(R.id.comment_listview);
+				
+				viewHolder.comment_img1 = (ImageView) convertView
+						.findViewById(R.id.comment_img);
+				viewHolder.comment_img2 = (ImageView) convertView
+						.findViewById(R.id.comment_img2);
+				viewHolder.like_img1 = (ImageView) convertView
+						.findViewById(R.id.like_img);
+				viewHolder.like_img2 = (ImageView) convertView
+						.findViewById(R.id.like_img2);
 
 				convertView.setTag(viewHolder);
 			}
 			imageLoader.displayImage(threadItem.getMemberImage(),
 					viewHolder.avatar, otp);
 
+			//get screen width
+			Display display = getWindowManager().getDefaultDisplay();
+			Point size = new Point();
+			display.getSize(size);
+			int screenWidth = size.x;
 			// change size of content image
 			LayoutParams params = (LayoutParams) viewHolder.content_img
 					.getLayoutParams();
-			// params.width =
-			// Integer.parseInt(threadItem.getThreadImageList().get(0).getImageWidth())*2;
-			params.height = (int) Math.round(Integer.parseInt(threadItem
-					.getThreadImageList().get(0).getImageHeight()) * 2.5);
+			params.width = screenWidth;
+			params.height = (screenWidth/Integer.parseInt(threadItem.getThreadImageList().get(0).getImageWidth()))
+					*Integer.parseInt(threadItem.getThreadImageList().get(0).getImageHeight());
+			//params.height = (int) Math.round(Integer.parseInt(threadItem
+			//		.getThreadImageList().get(0).getImageHeight()) * 2.5);
 			viewHolder.content_img.setLayoutParams(params);
 			//
 
@@ -271,13 +288,33 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 			viewHolder.like_num.setText(String.valueOf(threadItem
 					.getThreadLikeList().size()));
 			viewHolder.time.setText(threadItem.getTimeDiff());
-			ArrayList<ThreadCmtModel> commentList = new ArrayList<ThreadCmtModel>();
-			commentList = threadItem.getThreadCmtList();
-
-			DuoliaoCommentAdapter duoliaoCommentAdapter = new DuoliaoCommentAdapter(commentList);
-			viewHolder.comment_listview.setAdapter(duoliaoCommentAdapter);
-			duoliaoCommentAdapter.notifyDataSetChanged();
-
+			
+			if(!threadItem.getThreadCmtList().isEmpty())
+			{
+				ArrayList<ThreadCmtModel> commentList = new ArrayList<ThreadCmtModel>();
+				commentList = threadItem.getThreadCmtList();
+				
+	
+				DuoliaoCommentAdapter duoliaoCommentAdapter = new DuoliaoCommentAdapter(commentList);
+				viewHolder.comment_listview.setAdapter(duoliaoCommentAdapter);
+				duoliaoCommentAdapter.notifyDataSetChanged();
+				viewHolder.comment_img2.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				viewHolder.comment_img2.setVisibility(View.GONE);
+			}
+			
+			if(threadItem.getThreadLikeList().isEmpty())
+			{
+				viewHolder.like_img2.setVisibility(View.GONE);
+			}
+			else
+			{
+				viewHolder.like_img2.setVisibility(View.VISIBLE);
+				//display liker list view
+			}
+			
 			return convertView;
 		}
 
@@ -334,6 +371,15 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 			viewHolder.comment_accountName
 					.setText(commentItem.getAccountName());
 			viewHolder.comment_content.setText(commentItem.getCommentContent());
+			
+			// change size of comment list view
+//			int commentHeight;
+//			commentHeight = viewHolder.comment_content.getHeight()+viewHolder.comment_accountName.getHeight();
+//			LayoutParams params2 = (LayoutParams) ((ListView)convertView
+//					.findViewById(R.id.comment_listview)).getLayoutParams();
+//			params2.height += commentHeight;
+//			viewHolder.comment_listview.setLayoutParams(params2);
+			//
 
 			return convertView;
 		}
@@ -369,9 +415,14 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 		ImageView liker_img2;
 		ImageView liker_img3;
 		ImageView line;
-		ListView comment_listview;
+		ExpandedListView comment_listview;
 		ImageView comment_avatar;
 		TextView comment_accountName;
 		TextView comment_content;
+		ImageView comment_img1;
+		ImageView comment_img2;
+		ImageView like_img1;
+		ImageView like_img2;
+		
 	}
 }
