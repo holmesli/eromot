@@ -213,22 +213,31 @@ public class RestaurantDetailActivity extends Activity{
 
 		gridView.setAdapter(new GridViewAdapter(this, imageAndTextList,
 				gridView));
-	    if(MenuItem.isEmpty() == false){
-
 		TextView DiscountView = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.discountdec);
-	      DiscountView.setText(MenuItem.get(0).getDiscountDes());
 		ImageView dsicountimapge = (ImageView) findViewById(R.id.discounimage);
-	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getDiscountImage(),
-	    		dsicountimapge,otp);
 		TextView SpecialView = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.specialdec);
-		SpecialView.setText(MenuItem.get(0).getSpecialDes());
 		ImageView Specialimapge = (ImageView) findViewById(R.id.specialimage);
+
+	    if(MenuItem.isEmpty() == false){
+
+	
+	      DiscountView.setText(MenuItem.get(0).getDiscountDes());
+	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getDiscountImage(),
+	    		dsicountimapge,otp);
+
+		SpecialView.setText(MenuItem.get(0).getSpecialDes());
 	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getSpecialImage(),
 	    		Specialimapge,otp);
 
-	    }
+	    }else{
+	    	DiscountView.setVisibility(View.GONE);	 
+	    	
+	    	dsicountimapge.setVisibility(View.GONE);
+	    	SpecialView.setVisibility(View.GONE);
+	    	Specialimapge.setVisibility(View.GONE);
+	    	}
 
 	}
 	  

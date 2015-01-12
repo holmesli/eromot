@@ -189,5 +189,6 @@
     <string name="title_activity_my_reply_list">MyReplyListActivity</string>
     <string name="title_activity_my_thread">MyThreadActivity</string>
     <string name="title_activity_aboutus">AboutusActivity</string>
+    <string name="menu_list">精选菜系</string>
 
 </resources>
