@@ -49,7 +49,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 	private DialogActivity dialog;
 	private boolean headerRefresh;
 	private ArrayList<ThreadModel> threadList;
-	private ArrayList<ThreadCmtModel> commentList;
+	//private ArrayList<ThreadCmtModel> commentList;
 	private int pageNumber = 1;
 	private int limit = 20;
 	private PullToRefreshListView mListView;
@@ -271,12 +271,12 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 			viewHolder.like_num.setText(String.valueOf(threadItem
 					.getThreadLikeList().size()));
 			viewHolder.time.setText(threadItem.getTimeDiff());
-			commentList = new ArrayList<ThreadCmtModel>();
+			ArrayList<ThreadCmtModel> commentList = new ArrayList<ThreadCmtModel>();
 			commentList = threadItem.getThreadCmtList();
 
-			DuoliaoCommentAdapter duoliaoCommentAdapter = new DuoliaoCommentAdapter();
+			DuoliaoCommentAdapter duoliaoCommentAdapter = new DuoliaoCommentAdapter(commentList);
 			viewHolder.comment_listview.setAdapter(duoliaoCommentAdapter);
-
+			duoliaoCommentAdapter.notifyDataSetChanged();
 
 			return convertView;
 		}
@@ -301,6 +301,13 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 	}
 
 	private class DuoliaoCommentAdapter extends BaseAdapter {
+		
+		private ArrayList<ThreadCmtModel> commentList;
+		public DuoliaoCommentAdapter(ArrayList<ThreadCmtModel> list)
+		{
+			super();
+			commentList = list;
+		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
