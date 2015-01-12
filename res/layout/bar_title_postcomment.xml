@@ -27,7 +27,7 @@
 
 
     <Button
-        android:id="@+id/bar_title_bt_postcomment"
+        android:id="@+id/bar_title_bt_postcomment1"
         android:layout_width="63dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"

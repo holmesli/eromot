@@ -12,9 +12,11 @@ import org.json.JSONException;
 
 import com.app.tomore.beans.ArticleCommentModel;
 import com.app.tomore.beans.ArticleModel;
+import com.app.tomore.beans.CommonModel;
 import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.net.MagParse;
 import com.app.tomore.net.MagRequest;
+import com.app.tomore.net.ToMoreParse;
 import com.app.tomore.net.YellowPageParse;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -45,11 +47,13 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 public class MagCommentActivity extends Activity {
 	private DialogActivity dialog;
 	private ArrayList<ArticleCommentModel> articleComment;
@@ -66,6 +70,10 @@ public class MagCommentActivity extends Activity {
 	private String memberId="34";
 	private int page;
 	private int limit ;
+	private Button submit;
+	private EditText content;
+	private String finalResult = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,37 +92,39 @@ public class MagCommentActivity extends Activity {
 			mListView.setOnRefreshListener(onRefreshListener);
 			noneData = (TextView)findViewById(R.id.noData);
 			no_net_lay = findViewById(R.id.no_net_lay);
+			submit = (Button)findViewById(R.id.bar_title_bt_postcomment); 
+			content = (EditText)findViewById(R.id.commentContent); 
 			
 			
 			Intent intent=getIntent();
 			articleId=intent.getStringExtra("articleid");
-			new GetData(MagCommentActivity.this, 1).execute("");
+			
 			mContext = this;
 			page=1;
 			limit=5;
 			
-			Button postComment = (Button)findViewById(R.id.bar_title_bt_postcomment);
-			postComment.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(); 
-					if(memberId==null)
-					{
-						intent.setClass(MagCommentActivity.this, LoginActivity.class);
-						startActivity(intent);
-					}
-					else
-					{
-						intent.putExtra("articleCommentId", articleId);
-						intent.putExtra("memberid", memberId);
-			            intent.setClass(MagCommentActivity.this, PostCommentActivity.class);  
-			            startActivityForResult(intent, 100);
-					}
-					
-				}
-			});
+//			Button postComment = (Button)findViewById(R.id.bar_title_bt_postcomment);
+//			postComment.setOnClickListener(new View.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					// TODO Auto-generated method stub
+//					Intent intent = new Intent(); 
+//					if(memberId==null)
+//					{
+//						intent.setClass(MagCommentActivity.this, LoginActivity.class);
+//						startActivity(intent);
+//					}
+//					else
+//					{
+//						intent.putExtra("articleCommentId", articleId);
+//						intent.putExtra("memberid", memberId);
+//			            intent.setClass(MagCommentActivity.this, PostCommentActivity.class);  
+//			            startActivityForResult(intent, 100);
+//					}
+//					
+//				}
+//			});
 			
 			RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
 					.findViewById(R.id.bar_title_commentlistbar);
@@ -128,7 +138,26 @@ public class MagCommentActivity extends Activity {
 				}
 			});
 			
-	
+			
+			submit.setOnClickListener(new OnClickListener() {
+		        @Override
+		        public void onClick(View viewIn) {
+		        	if(content.getText().toString() == null || content.getText().toString().length()==0)
+		        	{
+		        		Toast.makeText(getApplicationContext(), "请输入内容", Toast.LENGTH_SHORT).show();
+		        	}
+		        	else
+		        	{
+		        		new GetData1(MagCommentActivity.this, 1).execute("");
+		        		content.setText("");
+		        		
+		        	}
+		        	
+		        }
+		        
+		    });
+			
+			new GetData(MagCommentActivity.this, 1).execute("");
 	}
 
 	private void BindDataToListView() {
@@ -196,7 +225,7 @@ public class MagCommentActivity extends Activity {
 			} catch (TimeoutException e) {
 				e.printStackTrace();
 			}
-
+			
 			return result;
 		}
 
@@ -226,11 +255,13 @@ public class MagCommentActivity extends Activity {
 					}
 				
 					BindDataToListView();
+					
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
 			}
 		}
+
 	}
 
 	Handler handler = new Handler() {
@@ -294,6 +325,12 @@ public class MagCommentActivity extends Activity {
 
 			return convertView;
 		}
+		
+		public void refresh(ArrayList<ArticleCommentModel> list) { 
+			articleComment = list; 
+	        notifyDataSetChanged(); 
+	    }
+
 
 		@Override
 		public int getCount() {
@@ -312,7 +349,107 @@ public class MagCommentActivity extends Activity {
 			// TODO Auto-generated method stub
 			return 0;
 		}
+		
+		
+	}
+	
+	
+	
+	
+	
 
+
+
+private class GetData1 extends AsyncTask<String, String, String> {
+	// private Context mContext;
+	private int mType;
+
+	private GetData1(Context context, int type) {
+		// this.mContext = context;
+		this.mType = type;
+		dialog = new DialogActivity(context, type);
+	}
+
+	@Override
+	protected void onPreExecute() {
+		if (mType == 1) {
+			if (null != dialog && !dialog.isShowing()) {
+				dialog.show();
+			}
+		}
+		super.onPreExecute();
+	}
+
+	@Override
+	protected String doInBackground(String... params) {
+		String result = null;
+		MagRequest request = new MagRequest(MagCommentActivity.this);
+		try {
+			Log.d("doInBackground", "start request");
+				result = request.PostCommentByMemberId(articleId, memberId, content.getText().toString());
+				
+			
+			Log.d("doInBackground", "returned");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+
+	@Override
+	protected void onPostExecute(String result) {
+		if (null != dialog) {
+			dialog.dismiss();
+		}
+		Log.d("onPostExecute", "postExec state");
+		if (result == null || result.equals("")) {
+			// show empty alert
+		} else {
+			
+				CommonModel returnResult = new CommonModel();
+				try {
+					ToMoreParse getrequest= new ToMoreParse();
+		    		 returnResult = getrequest.CommonPares(result);
+		    		} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+				finalResult = returnResult.getResult(); 
+	    		if(finalResult.equals("succ")){
+	    			Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
+	    		}
+	    		else
+	    		{
+	    			Toast.makeText(getApplicationContext(), "请重新发送", Toast.LENGTH_SHORT).show();
+	    		}
+			
+				if(articleComment!=null && articleComment.size()!=0)
+				{
+					if(headerRefresh)
+						articleComment = new ArrayList<ArticleCommentModel>();
+				}
+				else
+				{
+					articleComment = new ArrayList<ArticleCommentModel>();
+				try {
+					if(headerRefresh)
+						articleComment = new MagParse().parseArticleComment(result);
+					else
+					{
+						articleComment.addAll(new MagParse().parseArticleComment(result));
+					}
+				//	new GetData1(MagCommentActivity.this, 1).execute("");
+					BindDataToListView();
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+	}
+	
 	}
 }
 
