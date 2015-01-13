@@ -232,9 +232,9 @@ public class MainFansActivity extends Activity {
 		}
 
 		@Override
-		public Object getItem(int position) {
+		public Object getItem(int arg0) {
 			// TODO Auto-generated method stub
-			return fansList.get(position);
+			return fansList.get(arg0);
 		}
 
 		@Override
@@ -256,48 +256,49 @@ public class MainFansActivity extends Activity {
 				viewHolder.MemberImage = (ImageView) convertView.findViewById(R.id.MemberImage);
 				viewHolder.AccountName = (TextView) convertView.findViewById(R.id.AccountName);
 				viewHolder.Followed = (TextView) convertView.findViewById(R.id.Followed);
-				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
+//				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
 				convertView.setTag(viewHolder);
 			}
 			
-			new FansImage().execute(fansText.getMemberImage());
+//			new FansImage().execute(fansText.getMemberImage());
 			
+			ImageLoader.getInstance().displayImage(fansText.getMemberImage(), viewHolder.MemberImage, otp);
 			viewHolder.MemberImage.setImageBitmap(bitmap);
 			viewHolder.AccountName.setText(fansText.getAccountName());
 			viewHolder.Followed.setText(fansText.getFollowed());
-			viewHolder.Blocked.setText(fansText.getBlocked());
+//			viewHolder.Blocked.setText(fansText.getBlocked());
 			return convertView;
 		}
 	}
 	
-	private class FansImage extends AsyncTask<String, String, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			try {
-				URL url = new URL(params[0]);
-				 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				 connection.setDoInput(true);
-				 connection.connect();
-				 InputStream input = connection.getInputStream();
-				 bitmap = BitmapFactory.decodeStream(input);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-	}
+//	private class FansImage extends AsyncTask<String, String, String> {
+//
+//		@Override
+//		protected String doInBackground(String... params) {
+//			try {
+//				URL url = new URL(params[0]);
+//				 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//				 connection.setDoInput(true);
+//				 connection.connect();
+//				 InputStream input = connection.getInputStream();
+//				 bitmap = BitmapFactory.decodeStream(input);
+//			} catch (MalformedURLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//		
+//	}
 	
 	class ViewHolder {
 		private ImageView MemberImage;
 	    private TextView AccountName;
 	    private TextView Followed;
-	    private TextView Blocked;
+//	    private TextView Blocked;
 	}
 	
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
