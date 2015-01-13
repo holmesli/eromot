@@ -152,10 +152,18 @@ public class MagCommentActivity extends Activity {
 		        		content.setText("");
 		        		
 		        	}
-		        	
+		        	Intent intent = new Intent(MagCommentActivity.this,MagCommentActivity.class);
+	        	   	   intent.putExtra("articleid", articleId);
+	        	   	   finish();
+	        	   	   startActivity(intent);
+//	        	   	articleListAdapter = new ArticleAdapter();
+//	    			articleListAdapter.notifyDataSetChanged();
+//	    			new GetData(MagCommentActivity.this, 1).execute("");
 		        }
 		        
 		    });
+			
+			//mListView.setAdapter(articleListAdapter);
 			
 			new GetData(MagCommentActivity.this, 1).execute("");
 	}
@@ -211,7 +219,7 @@ public class MagCommentActivity extends Activity {
 			super.onPreExecute();
 		}
 
-		@Override
+		
 		protected String doInBackground(String... params) {
 			String result = null;
 			MagRequest request = new MagRequest(MagCommentActivity.this);

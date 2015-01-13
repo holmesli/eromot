@@ -255,13 +255,9 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 			// change size of content image
 			LayoutParams params = (LayoutParams) viewHolder.content_img
 					.getLayoutParams();
-			// params.width =
-			// Integer.parseInt(threadItem.getThreadImageList().get(0).getImageWidth())*2;
 			params.height = (int) Math.round(Integer.parseInt(threadItem
 					.getThreadImageList().get(0).getImageHeight()) * 2.5);
 			viewHolder.content_img.setLayoutParams(params);
-			//
-
 			imageLoader.displayImage(threadItem.getThreadImageList().get(0)
 					.getImageUrl(), viewHolder.content_img, otp);
 			viewHolder.account_name.setText(threadItem.getAccountName());
@@ -374,4 +370,7 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 		TextView comment_accountName;
 		TextView comment_content;
 	}
+	
+	
+	
 }

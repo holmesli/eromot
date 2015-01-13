@@ -226,7 +226,6 @@ public class MainMagActivity extends Activity {
 					MagDetailActivity.class);
 			intent.putExtra("articleList", (Serializable) obj);
 			startActivity(intent);
-
 		}
 	};
 	
@@ -347,6 +346,8 @@ public class MainMagActivity extends Activity {
 		}
 
 	}
+	
+	
 }
 
 
