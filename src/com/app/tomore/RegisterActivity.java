@@ -105,11 +105,11 @@ public class RegisterActivity extends Activity {
 			if(registerPassword.equals(registerConfirmPassword) && registerPassword.length() >= 3 && registerPassword.length() <= 20){
 				new Register(RegisterActivity.this, 1).execute("");
 			}else{
-		    	Toast.makeText(getApplicationContext(), "��������Ч������",
+		    	Toast.makeText(getApplicationContext(), "请输入有效的密码",
 						Toast.LENGTH_SHORT).show();				
 			}
 		}else{
-	    	Toast.makeText(getApplicationContext(), "��Ҫͬ����˽Э��ͷ�������",
+	    	Toast.makeText(getApplicationContext(), "需要同意隐私协议和服务条款",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -157,7 +157,7 @@ public class RegisterActivity extends Activity {
 				dialog.dismiss();
 			}
 			if (result == null || result.equals("")) {
-		    	Toast.makeText(getApplicationContext(), "ע��ʧ��",
+		    	Toast.makeText(getApplicationContext(), "ע注册失败",
 						Toast.LENGTH_SHORT).show();
 			}else {
 				UserCenterParse ucParse = new UserCenterParse();
@@ -166,13 +166,13 @@ public class RegisterActivity extends Activity {
 			    	Intent intent = new Intent(RegisterActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   
 			    }else if(registerResult.equals("\"2\"")){
-			    	Toast.makeText(getApplicationContext(), "�û����Ѵ���",
+			    	Toast.makeText(getApplicationContext(), "用户名已存在",
 							Toast.LENGTH_SHORT).show();
 			    }else if(registerResult.equals("\"3\"")){
-			    	Toast.makeText(getApplicationContext(), "�����Ѵ���",
+			    	Toast.makeText(getApplicationContext(), "邮箱已存在",
 							Toast.LENGTH_SHORT).show();
 			    }else{
-			    	Toast.makeText(getApplicationContext(), "ע��ʧ��",
+			    	Toast.makeText(getApplicationContext(), "注册失败",
 							Toast.LENGTH_SHORT).show();			    	
 			    }
 			}

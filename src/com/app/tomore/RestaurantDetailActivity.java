@@ -7,6 +7,7 @@ import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.beans.BLMenuModel;
 import com.app.tomore.beans.BLMenuSpecial;
+import com.app.tomore.beans.BLRestaurantModel;
 import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.beans.ImageAndText;
 import com.app.tomore.RestaurantBLActivity.ViewHolder;
@@ -26,8 +27,10 @@ import android.view.WindowManager;
 import android.widget.GridView;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -49,7 +52,13 @@ import com.google.gson.JsonSyntaxException;
 
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+
+
+
+
+
 
 
 
@@ -105,6 +114,8 @@ public class RestaurantDetailActivity extends Activity{
 	private ListView listView;
 	ViewHolder viewHolder = new ViewHolder();
 
+	private BLRestaurantModel restaurantmodel;
+	String restid;
 
 
 
@@ -116,15 +127,90 @@ public class RestaurantDetailActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.restaurant_detail_layout);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+		Intent intent = getIntent();
+		restaurantmodel = (BLRestaurantModel) intent.getSerializableExtra("restlist");
+		restid = restaurantmodel.getAdID();
 		new GetData(RestaurantDetailActivity.this, 1).execute("");
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
 		mContext = this;
+		ImageView Call = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.RestCall);
+		Call.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	showPopup();
+		    }
+		});
+		ImageView Dialog = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.contentinfo);
+        Dialog.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v){
+		    	showdialog();
+		    }
+        });
+		    
+	}
+	private void showdialog(){
+		AlertDialog.Builder builder;
+		AlertDialog alertDialog;
+		Context mContext = RestaurantDetailActivity.this;
+
+		LayoutInflater inflater = (LayoutInflater) mContext
+		.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.restaurant_content, null);
+		TextView text = (TextView) layout.findViewById(R.id.resttitle);
+		text.setText(restaurantmodel.getTitle());
+		TextView text1 = (TextView) layout.findViewById(R.id.restcontent);
+		text1.setText(restaurantmodel.getContent());
+		builder = new AlertDialog.Builder(mContext);
+		builder.setView(layout);
+		alertDialog = builder.create();
+		alertDialog.show();
+		
+		
+		
+	}
+	private void showPopup(){
+
+		String Call = getString(R.string.PhoneCall);
+		String Cancel = getString(R.string.Cancel);
+		String MakeCall = restaurantmodel.getPhone();
+		List<CharSequence>  cs = new ArrayList<CharSequence>();
+		cs.add(Call);
+		cs.add(MakeCall);
+		cs.add(Cancel);
+		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
+  
+    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+    	final int length = options.length;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	
+		builder.setTitle(getString(R.string.Phone));
+		builder.setItems(options, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface Optiondialog, int which) {
+				String phone_number = restaurantmodel.getPhone();
+		        if (which == 0){
+		        	if(length == 3)
+		        	{
+					Intent call = new Intent(Intent.ACTION_DIAL);
+					call.setData(Uri.parse("tel:"+phone_number));
+					startActivity(call);
+		        	}
 
+		        	}
+		        
+		        else if(which == 2){
+		        	Optiondialog.dismiss();
+		        }
 
-
+		    }
+		});
+		builder.show();
+		
 	}
 
 	
@@ -150,7 +236,6 @@ public class RestaurantDetailActivity extends Activity{
 			//http://54.213.167.5/APIV2/getItemsByRestID.php?restid=48&page=1&limit=10
 			String result = null;
 			YellowPageRequest request = new YellowPageRequest(RestaurantDetailActivity.this);
-			   String restid="48";
 			   try{
 				Log.d("doInBackground", "start request");
 				 result = request.getRestaurantDetail(restid);
@@ -195,39 +280,123 @@ public class RestaurantDetailActivity extends Activity{
 		TouchImageView MenudetailImage;
 	}
 	private void BindDataToGridView(){
-		final List<ImageAndText> imageAndTextList = new ArrayList<ImageAndText>();
+		final List<ImageAndText> imageAndTexts = new ArrayList<ImageAndText>();
 		
 
 	    for(BLMenuModel c: menulist)
 		{	
 	    	//imageAndTextList1.add(new ImageAndText(c.getDiscountImage(), c.getItemName()) );
-			imageAndTextList.add(new ImageAndText(c.getItemImage(), c.getItemName()));
+	    	imageAndTexts.add(new ImageAndText(c.getItemImage(), c.getItemName()));
 
 		}
 		 NoScrollGridview  gridView = (NoScrollGridview) findViewById(R.id.menugridView);
 
-		gridView.setAdapter(new ImageAndTextListAdapter(this, imageAndTextList,
+		gridView.setAdapter(new GridViewAdapter(this, imageAndTexts,
 				gridView));
+		
 		TextView DiscountView = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.discountdec);
-	      DiscountView.setText(MenuItem.get(0).getDiscountDes());
 		ImageView dsicountimapge = (ImageView) findViewById(R.id.discounimage);
-	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getDiscountImage(),
-	    		dsicountimapge,otp);
 		TextView SpecialView = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.specialdec);
-		SpecialView.setText(MenuItem.get(0).getSpecialDes());
 		ImageView Specialimapge = (ImageView) findViewById(R.id.specialimage);
+
+	    if(MenuItem.isEmpty() == false){
+
+	
+	      DiscountView.setText(MenuItem.get(0).getDiscountDes());
+	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getDiscountImage(),
+	    		dsicountimapge,otp);
+
+		SpecialView.setText(MenuItem.get(0).getSpecialDes());
 	    ImageLoader.getInstance().displayImage(MenuItem.get(0).getSpecialImage(),
 	    		Specialimapge,otp);
 
+	    }else{
+	    	DiscountView.setVisibility(View.GONE);	 
+	    	
+	    	dsicountimapge.setVisibility(View.GONE);
+	    	SpecialView.setVisibility(View.GONE);
+	    	Specialimapge.setVisibility(View.GONE);
+	    	}
 
-
-	
-		
-	 
-		
 	}
+	  
+	public class GridViewAdapter extends ArrayAdapter<ImageAndText> {  
+	  
+	        private GridView gridView;  
+	        public GridViewAdapter(Activity activity, List<ImageAndText> imageAndTexts, GridView gridView2) {  
+	            super(activity, 0, imageAndTexts);  
+	            this.gridView = gridView2;  
+	            ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
+
+	        }  
+	  
+	        public View getView(int position, View convertView, ViewGroup parent) {  
+	            Activity activity = (Activity) getContext();  
+	  
+	            View rowView = convertView;  
+	            GridViewCache viewCache;  
+	            if (rowView == null) {  
+	                LayoutInflater inflater = activity.getLayoutInflater();  
+	                rowView = inflater.inflate(R.layout.menugridview, null);  
+	                viewCache = new GridViewCache(rowView);  
+	                rowView.setTag(viewCache);  
+	            } else {  
+	                viewCache = (GridViewCache) rowView.getTag();  
+	            }  
+	            ImageAndText imageAndText = getItem(position);  
+	  
+	            // Load the image and set it on the ImageView  
+	            final String imageUrl = imageAndText.getImageUrl();  
+	            ImageView imageView = viewCache.getImageView();  
+	            imageView.setTag(imageUrl);  
+	           
+	            /*ImageLoader.getInstance().loadImage(imageUrl, new SimpleImageLoadingListener() {
+	                @Override
+	                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+	                	ImageView imageViewByTag = (ImageView) gridView.findViewWithTag(imageUrl);  
+	                    if (imageViewByTag != null) {  
+	                        imageViewByTag.setImageBitmap(loadedImage); 
+	                    }  
+	                }
+	            }); */
+	            
+	            ImageLoader.getInstance().displayImage(imageUrl,
+	            		imageView);
+	            
+	            // Set the text on the TextView  
+	            TextView textView = viewCache.getTextView();  
+	            textView.setText(imageAndText.getText());  
+	            return rowView;  
+	        }  
+	  
+	}  
+	public class GridViewCache {
+
+	    private View baseView;
+	    private TextView textView;
+	    private ImageView imageView;
+
+	    public GridViewCache(View baseView) {
+	        this.baseView = baseView;
+	    }
+
+	    public TextView getTextView() {
+	        if (textView == null) {
+	            textView = (TextView) baseView.findViewById(R.id.MenuText);
+	        }
+	        return textView;
+	    }
+
+	    public ImageView getImageView() {
+	        if (imageView == null) {
+	            imageView = (ImageView) baseView.findViewById(R.id.MenuImage);
+	        }
+	        return imageView;
+	    }
+
+}
 
 
 	

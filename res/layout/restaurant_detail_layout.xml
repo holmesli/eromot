@@ -11,7 +11,7 @@
         android:text="@string/hello_world" />
     -->
 
- 
+
 <RelativeLayout
    
     android:layout_width="match_parent"
@@ -31,9 +31,9 @@
         android:layout_below="@+id/include1"
          
         >
+        
           </TextView>
-          
-    <ImageView
+              <ImageView
         android:id="@+id/specialimage"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
@@ -54,25 +54,52 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/discountdec"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="1dp"
         android:scaleType="fitXY" />
     
-
+   <TextView
+        android:id="@+id/jingxuan"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/discounimage"
+          android:text="@string/menu_list"
+          android:textColor="#000000"/>
     <com.app.tomore.utils.NoScrollGridview
         android:id="@+id/menugridView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/discounimage"
+        android:layout_below="@id/jingxuan"
         android:gravity="center"
         android:numColumns="2"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth" >
 
     </com.app.tomore.utils.NoScrollGridview>
- 
 
+
+
+    <ImageView
+        android:id="@+id/contentinfo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/specialdec"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/RestCall"
+        android:paddingTop="5dp"
+        android:src="@drawable/restinfo" />
+
+    <ImageView
+        android:id="@+id/RestCall"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/specialdec"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:src="@drawable/callyou" />
 
  </RelativeLayout> 
 </ScrollView>    

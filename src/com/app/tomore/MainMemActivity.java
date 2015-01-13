@@ -166,7 +166,7 @@ public class MainMemActivity extends Activity {
 			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "ÁÐ±íÎª¿Õ");
+				ToastUtils.showToast(mContext, "åˆ—è¡¨ä¸ºç©º");
 			} else {
 				if (cardList != null && cardList.size() > 0) {
 					cardList.clear();
@@ -188,7 +188,7 @@ public class MainMemActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			if (!AppUtil.networkAvailable(mContext)) {
-				ToastUtils.showToast(mContext, "ÇëÁ¬½ÓÍøÂç");
+				ToastUtils.showToast(mContext, "åˆ—è¡¨ä¸ºç©º");
 				return;
 			}
 			if (cardList == null) {
@@ -218,7 +218,7 @@ public class MainMemActivity extends Activity {
 				onRefresh = true;
 				new GetData(MainMemActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
+				ToastUtils.showToast(mContext, "åˆ°å¤´äº†");
 				mListView.onRefreshComplete();
 			}
 		}
@@ -230,7 +230,7 @@ public class MainMemActivity extends Activity {
 			if (AppUtil.networkAvailable(mContext)) {
 				// new GetData(MainMemActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "Ã»ÓÐÍøÂç");
+				ToastUtils.showToast(mContext, "åˆ°å¤´äº†");
 			}
 		}
 	};
