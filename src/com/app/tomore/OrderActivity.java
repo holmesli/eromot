@@ -151,65 +151,37 @@ public class OrderActivity extends Activity{
 	
 	private void showPopup(final GeneralBLModel generalbltext){
 
-		String Call = getString(R.string.sentMessage);
 		String Cancel = getString(R.string.Cancel);
-		String MakeCall = generalbltext.getPhone1();
+		String Phone1 = generalbltext.getPhone1();
 		List<CharSequence>  cs = new ArrayList<CharSequence>();
-		cs.add(Call);
+		cs.add(Phone1);
+    	if(generalbltext.getPhone2() != null){
+    		if(generalbltext.getPhone2().length() > 7 || !generalbltext.getPhone2().equals(""))
+    		{
+    			cs.add(generalbltext.getPhone2());
+    		}
+    	}
 		cs.add(Cancel);
-		cs.add(MakeCall);
-		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
-		if(generalbltext.getPhone1() != null){
-	    	if(generalbltext.getPhone2() != null ){
-	    		if(generalbltext.getPhone2().length() > 7 || !generalbltext.getPhone2().equals(""))
-	    		{
-	    			cs.add(generalbltext.getPhone2());
-	    		}
-	    	}
-	    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
-	    	final int length = options.length;
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-			AlertDialog OptionDialog = builder.create();
-			builder.setTitle(getString(R.string.sentMessage));
-			builder.setItems(options, new DialogInterface.OnClickListener() {
-			    @Override
-			    public void onClick(DialogInterface Optiondialog, int which) {
-					String phone_number = generalbltext.getPhone1();
-			        if (which == 0){
-			        	if(length == 3)
-			        	{
-			        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
-			                        + phone_number)));
-			        	}
-			        	else{
-			        		AlertDialog PhoneOptionDialog = builder2.create();
-			        		CharSequence options[] = new CharSequence[] {generalbltext.getPhone1(),generalbltext.getPhone2()};
-			        		builder2.setTitle(getString(R.string.sentMessage));
-			        		builder2.setItems(options, new DialogInterface.OnClickListener() {
-			        		    @Override
-			        		    public void onClick(DialogInterface Optiondialog, int which) {
-			        		    	if(which == 0){
-			    		        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
-			    		                        + generalbltext.getPhone1())));
-			        		    	}
-			        		    	else{
-			    		        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
-			    		                        + generalbltext.getPhone2())));
-			        		    	}
-			        		    }
-			        		    });
-			        		builder2.show();
-			        	}
-			        }
-			        else if(which == 1){
-			        	Optiondialog.dismiss();
-			        }
-	
-			    }
-			});
-			builder.show();
-		}
+    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+    	final int length = options.length;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.Phone));
+		builder.setItems(options, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface Optiondialog, int which) {
+		        if (which == 0){
+		        	startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+		                    + generalbltext.getPhone1())));
+		        }
+		        else if (which == 1 && length == 3)
+		        {
+		        	startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+		                    + generalbltext.getPhone2())));
+		        }
+
+		    }
+		});
+		builder.show();
 	}
 
 	class ViewHolder {

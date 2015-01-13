@@ -64,62 +64,36 @@ public class GeneralBLDetailActivity extends Activity {
 	}
 	
 	private void showPopup(){
-
-		String Call = getString(R.string.PhoneCall);
+		
 		String Cancel = getString(R.string.Cancel);
-		String MakeCall = BLModel.getPhone1();
+		String Phone1 = BLModel.getPhone1();
 		List<CharSequence>  cs = new ArrayList<CharSequence>();
-		cs.add(Call);
-		cs.add(Cancel);
-		cs.add(MakeCall);
-		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
+		cs.add(Phone1);
     	if(BLModel.getPhone2() != null){
     		if(BLModel.getPhone2().length() > 7 || !BLModel.getPhone2().equals(""))
     		{
     			cs.add(BLModel.getPhone2());
     		}
     	}
+		cs.add(Cancel);
     	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
     	final int length = options.length;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-		AlertDialog OptionDialog = builder.create();
 		builder.setTitle(getString(R.string.Phone));
 		builder.setItems(options, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface Optiondialog, int which) {
 				String phone_number = BLModel.getPhone1();
 		        if (which == 0){
-		        	if(length == 3)
-		        	{
 					Intent call = new Intent(Intent.ACTION_DIAL);
 					call.setData(Uri.parse("tel:"+phone_number));
 					startActivity(call);
-		        	}
-		        	else{
-		        		AlertDialog PhoneOptionDialog = builder2.create();
-		        		CharSequence options[] = new CharSequence[] {BLModel.getPhone1(),BLModel.getPhone2()};
-		        		builder2.setTitle(getString(R.string.Phone));
-		        		builder2.setItems(options, new DialogInterface.OnClickListener() {
-		        		    @Override
-		        		    public void onClick(DialogInterface Optiondialog, int which) {
-		        		    	if(which == 0){
-		        					Intent call = new Intent(Intent.ACTION_DIAL);
-		        					call.setData(Uri.parse("tel:"+BLModel.getPhone1()));
-		        					startActivity(call);
-		        		    	}
-		        		    	else{
-		        					Intent call = new Intent(Intent.ACTION_DIAL);
-		        					call.setData(Uri.parse("tel:"+BLModel.getPhone2()));
-		        					startActivity(call);
-		        		    	}
-		        		    }
-		        		    });
-		        		builder2.show();
-		        	}
 		        }
-		        else if(which == 1){
-		        	Optiondialog.dismiss();
+		        else if (which == 1 && length == 3)
+		        {
+		        		Intent call = new Intent(Intent.ACTION_DIAL);
+		        		call.setData(Uri.parse("tel:"+BLModel.getPhone2()));
+		        		startActivity(call);
 		        }
 
 		    }

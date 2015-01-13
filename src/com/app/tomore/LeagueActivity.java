@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.app.tomore.beans.CommonModel;
 import com.app.tomore.net.ToMoreParse;
 import com.app.tomore.net.YellowPageRequest;
@@ -140,8 +138,8 @@ public class LeagueActivity extends Activity{
 	    	            }
 	    	        });
 	    			pw.showAtLocation(layout, Gravity.TOP, 0, 200);
-	    	        handler.postDelayed(r, 2000);//2秒后自动关闭
-	    	        
+	    	        handler.postDelayed(r, 2000);
+
 
 			        
 			        new Handler().postDelayed(new Runnable() {
