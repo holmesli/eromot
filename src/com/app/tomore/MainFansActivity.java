@@ -11,8 +11,10 @@ import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.GeneralBLActivity.ViewHolder;
 import com.app.tomore.beans.FansModel;
+import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
+import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.utils.AppUtil;
 import com.app.tomore.utils.PullToRefreshBase;
 import com.app.tomore.utils.PullToRefreshListView;
@@ -57,6 +59,7 @@ public class MainFansActivity extends Activity {
 	private boolean headerRefresh = false; // false -> footer
 	private int pageNumber;
 	private int limit;
+	private TextView noneData;
 	private View no_net_lay;
 	private LayoutInflater inflater; 
 	private View layout;
@@ -74,6 +77,7 @@ public class MainFansActivity extends Activity {
 		mListView.setOnRefreshListener(onRefreshListener);
 		mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 		mListView.setOnItemClickListener(itemClickListener);
+		noneData = (TextView) findViewById(R.id.noneData);
 		no_net_lay = findViewById(R.id.no_net_lay);
 		inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		layout = findViewById(R.id.MainFansLayout);
@@ -82,7 +86,7 @@ public class MainFansActivity extends Activity {
 				.build();
 		TextView header_Text = (TextView) layout.findViewById(R.id.btFans);
 //		header_Text.setText(name);
-		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_bl_go_back);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_fans_go_back);
 
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -135,28 +139,58 @@ public class MainFansActivity extends Activity {
 			if (null != dialog) {
 				dialog.dismiss();
 			}
-//			mListView.onRefreshComplete();
+			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "�б�Ϊ��");
+				// show empty alert
 			} else {
-				if(fansList!=null && fansList.size()>0)
+				
+				if(fansList!=null && fansList.size()!=0)
 				{
-					fansList.clear();
+					if(headerRefresh)
+						fansList = new ArrayList<FansModel>();
 				}
 				else
-				{
 					fansList = new ArrayList<FansModel>();
-				}
 				try {
-					fansList = new UserCenterParse().parseFansResponse(result);
-//					mListView.setAdapter(fansListAdapter);
+					if(headerRefresh)
+						fansList = new UserCenterParse().parseFansResponse(result);
+					else
+					{
+						fansList.addAll(new UserCenterParse().parseFansResponse(result));
+					}
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
 			}
-		}		
+		}
+//		protected void onPostExecute(String result) {
+//			if (null != dialog) {
+//				dialog.dismiss();
+//			}
+////			mListView.onRefreshComplete();
+//			Log.d("onPostExecute", "postExec state");
+//			if (result == null || result.equals("")) {
+//				ToastUtils.showToast(mContext, "�б�Ϊ��");
+//			} else {
+//				if(fansList!=null && fansList.size()>0)
+//				{
+//					fansList.clear();
+//				}
+//				else
+//				{
+//					fansList = new ArrayList<FansModel>();
+//				}
+//				try {
+//					fansList = new UserCenterParse().parseFansResponse(result);
+////					mListView.setAdapter(fansListAdapter);
+//					BindDataToListView();
+//				} catch (JsonSyntaxException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}		
 	}
 	
 	private void BindDataToListView(){
@@ -171,10 +205,22 @@ public class MainFansActivity extends Activity {
 			fansListAdapter.notifyDataSetChanged();
 		}
 		if (fansList != null && fansList.size() > 0) {
-			//showDataUi();
+			showDataUi();
 		} else {
-			//showNoDataUi();
+			showNoDataUi();
 		}
+	}
+	
+	void showDataUi() {
+		mListView.setVisibility(View.VISIBLE);
+		noneData.setVisibility(View.GONE);
+		no_net_lay.setVisibility(View.GONE);
+	}
+
+	void showNoDataUi() {
+		mListView.setVisibility(View.GONE);
+		noneData.setVisibility(View.VISIBLE);
+		no_net_lay.setVisibility(View.GONE);
 	}
 	
 	public class FansAdapter extends BaseAdapter{
