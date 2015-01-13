@@ -92,7 +92,7 @@ public class LoginActivity extends Activity{
 			}
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-		    	Toast.makeText(getApplicationContext(), "ÇëÊäÈëÓĞĞ§µÄÓÊÏäºÍÃÜÂë",
+		    	Toast.makeText(getApplicationContext(), "è¯·è¾“å…¥æœ‰æ•ˆçš„é‚®ç®±å’Œå¯†ç ",
 						Toast.LENGTH_SHORT).show();
 			}else {
 				UserCenterParse ucParse = new UserCenterParse();
@@ -101,7 +101,7 @@ public class LoginActivity extends Activity{
 			    	Intent intent = new Intent(LoginActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   
 			    }else {
-			    	Toast.makeText(getApplicationContext(), "ÇëÊäÈëÓĞĞ§µÄÓÊÏäºÍÃÜÂë",
+			    	Toast.makeText(getApplicationContext(), "è¯·è¾“å…¥æœ‰æ•ˆçš„é‚®ç®±å’Œå¯†ç ",
 							Toast.LENGTH_SHORT).show();
 			    }
 			}
