@@ -11,7 +11,7 @@
         android:text="@string/hello_world" />
     -->
 
- 
+
 <RelativeLayout
    
     android:layout_width="match_parent"
@@ -31,9 +31,9 @@
         android:layout_below="@+id/include1"
          
         >
+        
           </TextView>
-          
-    <ImageView
+              <ImageView
         android:id="@+id/specialimage"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
@@ -77,20 +77,29 @@
         android:stretchMode="columnWidth" >
 
     </com.app.tomore.utils.NoScrollGridview>
-    
- <Button
-            android:id="@+id/infobutton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignBottom="@+id/include1"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="48dp"
-            android:background="@drawable/info"
-            android:onClick="showToastinfo"
-            
-            android:tag="1" />
- 
 
+
+
+    <ImageView
+        android:id="@+id/contentinfo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/specialdec"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/RestCall"
+        android:paddingTop="5dp"
+        android:src="@drawable/restinfo" />
+
+    <ImageView
+        android:id="@+id/RestCall"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/specialdec"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:src="@drawable/callyou" />
 
  </RelativeLayout> 
 </ScrollView>    

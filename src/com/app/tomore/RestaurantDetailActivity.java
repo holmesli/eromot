@@ -27,8 +27,10 @@ import android.view.WindowManager;
 import android.widget.GridView;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -50,7 +52,10 @@ import com.google.gson.JsonSyntaxException;
 
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+
+
 
 
 
@@ -130,7 +135,82 @@ public class RestaurantDetailActivity extends Activity{
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
 				.build();
 		mContext = this;
+		ImageView Call = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.RestCall);
+		Call.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	showPopup();
+		    }
+		});
+		ImageView Dialog = (ImageView) getWindow().getDecorView()
+				.findViewById(R.id.contentinfo);
+        Dialog.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v){
+		    	showdialog();
+		    }
+        });
+		    
+	}
+	private void showdialog(){
+		AlertDialog.Builder builder;
+		AlertDialog alertDialog;
+		Context mContext = RestaurantDetailActivity.this;
 
+		LayoutInflater inflater = (LayoutInflater) mContext
+		.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.restaurant_content, null);
+		TextView text = (TextView) layout.findViewById(R.id.resttitle);
+		text.setText(restaurantmodel.getTitle());
+		TextView text1 = (TextView) layout.findViewById(R.id.restcontent);
+		text1.setText(restaurantmodel.getContent());
+		builder = new AlertDialog.Builder(mContext);
+		builder.setView(layout);
+		alertDialog = builder.create();
+		alertDialog.show();
+		
+		
+		
+	}
+	private void showPopup(){
+
+		String Call = getString(R.string.PhoneCall);
+		String Cancel = getString(R.string.Cancel);
+		String MakeCall = restaurantmodel.getPhone();
+		List<CharSequence>  cs = new ArrayList<CharSequence>();
+		cs.add(Call);
+		cs.add(MakeCall);
+		cs.add(Cancel);
+		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
+  
+    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+    	final int length = options.length;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	
+		builder.setTitle(getString(R.string.Phone));
+		builder.setItems(options, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface Optiondialog, int which) {
+				String phone_number = restaurantmodel.getPhone();
+		        if (which == 0){
+		        	if(length == 3)
+		        	{
+					Intent call = new Intent(Intent.ACTION_DIAL);
+					call.setData(Uri.parse("tel:"+phone_number));
+					startActivity(call);
+		        	}
+
+		        	}
+		        
+		        else if(which == 2){
+		        	Optiondialog.dismiss();
+		        }
+
+		    }
+		});
+		builder.show();
+		
 	}
 
 	
@@ -200,19 +280,20 @@ public class RestaurantDetailActivity extends Activity{
 		TouchImageView MenudetailImage;
 	}
 	private void BindDataToGridView(){
-		final List<ImageAndText> imageAndTextList = new ArrayList<ImageAndText>();
+		final List<ImageAndText> imageAndTexts = new ArrayList<ImageAndText>();
 		
 
 	    for(BLMenuModel c: menulist)
 		{	
 	    	//imageAndTextList1.add(new ImageAndText(c.getDiscountImage(), c.getItemName()) );
-			imageAndTextList.add(new ImageAndText(c.getItemImage(), c.getItemName()));
+	    	imageAndTexts.add(new ImageAndText(c.getItemImage(), c.getItemName()));
 
 		}
 		 NoScrollGridview  gridView = (NoScrollGridview) findViewById(R.id.menugridView);
 
-		gridView.setAdapter(new GridViewAdapter(this, imageAndTextList,
+		gridView.setAdapter(new GridViewAdapter(this, imageAndTexts,
 				gridView));
+		
 		TextView DiscountView = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.discountdec);
 		ImageView dsicountimapge = (ImageView) findViewById(R.id.discounimage);
