@@ -228,13 +228,13 @@ public class MainFansActivity extends Activity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 0;
+			return fansList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
-			return null;
+			return fansList.get(position);
 		}
 
 		@Override
