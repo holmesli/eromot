@@ -146,7 +146,7 @@ public class MainFansActivity extends Activity {
 			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				// show empty alert
+				ToastUtils.showToast(mContext, "列表为空");
 			} else {
 				
 				if(fansList!=null && fansList.size()!=0)
@@ -168,33 +168,7 @@ public class MainFansActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
-		}
-//		protected void onPostExecute(String result) {
-//			if (null != dialog) {
-//				dialog.dismiss();
-//			}
-////			mListView.onRefreshComplete();
-//			Log.d("onPostExecute", "postExec state");
-//			if (result == null || result.equals("")) {
-//				ToastUtils.showToast(mContext, "�б�Ϊ��");
-//			} else {
-//				if(fansList!=null && fansList.size()>0)
-//				{
-//					fansList.clear();
-//				}
-//				else
-//				{
-//					fansList = new ArrayList<FansModel>();
-//				}
-//				try {
-//					fansList = new UserCenterParse().parseFansResponse(result);
-////					mListView.setAdapter(fansListAdapter);
-//					BindDataToListView();
-//				} catch (JsonSyntaxException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}		
+		}		
 	}
 	
 	private void BindDataToListView(){
@@ -260,11 +234,9 @@ public class MainFansActivity extends Activity {
 				viewHolder.MemberImage = (ImageView) convertView.findViewById(R.id.MemberImage);
 				viewHolder.AccountName = (TextView) convertView.findViewById(R.id.AccountName);
 				btnFollow = (Button) convertView.findViewById(R.id.Followed);
-//				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
 				convertView.setTag(viewHolder);
 			}
 			
-//			new FansImage().execute(fansText.getMemberImage());
 			String follow = "";
 			if(fansText.getFollowed().equals("0")){
 				follow = "+关注";
@@ -272,22 +244,12 @@ public class MainFansActivity extends Activity {
 				follow = "取消关注";
 			}
 			ImageLoader.getInstance().displayImage(fansText.getMemberImage(), viewHolder.MemberImage, otp);
-//			viewHolder.MemberImage.setImageBitmap(bitmap);
 			viewHolder.AccountName.setText(fansText.getAccountName());
 			btnFollow.setText(follow);
-//			btnFollow.setOnClickListener(this);
-//			viewHolder.Blocked.setText(fansText.getBlocked());
 			return convertView;
 		}
 	}
-	
-//	public void onClick(View v) {
-//		int id = v.getId();
-//		if (id == R.id.Followed) {
-//			onFollowClick(v);
-//		}
-//	}
-//	
+
 	public void onFollowClick(View view){
 		Toast.makeText(getApplicationContext(), "follow", 1).show();
 	}
@@ -296,7 +258,6 @@ public class MainFansActivity extends Activity {
 		ImageView MemberImage;
 	    TextView AccountName;
 	    Button Followed;
-//	    private TextView Blocked;
 	}
 	
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
@@ -308,7 +269,7 @@ public class MainFansActivity extends Activity {
 				pageNumber = 1;
 				new MyFans(MainFansActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "û������");
+				ToastUtils.showToast(mContext, "到头了");
 				mListView.onRefreshComplete();
 			}
 		}
@@ -322,7 +283,7 @@ public class MainFansActivity extends Activity {
 				pageNumber ++;
 				new MyFans(MainFansActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "û������");
+				ToastUtils.showToast(mContext, "到头了");
 			}
 		}
 	};
@@ -332,7 +293,7 @@ public class MainFansActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			if (!AppUtil.networkAvailable(mContext)) {
-				ToastUtils.showToast(mContext, "����������");
+				ToastUtils.showToast(mContext, "列表为空");
 				return;
 			}
 			if (fansList == null) {
