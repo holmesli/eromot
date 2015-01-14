@@ -149,8 +149,8 @@ public class SpUtils {
 	 * @return true:已登录，false：未登录
 	 */
 	public static boolean isLogin(Activity activity){
-		String userId = getUserId(activity);
-		if(TextUtils.isEmpty(userId)){
+		String uid = getUserId(activity);
+		if(TextUtils.isEmpty(uid)){
 			return false;
 		}else{
 			return true;

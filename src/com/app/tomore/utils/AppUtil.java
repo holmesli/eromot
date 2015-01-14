@@ -2,6 +2,7 @@ package com.app.tomore.utils;
 
 import java.text.DecimalFormat;
 
+import com.app.tomore.LoginActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +19,10 @@ import android.view.animation.AnimationUtils;
 
 public class AppUtil {
 
+	public static void startLoginPage(Activity activity) {
+		Intent intent = new Intent(activity, LoginActivity.class);
+		activity.startActivity(intent);
+	}
 	
 	public static int getPixels(Activity activity,int dipValue) {
 		Resources r = activity.getResources();
@@ -39,7 +44,7 @@ public class AppUtil {
 			return num+"";
 		}
 		DecimalFormat   df=new  DecimalFormat("#.#");
-		return df.format(numInt/10000)+"Íò";
+		return df.format(numInt/10000)+"ï¿½ï¿½";
 	}
 	
 	public static boolean networkAvailable(Context context) {

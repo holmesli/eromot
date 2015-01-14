@@ -11,6 +11,7 @@ import com.app.tomore.net.ThreadsParse;
 import com.app.tomore.net.ThreadsRequest;
 import com.app.tomore.utils.ExpandedListView;
 import com.app.tomore.utils.PullToRefreshListView;
+import com.app.tomore.utils.SpUtils;
 import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -129,6 +130,8 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 	}
 
 	public void onLogoutClick(View view) {
+
+		SpUtils.clearUserInfo(mContext);//退出登录
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}

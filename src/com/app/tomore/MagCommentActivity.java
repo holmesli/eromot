@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.app.tomore.R;
 import com.app.tomore.utils.AppUtil;
+import com.app.tomore.utils.SpUtils;
 import com.app.tomore.utils.ToastUtils;
 import com.app.tomore.utils.PullToRefreshListView;
 import com.app.tomore.utils.PullToRefreshBase;
@@ -74,6 +75,7 @@ public class MagCommentActivity extends Activity {
 	private Button submit;
 	private EditText content;
 	private String finalResult = null;
+	private String userId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +92,14 @@ public class MagCommentActivity extends Activity {
 		ImageLoader.getInstance().init(
 				ImageLoaderConfiguration.createDefault(this));
 
+		
 			mListView = (PullToRefreshListView) findViewById(R.id.mag_comment_listviews);
 			mListView.setOnRefreshListener(onRefreshListener);
 			noneData = (TextView)findViewById(R.id.noData);
 			no_net_lay = findViewById(R.id.no_net_lay);
 			submit = (Button)findViewById(R.id.commentSubmit); 
 			content = (EditText)findViewById(R.id.commentContent); 
-			
+			content.setText("");
 			
 			Intent intent=getIntent();
 			articleId=intent.getStringExtra("articleid");
@@ -144,25 +147,35 @@ public class MagCommentActivity extends Activity {
 			submit.setOnClickListener(new OnClickListener() {
 		        @Override
 		        public void onClick(View viewIn) {
+		        	Intent intent = new Intent(); 
+		        	userId = SpUtils.getUserId(MagCommentActivity.this);
 		        	if(content.getText().toString() == null || content.getText().toString().length()==0)
-		        	{
-		        		Toast.makeText(getApplicationContext(), "请输入内容", Toast.LENGTH_SHORT).show();
-		        	}
-		        	else
-		        	{
-		        		new GetData1(MagCommentActivity.this, 1).execute("");
-		        		content.setText("");
-		        		
-		        	}
-		        	Intent intent = new Intent(MagCommentActivity.this,MagCommentActivity.class);
-	        	   	   intent.putExtra("articleid", articleId);
-	        	   	   finish();
-	        	   	   startActivity(intent);
-//	        	   	articleListAdapter = new ArticleAdapter();
-//	    			articleListAdapter.notifyDataSetChanged();
-//	    			new GetData(MagCommentActivity.this, 1).execute("");
+			        	{
+			        		Toast.makeText(getApplicationContext(), "请输入内容", Toast.LENGTH_SHORT).show();
+			        	}
+			        	else
+			        	{
+				        	if(userId!=null)
+							{
+				        		new GetData1(MagCommentActivity.this, 1).execute("");
+				        		content.setText("");
+				        		intent = new Intent(MagCommentActivity.this,MagCommentActivity.class);
+				        	   	   intent.putExtra("articleid", articleId);
+				        	   	   finish();
+				        	   	   startActivity(intent);
+							}
+				        	else
+				        	{
+				        		AppUtil.startLoginPage(mContext);
+//				        	   	articleListAdapter = new ArticleAdapter();
+//				    			articleListAdapter.notifyDataSetChanged();
+//				    			new GetData(MagCommentActivity.this, 1).execute("");
+//				        	   	intent.setClass(MagCommentActivity.this, LoginActivity.class);
+//								startActivity(intent);
+					        }	        	
+					}
+		        	
 		        }
-		        
 		    });
 			
 			//mListView.setAdapter(articleListAdapter);
@@ -396,7 +409,7 @@ private class GetData1 extends AsyncTask<String, String, String> {
 		MagRequest request = new MagRequest(MagCommentActivity.this);
 		try {
 			Log.d("doInBackground", "start request");
-				result = request.PostCommentByMemberId(articleId, memberId, content.getText().toString());
+				result = request.PostCommentByMemberId(articleId, userId, content.getText().toString());
 				
 			
 			Log.d("doInBackground", "returned");

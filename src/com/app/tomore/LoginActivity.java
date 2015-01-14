@@ -6,6 +6,7 @@ import java.util.concurrent.TimeoutException;
 import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
 import com.app.tomore.beans.UserModel;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.app.tomore.utils.SpUtils;
 
 public class LoginActivity extends Activity{
@@ -95,9 +97,11 @@ public class LoginActivity extends Activity{
 				UserCenterParse ucParse = new UserCenterParse();
 				UserModel usermodel = ucParse.parseLoginResponse(result);
 			    if(usermodel!=null){
-			    	SpUtils.saveUid(LoginActivity.this, usermodel.getMemberID());
-			    	Intent intent = new Intent(LoginActivity.this, MainDuoliaoActivity.class);
-					startActivity(intent);   
+			    	SpUtils.saveUserId(LoginActivity.this, usermodel.getMemberID());
+			    	finish();
+//			    	Intent intent = new Intent(LoginActivity.this, MagCommentActivity.class);
+//			    	intent.putExtra("commentMemberId", usermodel.getMemberID());
+//					startActivity(intent);   
 			    }else {
 			    	Toast.makeText(getApplicationContext(), "请输入有效的邮箱和密码",
 							Toast.LENGTH_SHORT).show();
