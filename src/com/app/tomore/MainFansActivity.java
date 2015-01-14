@@ -44,6 +44,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MainFansActivity extends Activity {
@@ -64,6 +65,7 @@ public class MainFansActivity extends Activity {
 	private LayoutInflater inflater; 
 	private View layout;
 	private Bitmap bitmap;
+	private TextView btnFollow;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +123,10 @@ public class MainFansActivity extends Activity {
 			String result = null;
 			UserCenterRequest request = new UserCenterRequest(MainFansActivity.this);
 			//memberID, viewerID, limit, page
+			String sLimite = Integer.toString(limit);
+			String sPageNumber = Integer.toString(pageNumber);
 			try {
-				result = request.getFansRequest("25", "34", "10", "1");
+				result = request.getFansRequest("25", "34", sLimite, sPageNumber);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -255,49 +259,43 @@ public class MainFansActivity extends Activity {
 						R.layout.main_fans_text, null);
 				viewHolder.MemberImage = (ImageView) convertView.findViewById(R.id.MemberImage);
 				viewHolder.AccountName = (TextView) convertView.findViewById(R.id.AccountName);
-				viewHolder.Followed = (TextView) convertView.findViewById(R.id.Followed);
+				btnFollow = (TextView) convertView.findViewById(R.id.Followed);
 //				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
 				convertView.setTag(viewHolder);
 			}
 			
 //			new FansImage().execute(fansText.getMemberImage());
-			
+			String follow = "";
+			if(fansText.getFollowed().equals("0")){
+				follow = "+关注";
+			} else if(fansText.getFollowed().equals("1")){
+				follow = "取消关注";
+			}
 			ImageLoader.getInstance().displayImage(fansText.getMemberImage(), viewHolder.MemberImage, otp);
-			viewHolder.MemberImage.setImageBitmap(bitmap);
+//			viewHolder.MemberImage.setImageBitmap(bitmap);
 			viewHolder.AccountName.setText(fansText.getAccountName());
-			viewHolder.Followed.setText(fansText.getFollowed());
+			btnFollow.setText(follow);
+//			btnFollow.setOnClickListener(this);
 //			viewHolder.Blocked.setText(fansText.getBlocked());
 			return convertView;
 		}
 	}
 	
-//	private class FansImage extends AsyncTask<String, String, String> {
-//
-//		@Override
-//		protected String doInBackground(String... params) {
-//			try {
-//				URL url = new URL(params[0]);
-//				 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//				 connection.setDoInput(true);
-//				 connection.connect();
-//				 InputStream input = connection.getInputStream();
-//				 bitmap = BitmapFactory.decodeStream(input);
-//			} catch (MalformedURLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			return null;
+//	public void onClick(View v) {
+//		int id = v.getId();
+//		if (id == R.id.Followed) {
+//			onFollowClick(v);
 //		}
-//		
+//	}
+//	
+//	public void onFollowClick(View view){
+//		Toast.makeText(getApplicationContext(), "follow", 1).show();
 //	}
 	
 	class ViewHolder {
-		private ImageView MemberImage;
-	    private TextView AccountName;
-	    private TextView Followed;
+		ImageView MemberImage;
+	    TextView AccountName;
+	    TextView Followed;
 //	    private TextView Blocked;
 	}
 	
