@@ -7,9 +7,9 @@
     android:background="@color/white" 
     android:id="@+id/MainFollowingLayout">
     <include
-        layout="@layout/bar_title_fans"
+        layout="@layout/bar_title_following"
         android:focusable="true"
-        android:id="@+id/FansTitleBar"/>
+        android:id="@+id/FollowingTitleBar"/>
 	<com.app.tomore.utils.PullToRefreshListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

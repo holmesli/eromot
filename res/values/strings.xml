@@ -23,6 +23,7 @@
     <string name="bar_title_add">添加</string>
     <string name="bar_title_bianli">便利</string>
     <string name="bar_title_fans">粉丝</string>
+    <string name="bar_title_following">关注</string>
     <string name="wait">Wait...</string>
     <string name="dataload">Loading...</string>
     <string name="quit">Quit</string>
