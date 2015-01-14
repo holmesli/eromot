@@ -13,7 +13,7 @@
 
 
 <RelativeLayout
-   
+    android:id="@+id/Restauranttitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
@@ -88,7 +88,7 @@
         android:layout_marginRight="14dp"
         android:layout_toLeftOf="@+id/RestCall"
         android:paddingTop="5dp"
-        android:src="@drawable/restinfo" />
+        android:src="@drawable/info" />
 
     <ImageView
         android:id="@+id/RestCall"
