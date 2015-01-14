@@ -107,30 +107,7 @@ public class MagCommentActivity extends Activity {
 			mContext = this;
 			page=1;
 			limit=5;
-			
-//			Button postComment = (Button)findViewById(R.id.bar_title_bt_postcomment);
-//			postComment.setOnClickListener(new View.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					// TODO Auto-generated method stub
-//					Intent intent = new Intent(); 
-//					if(memberId==null)
-//					{
-//						intent.setClass(MagCommentActivity.this, LoginActivity.class);
-//						startActivity(intent);
-//					}
-//					else
-//					{
-//						intent.putExtra("articleCommentId", articleId);
-//						intent.putExtra("memberid", memberId);
-//			            intent.setClass(MagCommentActivity.this, PostCommentActivity.class);  
-//			            startActivityForResult(intent, 100);
-//					}
-//					
-//				}
-//			});
-			
+
 			RelativeLayout rl = (RelativeLayout) getWindow().getDecorView()
 					.findViewById(R.id.bar_title_commentlistbar);
 			final Button btnBack = (Button) rl
