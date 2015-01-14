@@ -272,7 +272,7 @@ public class MainFansActivity extends Activity {
 				follow = "取消关注";
 			}
 			ImageLoader.getInstance().displayImage(fansText.getMemberImage(), viewHolder.MemberImage, otp);
-			viewHolder.MemberImage.setImageBitmap(bitmap);
+//			viewHolder.MemberImage.setImageBitmap(bitmap);
 			viewHolder.AccountName.setText(fansText.getAccountName());
 			btnFollow.setText(follow);
 //			btnFollow.setOnClickListener(this);
@@ -281,44 +281,21 @@ public class MainFansActivity extends Activity {
 		}
 	}
 	
-	public void onClick(View v) {
-		int id = v.getId();
-		if (id == R.id.Followed) {
-			onFollowClick(v);
-		}
-	}
-	
-	public void onFollowClick(View view){
-		Toast.makeText(getApplicationContext(), "follow", 1).show();
-	}
-	
-//	private class FansImage extends AsyncTask<String, String, String> {
-//
-//		@Override
-//		protected String doInBackground(String... params) {
-//			try {
-//				URL url = new URL(params[0]);
-//				 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//				 connection.setDoInput(true);
-//				 connection.connect();
-//				 InputStream input = connection.getInputStream();
-//				 bitmap = BitmapFactory.decodeStream(input);
-//			} catch (MalformedURLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			return null;
+//	public void onClick(View v) {
+//		int id = v.getId();
+//		if (id == R.id.Followed) {
+//			onFollowClick(v);
 //		}
-//		
+//	}
+//	
+//	public void onFollowClick(View view){
+//		Toast.makeText(getApplicationContext(), "follow", 1).show();
 //	}
 	
 	class ViewHolder {
-		private ImageView MemberImage;
-	    private TextView AccountName;
-	    private TextView Followed;
+		ImageView MemberImage;
+	    TextView AccountName;
+	    TextView Followed;
 //	    private TextView Blocked;
 	}
 	
