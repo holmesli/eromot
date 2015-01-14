@@ -261,7 +261,6 @@ public class RestaurantBLActivity  extends Activity{
 								if(RestaurantItem.getDiscount().equals("1")){
 									DiscountIcon.setVisibility(View.VISIBLE);
 								}
-
 					}
 					else{
 						convertView = LayoutInflater.from(mContext).inflate(

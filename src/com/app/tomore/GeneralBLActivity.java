@@ -149,7 +149,8 @@ public class GeneralBLActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			if (!AppUtil.networkAvailable(mContext)) {
-				ToastUtils.showToast(mContext, "����������");
+				String refresh = getString(R.string.refreshing);
+				ToastUtils.showToast(mContext, refresh);
 				return;
 			}
 			if (dataList == null) {
@@ -178,7 +179,8 @@ public class GeneralBLActivity extends Activity {
 				pageNumber = 1;
 				new GetData(GeneralBLActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "û������");
+				String refresh = getString(R.string.refreshing);
+				ToastUtils.showToast(mContext, refresh);
 				mListView.onRefreshComplete();
 			}
 		}
@@ -193,7 +195,8 @@ public class GeneralBLActivity extends Activity {
 				pageNumber ++;
 				new GetData(GeneralBLActivity.this, 1).execute("");
 			} else {
-				ToastUtils.showToast(mContext, "û������");
+				String refresh = getString(R.string.refreshing);
+				ToastUtils.showToast(mContext, refresh);
 			}
 		}
 	};
@@ -284,7 +287,7 @@ public class GeneralBLActivity extends Activity {
     	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
     	final int length = options.length;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getString(R.string.Phone));
+		builder.setTitle(getString(R.string.sentMessage));
 		builder.setItems(options, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface Optiondialog, int which) {
@@ -353,8 +356,12 @@ public class GeneralBLActivity extends Activity {
 				});
 				convertView.setTag(viewHolder);
 			}
+			String Title = generalbltext.getTitle();
+			if (Title.length() > 32){
+				Title = Title.substring(0,14) + ".....";
+			}
 
-			viewHolder.Title.setText(generalbltext.getTitle());
+			viewHolder.Title.setText(Title);
 			viewHolder.Contact.setText(generalbltext.getContact());
 			String language = "";
 			if (generalbltext.getLanguage_C().equals("1")) {

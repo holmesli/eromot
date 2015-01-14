@@ -11,8 +11,10 @@ import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.GeneralBLActivity.ViewHolder;
 import com.app.tomore.beans.FansModel;
+import com.app.tomore.beans.GeneralBLModel;
 import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
+import com.app.tomore.net.YellowPageParse;
 import com.app.tomore.utils.AppUtil;
 import com.app.tomore.utils.PullToRefreshBase;
 import com.app.tomore.utils.PullToRefreshListView;
@@ -57,6 +59,7 @@ public class MainFansActivity extends Activity {
 	private boolean headerRefresh = false; // false -> footer
 	private int pageNumber;
 	private int limit;
+	private TextView noneData;
 	private View no_net_lay;
 	private LayoutInflater inflater; 
 	private View layout;
@@ -74,6 +77,7 @@ public class MainFansActivity extends Activity {
 		mListView.setOnRefreshListener(onRefreshListener);
 		mListView.setOnLastItemVisibleListener(onLastItemVisibleListener);
 		mListView.setOnItemClickListener(itemClickListener);
+		noneData = (TextView) findViewById(R.id.noneData);
 		no_net_lay = findViewById(R.id.no_net_lay);
 		inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		layout = findViewById(R.id.MainFansLayout);
@@ -82,7 +86,7 @@ public class MainFansActivity extends Activity {
 				.build();
 		TextView header_Text = (TextView) layout.findViewById(R.id.btFans);
 //		header_Text.setText(name);
-		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_bl_go_back);
+		final Button btnBack = (Button) layout.findViewById(R.id.bar_title_fans_go_back);
 
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -135,28 +139,58 @@ public class MainFansActivity extends Activity {
 			if (null != dialog) {
 				dialog.dismiss();
 			}
-//			mListView.onRefreshComplete();
+			mListView.onRefreshComplete();
 			Log.d("onPostExecute", "postExec state");
 			if (result == null || result.equals("")) {
-				ToastUtils.showToast(mContext, "�б�Ϊ��");
+				// show empty alert
 			} else {
-				if(fansList!=null && fansList.size()>0)
+				
+				if(fansList!=null && fansList.size()!=0)
 				{
-					fansList.clear();
+					if(headerRefresh)
+						fansList = new ArrayList<FansModel>();
 				}
 				else
-				{
 					fansList = new ArrayList<FansModel>();
-				}
 				try {
-					fansList = new UserCenterParse().parseFansResponse(result);
-//					mListView.setAdapter(fansListAdapter);
+					if(headerRefresh)
+						fansList = new UserCenterParse().parseFansResponse(result);
+					else
+					{
+						fansList.addAll(new UserCenterParse().parseFansResponse(result));
+					}
 					BindDataToListView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
 				}
 			}
-		}		
+		}
+//		protected void onPostExecute(String result) {
+//			if (null != dialog) {
+//				dialog.dismiss();
+//			}
+////			mListView.onRefreshComplete();
+//			Log.d("onPostExecute", "postExec state");
+//			if (result == null || result.equals("")) {
+//				ToastUtils.showToast(mContext, "�б�Ϊ��");
+//			} else {
+//				if(fansList!=null && fansList.size()>0)
+//				{
+//					fansList.clear();
+//				}
+//				else
+//				{
+//					fansList = new ArrayList<FansModel>();
+//				}
+//				try {
+//					fansList = new UserCenterParse().parseFansResponse(result);
+////					mListView.setAdapter(fansListAdapter);
+//					BindDataToListView();
+//				} catch (JsonSyntaxException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}		
 	}
 	
 	private void BindDataToListView(){
@@ -171,10 +205,22 @@ public class MainFansActivity extends Activity {
 			fansListAdapter.notifyDataSetChanged();
 		}
 		if (fansList != null && fansList.size() > 0) {
-			//showDataUi();
+			showDataUi();
 		} else {
-			//showNoDataUi();
+			showNoDataUi();
 		}
+	}
+	
+	void showDataUi() {
+		mListView.setVisibility(View.VISIBLE);
+		noneData.setVisibility(View.GONE);
+		no_net_lay.setVisibility(View.GONE);
+	}
+
+	void showNoDataUi() {
+		mListView.setVisibility(View.GONE);
+		noneData.setVisibility(View.VISIBLE);
+		no_net_lay.setVisibility(View.GONE);
 	}
 	
 	public class FansAdapter extends BaseAdapter{
@@ -182,13 +228,13 @@ public class MainFansActivity extends Activity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 0;
+			return fansList.size();
 		}
 
 		@Override
-		public Object getItem(int position) {
+		public Object getItem(int arg0) {
 			// TODO Auto-generated method stub
-			return null;
+			return fansList.get(arg0);
 		}
 
 		@Override
@@ -210,48 +256,49 @@ public class MainFansActivity extends Activity {
 				viewHolder.MemberImage = (ImageView) convertView.findViewById(R.id.MemberImage);
 				viewHolder.AccountName = (TextView) convertView.findViewById(R.id.AccountName);
 				viewHolder.Followed = (TextView) convertView.findViewById(R.id.Followed);
-				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
+//				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
 				convertView.setTag(viewHolder);
 			}
 			
-			new FansImage().execute(fansText.getMemberImage());
+//			new FansImage().execute(fansText.getMemberImage());
 			
+			ImageLoader.getInstance().displayImage(fansText.getMemberImage(), viewHolder.MemberImage, otp);
 			viewHolder.MemberImage.setImageBitmap(bitmap);
 			viewHolder.AccountName.setText(fansText.getAccountName());
 			viewHolder.Followed.setText(fansText.getFollowed());
-			viewHolder.Blocked.setText(fansText.getBlocked());
+//			viewHolder.Blocked.setText(fansText.getBlocked());
 			return convertView;
 		}
 	}
 	
-	private class FansImage extends AsyncTask<String, String, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			try {
-				URL url = new URL(params[0]);
-				 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				 connection.setDoInput(true);
-				 connection.connect();
-				 InputStream input = connection.getInputStream();
-				 bitmap = BitmapFactory.decodeStream(input);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-	}
+//	private class FansImage extends AsyncTask<String, String, String> {
+//
+//		@Override
+//		protected String doInBackground(String... params) {
+//			try {
+//				URL url = new URL(params[0]);
+//				 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//				 connection.setDoInput(true);
+//				 connection.connect();
+//				 InputStream input = connection.getInputStream();
+//				 bitmap = BitmapFactory.decodeStream(input);
+//			} catch (MalformedURLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//		
+//	}
 	
 	class ViewHolder {
 		private ImageView MemberImage;
 	    private TextView AccountName;
 	    private TextView Followed;
-	    private TextView Blocked;
+//	    private TextView Blocked;
 	}
 	
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {

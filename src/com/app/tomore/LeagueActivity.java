@@ -130,7 +130,7 @@ public class LeagueActivity extends Activity{
 	    		                }
 	    		            }
 	    		        };
-	    	        final Handler handler = new Handler();//使用Handler做定时关闭PopupWindow
+	    	        final Handler handler = new Handler();
 	    	        pw.setOnDismissListener(new PopupWindow.OnDismissListener() {
 	    	            @Override
 	    	            public void onDismiss() {
@@ -148,6 +148,7 @@ public class LeagueActivity extends Activity{
 				        	Main_BL_intent = new Intent(LeagueActivity.this,
 				        			MainBLActivity.class);
 					        startActivityForResult(Main_BL_intent, 100);;
+							finish();
 			            }
 			        }, 2200);
 			        

@@ -38,10 +38,10 @@
 
         <EditText
             android:id="@+id/nameText"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="37dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="10dp"
             android:ems="10"
             android:inputType="textPersonName" >
 
@@ -66,10 +66,10 @@
 
         <EditText
             android:id="@+id/contactText"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="37dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:ems="10" />
     </LinearLayout>
 
@@ -89,10 +89,10 @@
 
         <EditText
             android:id="@+id/messageText"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_marginLeft="52dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="10dp"
             android:gravity="top"
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
