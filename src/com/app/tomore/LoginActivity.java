@@ -5,11 +5,7 @@ import java.util.concurrent.TimeoutException;
 
 import com.app.tomore.net.UserCenterParse;
 import com.app.tomore.net.UserCenterRequest;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+import com.app.tomore.beans.UserModel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.app.tomore.utils.SpUtils;
 
 public class LoginActivity extends Activity{
 
@@ -96,8 +93,9 @@ public class LoginActivity extends Activity{
 						Toast.LENGTH_SHORT).show();
 			}else {
 				UserCenterParse ucParse = new UserCenterParse();
-				String loninResult = ucParse.parseLoginResponse(result);
-			    if(loninResult.equals("\"succ\"")){					
+				UserModel usermodel = ucParse.parseLoginResponse(result);
+			    if(usermodel!=null){
+			    	SpUtils.saveUid(LoginActivity.this, usermodel.getMemberID());
 			    	Intent intent = new Intent(LoginActivity.this, MainDuoliaoActivity.class);
 					startActivity(intent);   
 			    }else {
