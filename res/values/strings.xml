@@ -23,6 +23,7 @@
     <string name="bar_title_add">添加</string>
     <string name="bar_title_bianli">便利</string>
     <string name="bar_title_fans">粉丝</string>
+    <string name="bar_title_following">关注</string>
     <string name="wait">Wait...</string>
     <string name="dataload">Loading...</string>
     <string name="quit">Quit</string>
@@ -83,19 +84,17 @@
     <string name="login_title">登陆</string>
     <string name="register">注册</string>
     <string name="back">返回</string>
-    
-	<string name="mandarin">汉</string>
-	<string name="cantonese">粤</string>
-	<string name="english">英</string>
-	<string name="servicelanuage">服务语言</string>
-	<string name="contact">联系人</string>
-	<string name="detailinfo">详细信息</string>
-	<string name="addressinfo">地址信息</string>
-	<string name="phone">电话</string>
-	<string name="sent">发送</string>
-	<string name="wholevideo">完整视频</string>
-	<string name="sentMessage">发送短信</string>
-
+    <string name="mandarin">汉</string>
+    <string name="cantonese">粤</string>
+    <string name="english">英</string>
+    <string name="servicelanuage">服务语言</string>
+    <string name="contact">联系人</string>
+    <string name="detailinfo">详细信息</string>
+    <string name="addressinfo">地址信息</string>
+    <string name="phone">电话</string>
+    <string name="sent">发送</string>
+    <string name="wholevideo">完整视频</string>
+    <string name="sentMessage">发送短信</string>
     <string name="join">加盟</string>
     <string name="contactTo">联系人：</string>
     <string name="contactThrough">联系方式：</string>
@@ -117,7 +116,7 @@
     <string name="Cancel">取消</string>
     <string name="Phone">电话</string>
     <string name="bar_title_generalBL_detail">信息详情</string>
-        
+
     <!-- <string name="bar_title_generalBL_detail">信息详情</string> -->
 
     <color name="register_background_color">#f7f7f7</color>

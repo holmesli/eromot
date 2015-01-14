@@ -1,7 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/com/app/tomore/LoginActivity.java=UTF-8
 encoding//src/com/app/tomore/MainActivity.java=UTF-8
+encoding//src/com/app/tomore/MainFansActivity.java=UTF-8
 encoding//src/com/app/tomore/MemberAddActivity.java=UTF-8
 encoding//src/com/app/tomore/MemberDetailActivity.java=UTF-8
 encoding//src/com/app/tomore/MySurfaceView.java=UTF-8
+encoding//src/com/app/tomore/RegisterActivity.java=UTF-8
 encoding//src/com/app/tomore/utils/AndroidShare.java=UTF-8
 encoding/<project>=UTF-8

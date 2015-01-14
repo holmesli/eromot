@@ -24,6 +24,9 @@ import com.app.tomore.utils.TouchImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -63,6 +66,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
+
 public class MagDetailActivity extends Activity {
 
 	private DialogActivity dialog;
@@ -83,6 +98,10 @@ public class MagDetailActivity extends Activity {
 	private Button commentButton;
 	private ArrayList<ArticleCommentModel> articleComment;
 	private ImageView backImage;
+	
+	private Button button;
+	final UMSocialService mController = UMServiceFactory
+			.getUMSocialService("com.umeng.share");
 	
 	
 	private String[] allOptionsMenuTexts = {"评论","分享"};  
@@ -109,26 +128,13 @@ public class MagDetailActivity extends Activity {
 		commentButton = (Button)findViewById(R.id.bar_title_bt_share);
 		commentButton.setOnClickListener(new buttonComment());
 			
-		//findViewById(R.id.bar_title_bt_share).setOnClickListener((OnClickListener) itemClickListener );
-//		{
-			
-			//String title = articleItem.getArticleTitle();
-//
-//			public void onClick(View v) {
-//				AndroidShare as = new AndroidShare(
-//						MagDetailActivity.this,
-//						"������ʹ�ö��׶����ToMoreӦ�ã����������� www.tomoreapp.com",
-//						"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
-//				as.show();
-//			}
-//		});
-		
 		Intent intent = getIntent();
 		articleItem = (ArticleModel) intent.getSerializableExtra("articleList");
 		BindData();
 		GetVideo();
-		new GetData(MagDetailActivity.this, 1).execute("");
 		
+		new GetData(MagDetailActivity.this, 1).execute("");
+//		init();
 		final Button btnBack = (Button) rl
 				.findViewById(R.id.bar_title_bt_mag);
 
@@ -307,12 +313,16 @@ public class MagDetailActivity extends Activity {
 	        	}
 	        	else if(position==1)
 	        	{
-
-	        				AndroidShare as = new AndroidShare(
-	        						MagDetailActivity.this,
-	        						"你正在使用多伦多最潮的APP，快来看看吧",
-	        						"www.tomoreapp.com");
-	        				as.show();
+	        		AndroidShare as = new AndroidShare(
+	        				MagDetailActivity.this,
+	        				"你正在使用多伦多最潮的APP，快来看看吧",
+	        				"www.tomoreapp.com");
+	        		as.show();
+//	        		mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
+//	    					SHARE_MEDIA.DOUBAN);
+//	    			//Ĭ�Ϸ��?ʽ
+//	    			mController.openShare(MagDetailActivity.this, null);
+	        				
 	        	}
 	        }  
 	    });  
@@ -335,5 +345,84 @@ public class MagDetailActivity extends Activity {
 	    return SimpleAdapter;  
 	}  
 	
+	
+	
+	
+//	private void init() {
+//		// ���÷�������
+//		mController
+//				.setShareContent("快来看看多伦多最潮的ToMore App, www.tomoreapp.com");
+//		// ���÷���ͼƬ, ����2ΪͼƬ��url��ַ
+//		mController.setShareMedia(new UMImage(this, R.drawable.tomorelogo));
+////--------------------------------------------------------------------------------------------------------
+////		 ����1Ϊ��ǰActivity������2Ϊ��������QQ���������APP ID������3Ϊ��������QQ���������APP kEY.���Լ����룩
+//		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "1103520645",
+//				"uIveeHinob7PhSGv");
+//		qqSsoHandler.addToSocialSDK();
+//		QQShareContent qqShareContent = new QQShareContent();
+//		// ���÷�������
+//		qqShareContent.setShareContent("����������ữ�����SDK�����ƶ�Ӧ�ÿ�������罻���?�� -- QQ");
+//		// ���÷���title
+//		qqShareContent.setTitle("hello, title");
+//		// ���÷���ͼƬ
+//		qqShareContent.setShareImage(new UMImage(this, R.drawable.tomorelogo));
+//		// ���õ���������ݵ���ת����
+//		qqShareContent.setTargetUrl("http://www.baidu.com");
+//		mController.setShareMedia(qqShareContent);
+////--------------------------------------------------------------------------------------------------------
+////		 ��������SSO handler
+//		mController.getConfig().setSsoHandler(new SinaSsoHandler());
+////--------------------------------------------------------------------------------------------------------
+////		 ���΢�ŵ�appID appSecretҪ�Լ�����
+//		String appID = "wxc9197d3be76aca03";
+//		String appSecret = "9c253edcab52fdb8458c99ec798c3c91";
+//		// ���΢��ƽ̨
+//		UMWXHandler wxHandler = new UMWXHandler(this, appID, appSecret);
+//		wxHandler.addToSocialSDK();
+//		// ����΢�ź��ѷ�������
+//		WeiXinShareContent weixinContent = new WeiXinShareContent();
+//		// ���÷�������
+//		weixinContent.setShareContent("����������ữ�����SDK�����ƶ�Ӧ�ÿ�������罻���?�ܣ�΢��");
+//		// ����title
+//		weixinContent.setTitle("������ữ�������-΢��");
+//		// ���÷���������תURL
+//		weixinContent.setTargetUrl("http://www.baidu.com");
+//		// ���÷���ͼƬ
+//		weixinContent.setShareImage(new UMImage(getApplicationContext(),
+//				R.drawable.tomorelogo));
+//		mController.setShareMedia(weixinContent);
+////--------------------------------------------------------------------------------------------------------
+//		// ���΢������Ȧ(�Ի���ʾtitle��������ʾ���ݣ���������˵��)
+//		UMWXHandler wxCircleHandler = new UMWXHandler(this, appID, appSecret);
+//		// ����΢������Ȧ��������
+//		CircleShareContent circleMedia = new CircleShareContent();
+//		circleMedia.setShareContent("����������ữ�����SDK�����ƶ�Ӧ�ÿ�������罻���?�ܣ�����Ȧ");
+//		// ��������Ȧtitle
+//		circleMedia.setTitle("������ữ�������-����Ȧ");
+//		circleMedia.setShareImage(new UMImage(getApplicationContext(),
+//				R.drawable.tomorelogo));
+//		circleMedia.setTargetUrl("http://www.baidu.com");
+//		mController.setShareMedia(circleMedia);
+//		wxCircleHandler.setToCircle(true);
+//		wxCircleHandler.addToSocialSDK();
+////--------------------------------------------------------------------------------------------------------		
+//		// ��Ӷ���
+////		SmsHandler smsHandler = new SmsHandler();
+////		smsHandler.addToSocialSDK();
+////--------------------------------------------------------------------------------------------------------
+//		button = (Button) findViewById(R.id.bar_title_bt_mag);
+//		button.setOnClickListener(this);
+//	}
+//	
+//	public void onClick(View arg0) {
+//		switch (arg0.getId()) {
+//		case R.id.bar_title_bt_mag:
+//			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
+//					SHARE_MEDIA.DOUBAN);
+//			//Ĭ�Ϸ��?ʽ
+//			mController.openShare(this, false);
+//			break;
+//		}
+//	}
 	
 }

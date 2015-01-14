@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="150px"
-            android:layout_height="150px"
+            android:layout_width="150dip"
+            android:layout_height="150dip"
             android:layout_marginLeft="10dip"
             android:layout_marginTop="5dip"
             android:scaleType="fitXY" />
