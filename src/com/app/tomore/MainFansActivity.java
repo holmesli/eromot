@@ -259,7 +259,7 @@ public class MainFansActivity extends Activity {
 						R.layout.main_fans_text, null);
 				viewHolder.MemberImage = (ImageView) convertView.findViewById(R.id.MemberImage);
 				viewHolder.AccountName = (TextView) convertView.findViewById(R.id.AccountName);
-				btnFollow = (TextView) convertView.findViewById(R.id.Followed);
+				btnFollow = (Button) convertView.findViewById(R.id.Followed);
 //				viewHolder.Blocked = (TextView) convertView.findViewById(R.id.Blocked);
 				convertView.setTag(viewHolder);
 			}
@@ -288,14 +288,14 @@ public class MainFansActivity extends Activity {
 //		}
 //	}
 //	
-//	public void onFollowClick(View view){
-//		Toast.makeText(getApplicationContext(), "follow", 1).show();
-//	}
+	public void onFollowClick(View view){
+		Toast.makeText(getApplicationContext(), "follow", 1).show();
+	}
 	
 	class ViewHolder {
 		ImageView MemberImage;
 	    TextView AccountName;
-	    TextView Followed;
+	    Button Followed;
 //	    private TextView Blocked;
 	}
 	
