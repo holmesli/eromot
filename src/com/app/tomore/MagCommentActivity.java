@@ -44,6 +44,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -79,6 +80,7 @@ public class MagCommentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mag_comment_listview);
 		
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 		
@@ -92,7 +94,7 @@ public class MagCommentActivity extends Activity {
 			mListView.setOnRefreshListener(onRefreshListener);
 			noneData = (TextView)findViewById(R.id.noData);
 			no_net_lay = findViewById(R.id.no_net_lay);
-			submit = (Button)findViewById(R.id.bar_title_bt_postcomment); 
+			submit = (Button)findViewById(R.id.commentSubmit); 
 			content = (EditText)findViewById(R.id.commentContent); 
 			
 			
