@@ -72,6 +72,7 @@
         <activity android:name=".PostCommentActivity"/>
         <activity android:name=".ShareAndCommentActivity"/>
         <activity android:name=".MainFansActivity"/>
+        <activity android:name=".MainFollowingActivity"/>
                 <activity android:label="@string/title_activity_thread_reply" android:name=".ThreadReplyActivity">
         </activity>
         <activity android:label="@string/title_activity_user_infomation" android:name=".UserInformationActivity">

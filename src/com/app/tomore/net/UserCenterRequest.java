@@ -80,7 +80,7 @@ public class UserCenterRequest {
 	}
 	
 	/*
-	 * send login info
+	 * send fans info
 	 * 
 	 */
 	//http://54.213.167.5/APIV2/getFollowedList.php
@@ -94,6 +94,24 @@ public class UserCenterRequest {
                 .add("limit", limit)
                 .add("page", page);
         HttpResponse httpResponse = baseRequest.post("/APIV2/getFollowedList.php", params);
+        return httpResponse.getBodyAsString();
+	}
+	
+	/*
+	 * send following info
+	 * 
+	 */
+	//http://54.213.167.5/APIV2/getFollowingList.php
+	public String getFollowingRequest(String memberID, String viewerID, String limit, String page)
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+                .add("memberID", memberID)
+                .add("viewerID", viewerID)
+                .add("limit", limit)
+                .add("page", page);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getFollowingList.php", params);
         return httpResponse.getBodyAsString();
 	}
 }

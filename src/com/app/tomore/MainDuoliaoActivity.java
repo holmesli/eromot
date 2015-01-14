@@ -122,6 +122,8 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_aboutus_bt) {
 			Toast.makeText(context, "����1", 1).show();
+		}else if (id == R.id.my_logout_bt) {
+			onLogoutClick(v);
 		}
 
 	}
