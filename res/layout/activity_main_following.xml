@@ -1,0 +1,40 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white" 
+    android:id="@+id/MainFollowingLayout">
+    <include
+        layout="@layout/bar_title_following"
+        android:focusable="true"
+        android:id="@+id/FollowingTitleBar"/>
+	<com.app.tomore.utils.PullToRefreshListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="-1.33dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        ptr:kalaAnimationStyle="flip"
+        ptr:kalaTopProgress="@drawable/kalagame_hunter_refresh_loading"
+        ptr:kalaDrawable="@drawable/kalagame_icon_arrows"
+        android:fadingEdge="none"
+        />
+	
+
+	<TextView 
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="没有数据"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/noneData"/>
+    <include layout="@layout/no_net_layout"/>
+</LinearLayout>

@@ -42,10 +42,12 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.JsonSyntaxException;
@@ -54,6 +56,8 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+
+
 
 
 
@@ -116,6 +120,9 @@ public class RestaurantDetailActivity extends Activity{
 
 	private BLRestaurantModel restaurantmodel;
 	String restid;
+	private BLMenuModel menupicture;
+	String resttitle;
+
 
 
 
@@ -130,6 +137,7 @@ public class RestaurantDetailActivity extends Activity{
 		Intent intent = getIntent();
 		restaurantmodel = (BLRestaurantModel) intent.getSerializableExtra("restlist");
 		restid = restaurantmodel.getAdID();
+		resttitle= restaurantmodel.getTitle();
 		new GetData(RestaurantDetailActivity.this, 1).execute("");
 		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
@@ -151,8 +159,48 @@ public class RestaurantDetailActivity extends Activity{
 		    	showdialog();
 		    }
         });
-		    
+		RelativeLayout whole_layout = (RelativeLayout)findViewById(R.id.Restauranttitle);
+		TextView header_Text = (TextView) whole_layout.findViewById(R.id.btMeg);
+		header_Text.setText(resttitle);
+		otp = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.ic_launcher)
+				.build();
+		//LinearLayout whole_layout = (LinearLayout)findViewById(R.id.GeneralBLLayout);
+		final Button btnBack = (Button) whole_layout.findViewById(R.id.bar_title_bl_go_back);
+
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
+      
+
 	}
+	private void showbigpicture(int positon){
+		AlertDialog.Builder builder;
+		AlertDialog alertDialog;
+		Context mContext = RestaurantDetailActivity.this;
+		
+
+
+		LayoutInflater inflater = (LayoutInflater) mContext
+		.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.restaurant_picturelarge, null);
+		ImageView largeimage = (ImageView) layout.findViewById(R.id.MenuImagelargesize);
+        
+	    ImageLoader.getInstance().displayImage(menulist.get(positon).getItemImage(),
+	    		largeimage,otp);
+		
+		builder = new AlertDialog.Builder(mContext);
+		builder.setView(layout);
+		alertDialog = builder.create();
+		alertDialog.show();
+		
+		
+		
+	}
+
 	private void showdialog(){
 		AlertDialog.Builder builder;
 		AlertDialog alertDialog;
@@ -173,45 +221,29 @@ public class RestaurantDetailActivity extends Activity{
 		
 		
 	}
-	private void showPopup(){
 
-		String Call = getString(R.string.PhoneCall);
+	private void showPopup(){
 		String Cancel = getString(R.string.Cancel);
-		String MakeCall = restaurantmodel.getPhone();
+		String Phone1 = restaurantmodel.getPhone();
 		List<CharSequence>  cs = new ArrayList<CharSequence>();
-		cs.add(Call);
-		cs.add(MakeCall);
+		cs.add(Phone1);
 		cs.add(Cancel);
-		//CharSequence options[] = new CharSequence[] {Call, Cancel, MakeCall};
-  
     	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
-    	final int length = options.length;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	
-		builder.setTitle(getString(R.string.Phone));
+		builder.setTitle(getString(R.string.PhoneCall));
 		builder.setItems(options, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface Optiondialog, int which) {
-				String phone_number = restaurantmodel.getPhone();
 		        if (which == 0){
-		        	if(length == 3)
-		        	{
-					Intent call = new Intent(Intent.ACTION_DIAL);
-					call.setData(Uri.parse("tel:"+phone_number));
-					startActivity(call);
-		        	}
-
-		        	}
-		        
-		        else if(which == 2){
-		        	Optiondialog.dismiss();
+	        		Intent call = new Intent(Intent.ACTION_DIAL);
+	        		call.setData(Uri.parse("tel:"+restaurantmodel.getPhone()));
+	        		startActivity(call);
 		        }
-
 		    }
 		});
 		builder.show();
-		
 	}
+
 
 	
 	private class GetData extends AsyncTask<String, String, String>{
@@ -261,6 +293,7 @@ public class RestaurantDetailActivity extends Activity{
 				try {
 					MenuItem = new YellowPageParse().parseRestaurantDetailResponse1(result);
 					menulist = new YellowPageParse().parseRestaurantDetailResponse(result);
+
 					BindDataToGridView();
 				} catch (JsonSyntaxException e) {
 					e.printStackTrace();
@@ -293,6 +326,14 @@ public class RestaurantDetailActivity extends Activity{
 
 		gridView.setAdapter(new GridViewAdapter(this, imageAndTexts,
 				gridView));
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+		    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+		    	showbigpicture(position);
+		    }
+		});
+
+		
+
 		
 		TextView DiscountView = (TextView) getWindow().getDecorView()
 				.findViewById(R.id.discountdec);

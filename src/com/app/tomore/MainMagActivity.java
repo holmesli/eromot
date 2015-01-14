@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
-
+import com.app.tomore.utils.SpUtils;
 import org.json.JSONException;
 
 import com.app.tomore.beans.ArticleCommentModel;
@@ -70,7 +70,7 @@ public class MainMagActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_mag_activity);
 		mContext = this;
-		
+		String userId = SpUtils.getUserId(MainMagActivity.this);
 		Intent i = getIntent();
 		categoryID = i.getStringExtra("categoryId");
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
@@ -226,7 +226,6 @@ public class MainMagActivity extends Activity {
 					MagDetailActivity.class);
 			intent.putExtra("articleList", (Serializable) obj);
 			startActivity(intent);
-
 		}
 	};
 	
@@ -347,6 +346,8 @@ public class MainMagActivity extends Activity {
 		}
 
 	}
+	
+	
 }
 
 
