@@ -139,6 +139,7 @@ public class MagCommentActivity extends Activity {
 				        		intent = new Intent(MagCommentActivity.this,MagCommentActivity.class);
 				        	   	   intent.putExtra("articleid", articleId);
 				        	   	   finish();
+				        	   	
 				        	   	   startActivity(intent);
 							}
 				        	else

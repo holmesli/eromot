@@ -87,7 +87,7 @@ public class MagDetailActivity extends Activity {
 	private int position = 0;
 	private ProgressDialog progressDialog;
 	private MediaController mediaControls;
-	
+	private AlertDialog alertDialog;
 	private TouchImageView detailImage;
 	private TextView testView1;
 	private TextView testView2;
@@ -294,11 +294,16 @@ public class MagDetailActivity extends Activity {
 	       
 	    LayoutInflater layoutInflater = getLayoutInflater();  
 	    View menuView = layoutInflater.inflate(R.layout.group_list, null);  
-	       
+	    
 	    GridView gridView = (GridView)menuView.findViewById(R.id.gridview);  
-	    final LinearLayout linear=(LinearLayout)findViewById(R.id.gridview_layout);
 	    SimpleAdapter menuSimpleAdapter = createSimpleAdapter(allOptionsMenuTexts,allOptionsMenuIcons);  
 	    gridView.setAdapter(menuSimpleAdapter);  
+	    
+	    AlertDialog.Builder builder ;
+	    builder = new AlertDialog.Builder(context);  
+        builder.setView(menuView);  
+        //alertDialog = builder.create();  
+        alertDialog=builder.show();  
 	    gridView.setOnItemClickListener(new OnItemClickListener(){  
 	        @Override  
 	        public void onItemClick(AdapterView<?> parent, View view,  
@@ -308,8 +313,9 @@ public class MagDetailActivity extends Activity {
 	        		
 	        		Intent intent=new Intent(MagDetailActivity.this,MagCommentActivity.class);   
 	    			intent.putExtra("articleid", articleItem.getArticleID());
-	                startActivity(intent);   
-	                finish();
+	                startActivity(intent);  
+	                alertDialog.dismiss();
+	                //finish();
 	        	}
 	        	else if(position==1)
 	        	{
@@ -318,16 +324,17 @@ public class MagDetailActivity extends Activity {
 	        				"你正在使用多伦多最潮的APP，快来看看吧",
 	        				"www.tomoreapp.com");
 	        		as.show();
+	        		alertDialog.dismiss();
 //	        		mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
 //	    					SHARE_MEDIA.DOUBAN);
 //	    			//Ĭ�Ϸ��?ʽ
 //	    			mController.openShare(MagDetailActivity.this, null);
 	        				
 	        	}
+
 	        }  
 	    });  
-	       
-	    new AlertDialog.Builder(context).setView(menuView).show();  
+	   // new AlertDialog.Builder(context).setView(menuView).show();  
 	}  
 	  
 	public SimpleAdapter createSimpleAdapter(String[] menuNames,int[] menuImages){  
@@ -410,8 +417,8 @@ public class MagDetailActivity extends Activity {
 ////		SmsHandler smsHandler = new SmsHandler();
 ////		smsHandler.addToSocialSDK();
 ////--------------------------------------------------------------------------------------------------------
-//		button = (Button) findViewById(R.id.bar_title_bt_mag);
-//		button.setOnClickListener(this);
+////		button = (Button) findViewById(R.id.bar_title_bt_mag);
+////		button.setOnClickListener(this);
 //	}
 //	
 //	public void onClick(View arg0) {

@@ -99,9 +99,6 @@ public class LoginActivity extends Activity{
 			    if(usermodel!=null){
 			    	SpUtils.saveUserId(LoginActivity.this, usermodel.getMemberID());
 			    	finish();
-//			    	Intent intent = new Intent(LoginActivity.this, MagCommentActivity.class);
-//			    	intent.putExtra("commentMemberId", usermodel.getMemberID());
-//					startActivity(intent);   
 			    }else {
 			    	Toast.makeText(getApplicationContext(), "请输入有效的邮箱和密码",
 							Toast.LENGTH_SHORT).show();
