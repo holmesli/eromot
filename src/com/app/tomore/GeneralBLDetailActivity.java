@@ -35,6 +35,7 @@ public class GeneralBLDetailActivity extends Activity {
 	private GeneralBLModel BLModel;
 	private GoogleMap map;
 	private View layout;
+	private EditText messagetosent;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,6 +60,15 @@ public class GeneralBLDetailActivity extends Activity {
 		    @Override
 		    public void onClick(View v) {
 		    	showPopup();
+		    }
+		});
+		messagetosent = (EditText) layout.findViewById(R.id.messagetosent);
+
+		TextView sendlabel = (TextView) layout.findViewById(R.id.sendlabel);
+		sendlabel.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	SentText(messagetosent.getText().toString());
 		    }
 		});
 	}
@@ -101,6 +111,45 @@ public class GeneralBLDetailActivity extends Activity {
 		builder.show();
 		
 	}
+	private void SentText(final String text){
+		String Cancel = getString(R.string.Cancel);
+		String Phone1 = BLModel.getPhone1();
+		List<CharSequence>  cs = new ArrayList<CharSequence>();
+		cs.add(Phone1);
+    	if(BLModel.getPhone2() != null){
+    		if(BLModel.getPhone2().length() > 7 || !BLModel.getPhone2().equals(""))
+    		{
+    			cs.add(BLModel.getPhone2());
+    		}
+    	}
+		cs.add(Cancel);
+    	CharSequence [] options = cs.toArray(new CharSequence[cs.size()]);
+    	final int length = options.length;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.PhoneCall));
+		builder.setItems(options, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface Optiondialog, int which) {
+		        if (which == 0){
+		        	Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+		        	sendIntent.putExtra("sms_body", text); 
+		        	sendIntent.setType("vnd.android-dir/mms-sms");
+		        	startActivity(sendIntent);
+		        }
+		        else if (which == 1 && length == 3)
+		        {
+		        	Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+		        	sendIntent.putExtra("sms_body", text); 
+		        	sendIntent.setType("vnd.android-dir/mms-sms");
+		        	startActivity(sendIntent);
+		        }
+
+		    }
+		});
+		builder.show();
+		
+	}
+	
 	
 	
 	private void BindData()
