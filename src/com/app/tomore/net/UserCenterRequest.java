@@ -131,4 +131,44 @@ public class UserCenterRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getBlockedList.php", params);
         return httpResponse.getBodyAsString();
 	}
+	
+	// get user reply list
+	//http://54.213.167.5/APIV2/getUpdates.php?memberID=25
+	public String getUserUpdate(String memberId)
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+                .add("memberID", memberId);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getUpdates.php", params);
+        return httpResponse.getBodyAsString();
+	}
+	
+	//delete user's thread by Id
+	//http://54.213.167.5/deleteThreadByThreadIDAndMemberID.php?&memberID=18&threadID=2
+	public String deleteUserThread(String memberId, String threadId)
+			throws IOException, TimeoutException {
+		
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+                .add("memberID", memberId)
+                .add("threadID", threadId);
+        HttpResponse httpResponse = baseRequest.post("/deleteThreadByThreadIDAndMemberID", params);
+        return httpResponse.getBodyAsString();
+	}
+	
+	//get user's post
+	//http://54.213.167.5/getThreadListByMemberID.php?memberID=25&limit=20&page=1
+	public String getUserPostThreadList(String memberID, String page,String limit)
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+                .add("memberID", memberID)
+                .add("limit", limit)
+                .add("page", page);
+        HttpResponse httpResponse = baseRequest.post("/getThreadListByMemberID.php", params);
+        return httpResponse.getBodyAsString();
+	}
 }
