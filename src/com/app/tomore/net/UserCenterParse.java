@@ -1,10 +1,10 @@
 package com.app.tomore.net;
 
 import java.util.ArrayList;
-
 import com.app.tomore.beans.BlockedModel;
 import com.app.tomore.beans.FansModel;
 import com.app.tomore.beans.FollowingModel;
+import com.app.tomore.beans.ThreadModel;
 import com.app.tomore.beans.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -12,6 +12,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+
 public class UserCenterParse {
 	public UserModel parseLoginResponse(String result) {
 		Gson gson = new Gson();
@@ -25,8 +26,7 @@ public class UserCenterParse {
 				UserModel cse = gson.fromJson(obj, UserModel.class);
 				if (cse != null) {
 					return cse;
-				}
-				else
+				} else
 					return null;
 			}
 		}
@@ -68,7 +68,7 @@ public class UserCenterParse {
 		}
 		return lcs;
 	}
-	
+
 	public ArrayList<BlockedModel> parseBlockedResponse(String result)
 			throws JsonSyntaxException {
 		Gson gson = new Gson();
@@ -81,5 +81,31 @@ public class UserCenterParse {
 			lcs.add(cse);
 		}
 		return lcs;
+	}
+
+	// delete a thread by member id parse
+	// return true - deleted.
+	public boolean parseDeleteThreadResponse(String result) {
+		JsonElement jelement = new JsonParser().parse(result);
+		JsonObject jobject = jelement.getAsJsonObject();
+		String resultSucc = jobject.get("result").toString();
+
+		if (resultSucc.equals("\"succ\"")) {
+			return true;
+		} else
+			return false;
+	}
+
+	//get all my threads list
+	// http://54.213.167.5/getThreadListByMemberID.php?memberID=25&limit=20&page=1
+	public ArrayList<ThreadModel> parseThreadModel(String jsonThreads)
+			throws JsonSyntaxException {
+		return new ThreadsParse().parseThreadModel(jsonThreads);
+	}
+	
+	//http://54.213.167.5/APIV2/getUpdates.php?memberID=25
+	public ArrayList<ThreadModel> praserMyUpdateModel(String jsonUpdateString)
+				throws JsonSyntaxException {
+		return null;
 	}
 }
