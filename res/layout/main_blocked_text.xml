@@ -32,7 +32,7 @@
    		  android:paddingTop="5dp"
    		  android:paddingLeft="5dp" />
 
-        <!--<Button android:id="@+id/Followed" 
+        <Button android:id="@+id/UnBlock" 
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
           android:textSize="17sp"
@@ -41,8 +41,8 @@
           android:layout_centerVertical="true"
           android:paddingRight="5dp"
           android:layout_alignParentRight="true"
-          android:onClick="onFollowClick" />
-           android:paddingBottom="5dp"  -->
+          android:onClick="onUnBlockClick" />
+          <!-- android:paddingBottom="5dp"  -->
    		  
 
 		</RelativeLayout>

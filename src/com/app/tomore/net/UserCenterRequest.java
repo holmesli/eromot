@@ -111,7 +111,7 @@ public class UserCenterRequest {
                 .add("viewerID", viewerID)
                 .add("limit", limit)
                 .add("page", page);
-        HttpResponse httpResponse = baseRequest.post("/APIV2/getFollowingList.php", params);
+        HttpResponse httpResponse = baseRequest.post("/getFollowingList.php", params);
         return httpResponse.getBodyAsString();
 	}
 	

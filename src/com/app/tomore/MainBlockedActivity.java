@@ -38,6 +38,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MainBlockedActivity extends Activity {
@@ -58,7 +59,7 @@ public class MainBlockedActivity extends Activity {
 	private LayoutInflater inflater; 
 	private View layout;
 	private Bitmap bitmap;
-	private TextView btnFollow;
+	private TextView btnUbBlock;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -226,11 +227,13 @@ public class MainBlockedActivity extends Activity {
 						R.layout.main_blocked_text, null);
 				viewHolder.MemberImage = (ImageView) convertView.findViewById(R.id.MemberImage);
 				viewHolder.AccountName = (TextView) convertView.findViewById(R.id.AccountName);
+				btnUbBlock = (Button) convertView.findViewById(R.id.UnBlock);
 				convertView.setTag(viewHolder);
 			}
 			
 			ImageLoader.getInstance().displayImage(blockedText.getMemberImage(), viewHolder.MemberImage, otp);
 			viewHolder.AccountName.setText(blockedText.getAccountName());
+			btnUbBlock.setText("移除黑名单");
 			return convertView;
 		}
 	}
@@ -238,6 +241,11 @@ public class MainBlockedActivity extends Activity {
 	class ViewHolder {
 		ImageView MemberImage;
 	    TextView AccountName;
+	    Button UnBlock;
+	}
+	
+	public void onUnBlockClick(View view){
+		Toast.makeText(getApplicationContext(), "unBlock", 1).show();
 	}
 	
 	public OnRefreshListener<ListView> onRefreshListener = new OnRefreshListener<ListView>() {
