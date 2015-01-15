@@ -54,7 +54,7 @@ public class MainFansActivity extends Activity {
 	private ArrayList<FansModel> fansList;
 	private FansModel fansItem;
 	private DisplayImageOptions otp;
-	FansAdapter fansListAdapter;
+	FollowingAdapter fansListAdapter;
 	private PullToRefreshListView mListView;
 	private boolean onRefresh = false;
 	private boolean headerRefresh = false; // false -> footer
@@ -176,7 +176,7 @@ public class MainFansActivity extends Activity {
 			onRefresh = false;
 		}
 		if (fansListAdapter == null) {
-			fansListAdapter = new FansAdapter();
+			fansListAdapter = new FollowingAdapter();
 			mListView.setAdapter(fansListAdapter);
 			fansListAdapter.notifyDataSetChanged();
 		} else {
@@ -201,7 +201,7 @@ public class MainFansActivity extends Activity {
 		no_net_lay.setVisibility(View.GONE);
 	}
 	
-	public class FansAdapter extends BaseAdapter{
+	public class FollowingAdapter extends BaseAdapter{
 
 		@Override
 		public int getCount() {

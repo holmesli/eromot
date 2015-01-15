@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:id="@+id/MainFollowingContainer"
+    >
+
+<RelativeLayout
+   android:layout_height="wrap_content" 
+   android:gravity="start|center"
+   android:layout_width="wrap_content" 
+   android:paddingBottom="5dp"
+   android:paddingTop="5dp" 
+   android:paddingLeft="5dp" 
+   android:orientation="vertical">
+   <ImageView
+        android:id="@+id/MemberImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingLeft = "5dp" />
+
+        <TextView android:id="@+id/AccountName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:textColor="#000000" 
+          android:textSize="19sp"
+   		  android:layout_toRightOf="@+id/MemberImage"
+          android:paddingBottom="5dp"
+   		  android:paddingTop="5dp"
+   		  android:paddingLeft="5dp" />
+
+        <Button android:id="@+id/Followed" 
+          android:layout_width="wrap_content" 
+          android:layout_height="wrap_content"
+          android:textSize="17sp"
+          android:textColor="#4d7ca6"
+          android:background="#00000000"
+          android:layout_centerVertical="true"
+          android:paddingRight="5dp"
+          android:layout_alignParentRight="true"
+          android:onClick="onFollowClick" />
+          <!-- android:paddingBottom="5dp"  -->
+   		  
+
+		</RelativeLayout>
+
+            <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />   
+
+    <!-- <ImageView
+        android:id="@+id/OrderMessage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/message_icon" 
+        android:paddingRight = "20dp">
+    </ImageView> -->
+</LinearLayout>
