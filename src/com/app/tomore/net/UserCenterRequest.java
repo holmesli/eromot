@@ -114,4 +114,21 @@ public class UserCenterRequest {
         HttpResponse httpResponse = baseRequest.post("/APIV2/getFollowingList.php", params);
         return httpResponse.getBodyAsString();
 	}
+	
+	/*
+	 * send blocked info
+	 * 
+	 */
+	//http://54.213.167.5/APIV2/getBlockedList.php
+	public String getBlockedRequest(String memberID, String limit, String page)
+			throws IOException, TimeoutException {
+		baseRequest = new BasicHttpClient(url);
+        baseRequest.setConnectionTimeout(2000);
+        ParameterMap params = baseRequest.newParams()
+                .add("memberID", memberID)
+                .add("limit", limit)
+                .add("page", page);
+        HttpResponse httpResponse = baseRequest.post("/APIV2/getBlockedList.php", params);
+        return httpResponse.getBodyAsString();
+	}
 }

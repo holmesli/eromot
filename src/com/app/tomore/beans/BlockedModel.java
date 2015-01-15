@@ -7,12 +7,17 @@ import org.json.JSONObject;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public class FansModel extends BaseBean implements Serializable, Comparable<FansModel> {	
+public class BlockedModel extends BaseBean implements Serializable, Comparable<BlockedModel> {
+
 	private String MemberID;
 	private String AccountName;
 	private String MemberImage;
-	private String followed;
-	private String Blocked;
+	
+	@Override
+	public int compareTo(BlockedModel another) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public Object parseJSON(JSONObject jsonObj) {
@@ -38,12 +43,6 @@ public class FansModel extends BaseBean implements Serializable, Comparable<Fans
 		return null;
 	}
 
-	@Override
-	public int compareTo(FansModel another) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public String getMemberID() {
 		return MemberID;
 	}
@@ -67,21 +66,4 @@ public class FansModel extends BaseBean implements Serializable, Comparable<Fans
 	public void setMemberImage(String memberImage) {
 		MemberImage = memberImage;
 	}
-
-	public String getFollowed() {
-		return followed;
-	}
-
-	public void setFollowed(String followed) {
-		this.followed = followed;
-	}
-
-	public String getBlocked() {
-		return Blocked;
-	}
-
-	public void setBlocked(String blocked) {
-		Blocked = blocked;
-	}
-
 }

@@ -113,14 +113,16 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 		} else if (id == R.id.my_tiezi_bt) {
 			Toast.makeText(context, "����2", 1).show();
 		} else if (id == R.id.my_guanzhu_bt) {
-			Toast.makeText(context, "����3", 1).show();
+			onMyFollowingClick(v);
+//			Toast.makeText(context, "����3", 1).show();
 		} else if (id == R.id.ivTitleBtnLeft) {
 			menu.toggle();
 		} else if (id == R.id.my_fensi_bt) {
 			onMyFansClick(v);
 //			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_blacklist_bt) {
-			Toast.makeText(context, "����1", 1).show();
+			onMyBlockedClick(v);
+//			Toast.makeText(context, "����1", 1).show();
 		} else if (id == R.id.my_aboutus_bt) {
 			Toast.makeText(context, "����1", 1).show();
 		}else if (id == R.id.my_logout_bt) {
@@ -138,6 +140,16 @@ public class MainDuoliaoActivity extends Activity implements OnClickListener {
 
 	public void onMyFansClick(View view) {
 		Intent intent = new Intent(this, MainFansActivity.class);
+		startActivity(intent);
+	}
+	
+	public void onMyFollowingClick(View view) {
+		Intent intent = new Intent(this, MainFollowingActivity.class);
+		startActivity(intent);
+	}
+	
+	public void onMyBlockedClick(View view) {
+		Intent intent = new Intent(this, MainBlockedActivity.class);
 		startActivity(intent);
 	}
 

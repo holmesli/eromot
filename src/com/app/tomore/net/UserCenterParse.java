@@ -2,6 +2,7 @@ package com.app.tomore.net;
 
 import java.util.ArrayList;
 
+import com.app.tomore.beans.BlockedModel;
 import com.app.tomore.beans.FansModel;
 import com.app.tomore.beans.FollowingModel;
 import com.app.tomore.beans.UserModel;
@@ -63,6 +64,20 @@ public class UserCenterParse {
 		ArrayList<FollowingModel> lcs = new ArrayList<FollowingModel>();
 		for (JsonElement obj : jarray) {
 			FollowingModel cse = gson.fromJson(obj, FollowingModel.class);
+			lcs.add(cse);
+		}
+		return lcs;
+	}
+	
+	public ArrayList<BlockedModel> parseBlockedResponse(String result)
+			throws JsonSyntaxException {
+		Gson gson = new Gson();
+		JsonElement jelement = new JsonParser().parse(result);
+		JsonObject jobject = jelement.getAsJsonObject();
+		JsonArray jarray = jobject.getAsJsonArray("data");
+		ArrayList<BlockedModel> lcs = new ArrayList<BlockedModel>();
+		for (JsonElement obj : jarray) {
+			BlockedModel cse = gson.fromJson(obj, BlockedModel.class);
 			lcs.add(cse);
 		}
 		return lcs;
