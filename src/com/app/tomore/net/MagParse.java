@@ -66,18 +66,35 @@ public class MagParse {
 	{
 		JsonElement jelement = new JsonParser().parse(pre);
 		JsonObject  jobject2 = jelement.getAsJsonObject();
-		pre =jobject2.get("pre").getAsString();
-
-		return pre;
-		
+		//pre =jobject2.get("pre").getAsString();
+		if(pre==null)
+		{
+			pre =jobject2.get("pre").getAsString();
+			return pre="0";
+		}
+		else
+		{
+			pre =jobject2.get("pre").getAsString();
+			return pre;
+		}
+	
 	}
 	
 	public String parseNext(String next) throws JsonSyntaxException
 	{
 		JsonElement jelement = new JsonParser().parse(next);
 		JsonObject  jobject3 = jelement.getAsJsonObject();
-		next =jobject3.get("next").getAsString();
-		return next;
+		//next =jobject3.get("next").getAsString();
+		if(next==null)
+		{
+			next =jobject3.get("next").getAsString();
+			return next="0";
+		}
+		else
+		{
+			next =jobject3.get("next").getAsString();
+			return next;
+		}
 
 		
 	}
